@@ -3,9 +3,10 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-//Class that organizes how you move.
+//Class that organizes the keys used.
 public class KeyHandler implements KeyListener {
 
+    //Initialization of what buttons that are usable
     public boolean upPressed, leftPressed, rightPressed, downPressed;
 
     @Override

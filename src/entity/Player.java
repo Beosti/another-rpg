@@ -1,11 +1,10 @@
-package main.entity;
+package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -16,6 +15,7 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyHandler;
 
+    //Constructor
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
         this.gp = gp;
@@ -35,6 +35,7 @@ public class Player extends Entity{
         direction = "down";
     }
 
+    //Frame images used for the player
     public void getPlayerImage()
     {
         try{
@@ -56,27 +57,29 @@ public class Player extends Entity{
             e.printStackTrace();
         }
     }
+    //What can the player do at every update of the game
     public void update()
     {
-        if (keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.leftPressed == true || keyHandler.rightPressed == true)
+        //Handling of the movement
+        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed)
         {
-            if (keyHandler.upPressed == true)
+            if (keyHandler.upPressed)
             {
 
                 direction = "up";
                 y -= speed;
             }
-            else if (keyHandler.downPressed == true)
+            else if (keyHandler.downPressed)
             {
                 direction = "down";
                 y += speed;
             }
-            else if (keyHandler.leftPressed == true)
+            else if (keyHandler.leftPressed)
             {
                 direction = "left";
                 x -= speed;
             }
-            else if (keyHandler.rightPressed == true)
+            else if (keyHandler.rightPressed)
             {
                 direction = "right";
                 x += speed;
@@ -94,10 +97,10 @@ public class Player extends Entity{
             }
         }
         else
-        {
             spriteNumber = 3;
-        }
     }
+
+    //Putting the images in the game
     public void draw(Graphics2D g2)
     {
         //g2.setColor(Color.white);
@@ -105,6 +108,7 @@ public class Player extends Entity{
 
         BufferedImage image = null;
 
+        //How does the player look in what direction
         switch (direction)
         {
             case "up":
