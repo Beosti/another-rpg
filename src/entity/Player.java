@@ -15,11 +15,15 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyHandler;
 
+
+
     //Constructor
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
         this.gp = gp;
         this.keyHandler = keyHandler;
+
+
 
         setDefaultValues();
         getPlayerImage();
