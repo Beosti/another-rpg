@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 // Entity class for all the entities in the game
 public class Entity {
 
-    public int x, y;
+    public int worldX, worldY;
     public int speed;
     public String name;
 
