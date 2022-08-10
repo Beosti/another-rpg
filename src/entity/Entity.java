@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 // Entity class for all the entities in the game
@@ -19,4 +20,7 @@ public class Entity {
     //Variables for the sprite changing
     public int spriteCounter = 0;
     public int spriteNumber = 1;
+
+    public Rectangle solidArea;
+    public boolean collisionOn = false;
 }

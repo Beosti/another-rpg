@@ -27,6 +27,12 @@ public class Player extends Entity{
         screenX = gp.screenWidth / 2 - (gp.tileSize/2);
         screenY = gp.screenHeight / 2 - (gp.tileSize/2);
 
+        solidArea = new Rectangle();
+        solidArea.x = 0;
+        solidArea.y = 30;
+        solidArea.width = 33;
+        solidArea.height = 30;
+
         setDefaultValues();
         getPlayerImage();
 
@@ -70,26 +76,38 @@ public class Player extends Entity{
         if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed)
         {
             if (keyHandler.upPressed)
-            {
-
                 direction = "up";
-                worldY -= speed;
-            }
             else if (keyHandler.downPressed)
-            {
                 direction = "down";
-                worldY += speed;
-            }
             else if (keyHandler.leftPressed)
-            {
                 direction = "left";
-                worldX -= speed;
-            }
             else if (keyHandler.rightPressed)
-            {
                 direction = "right";
-                worldX += speed;
+
+
+            collisionOn = false;
+            gp.Checker.checkTile(this);
+
+            // IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if (collisionOn == false)
+            {
+                switch (direction)
+                {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
+
             spriteCounter++;
             if (spriteCounter > 13)
             {
@@ -109,8 +127,6 @@ public class Player extends Entity{
     //Putting the images in the game
     public void draw(Graphics2D g2)
     {
-        //g2.setColor(Color.white);
-        //g2.fillRect(x, y, gp.tileSize, gp.tileSize);
 
         BufferedImage image = null;
 

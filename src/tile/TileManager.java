@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public Tile[] tile;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp)
     {
@@ -42,6 +42,7 @@ public class TileManager {
 
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water/Tile_water1.png"));
+            tile[4].collision = true;
         }
         catch (IOException e)
         {
@@ -49,6 +50,7 @@ public class TileManager {
         }
     }
 
+    // Specifically load the map to be drawn later
     public void loadMap(String map)
     {
         try
@@ -85,11 +87,13 @@ public class TileManager {
         }
     }
 
+    // Specifically draw the map
     public void draw(Graphics2D g2)
     {
         int worldCol = 0;
         int worldRow = 0;
 
+        // Draws the tiles
         while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow)
         {
             int tileNum = mapTileNum[worldCol][worldRow];
@@ -99,6 +103,7 @@ public class TileManager {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
+            // Draws the tiles specifically around the player, so spare on efficiency
             if (worldX  + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                 worldX  - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY  + gp.tileSize > gp.player.worldY - gp.player.screenY &&
