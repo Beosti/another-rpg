@@ -17,6 +17,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+    public int hasKey = 0;
 
     //Constructor
     public Player(GamePanel gp, KeyHandler keyHandler)
@@ -30,6 +31,8 @@ public class Player extends Entity{
         solidArea = new Rectangle();
         solidArea.x = 0;
         solidArea.y = 30;
+        solidAreaDefaultX = solidArea.x;
+        solidAeaDefaultY = solidArea.y;
         solidArea.width = 33;
         solidArea.height = 30;
 
@@ -88,6 +91,10 @@ public class Player extends Entity{
             collisionOn = false;
             gp.Checker.checkTile(this);
 
+            // CHECK OBJECT COLLISION
+            int objIndex = gp.Checker.checkObject(this, true);
+            pickUpObject(objIndex);
+
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (collisionOn == false)
             {
@@ -122,6 +129,38 @@ public class Player extends Entity{
         }
         else
             spriteNumber = 3;
+    }
+
+    public void pickUpObject(int i)
+    {
+        if (i != 999)
+        {
+            String objectName = gp.object[i].name;
+            switch (objectName)
+            {
+                case "Key":
+                    hasKey++;
+                    gp.object[i] = null;
+                    gp.ui.showMessage("Picked up a key");
+                    break;
+                case "Door":
+                    if (hasKey > 0)
+                    {
+                        gp.object[i] = null;
+                        hasKey--;
+                        gp.ui.showMessage("You opened the door");
+                    }
+                    else
+                        gp.ui.showMessage("You need a key");
+
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    // gp.playerSE(play cool music);
+                    break;
+            }
+        }
     }
 
     //Putting the images in the game

@@ -3,7 +3,7 @@ package object;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class DoorObject extends SuperObject{
+public class DoorObject extends SuperObject {
 
     public DoorObject()
     {
@@ -14,5 +14,6 @@ public class DoorObject extends SuperObject{
         {
             e.printStackTrace();
         }
+        collision = true;
     }
 }
