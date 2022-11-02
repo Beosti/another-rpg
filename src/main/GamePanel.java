@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import object.KeyObject;
 import object.SuperObject;
@@ -34,22 +35,26 @@ public class GamePanel extends JPanel implements Runnable{
 
     // SYSTEM
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
     Sound sound = new Sound();
     Sound se = new Sound();
     public CollisionChecker Checker = new CollisionChecker(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public Ui ui = new Ui(this);
+    public EventHandler eventHandler = new EventHandler(this);
     Thread gameThread;
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyHandler);
     public SuperObject object[] = new SuperObject[10];
+    public Entity NPC[] = new Entity[10];
 
     // GAME STATE
     public int gameState;
+    public final int titleScreenState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
     public GamePanel()
     {
@@ -63,8 +68,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame()
     {
         assetSetter.setObject();
-        playMusic(0);
-        gameState = playState;
+        //playMusic(0);
+        gameState = titleScreenState;
+        assetSetter.setNpc();
     }
 
     public void startGameThread()
@@ -109,7 +115,16 @@ public class GamePanel extends JPanel implements Runnable{
     {
         if (gameState == playState)
         {
+            //PLAYER
             player.update();
+            //NPC
+            for (int i = 0; i < NPC.length; i++)
+            {
+                if(NPC[i] != null)
+                {
+                    NPC[i].update();
+                }
+            }
         }
         else if (gameState == pauseState)
         {
@@ -123,16 +138,35 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) graphics;
 
-        tileManager.draw(g2);
         for (int i=0; i< object.length; i++)
         {
             if (object[i] != null)
                 object[i].draw(g2, this);
         }
-        player.draw(g2);
 
-        // UI
-        ui.draw(g2);
+        // TITLE SCREEN
+        if (gameState == titleScreenState)
+        {
+            ui.draw(g2);
+        }
+        else
+        {
+            tileManager.draw(g2);
+            player.draw(g2);
+            //NPC
+            for (int i= 0; i < NPC.length; i++)
+            {
+                if (NPC[i] != null)
+                {
+                    NPC[i].draw(g2);
+                }
+            }
+
+            // UI
+            ui.draw(g2);
+        }
+
+
 
         g2.dispose();
     }

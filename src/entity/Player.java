@@ -2,8 +2,10 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.Utilities;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,7 +14,6 @@ import java.io.IOException;
 //Class for the player
 public class Player extends Entity{
 
-    GamePanel gp;
     KeyHandler keyHandler;
 
     public final int screenX;
@@ -21,7 +22,7 @@ public class Player extends Entity{
     //Constructor
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
-        this.gp = gp;
+        super(gp);
         this.keyHandler = keyHandler;
 
         screenX = gp.screenWidth / 2 - (gp.tileSize/2);
@@ -31,9 +32,9 @@ public class Player extends Entity{
         solidArea.x = 0;
         solidArea.y = 30;
         solidAreaDefaultX = solidArea.x;
-        solidAeaDefaultY = solidArea.y;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 33;
-        solidArea.height = 30;
+        solidArea.height = 34;
 
         setDefaultValues();
         getPlayerImage();
@@ -45,32 +46,28 @@ public class Player extends Entity{
         name = "Player";
         worldX = gp.tileSize * 24;
         worldY = gp.tileSize * 45;
-        speed = 5;
+        speed = 3;
         direction = "down";
     }
 
     //Frame images used for the player
     public void getPlayerImage()
     {
-        try{
-            idle_front = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_front_idle.png"));
-            front_walking1 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_front_walking1.png"));
-            front_walking2 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_front_walking2.png"));
-            idle_back = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_back_idle.png"));
-            back_walking1 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_back_walking1.png"));
-            back_walking2 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_back_walking2.png"));
-            idle_left = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_side_left_idle.png"));
-            left_walking1 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_side_left_walking1.png"));
-            left_walking2 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_side_left_walking2.png"));
-            idle_right = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_side_right_idle.png"));
-            right_walking1 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_side_right_walking1.png"));
-            right_walking2 = ImageIO.read(getClass().getResourceAsStream("/entities/player/Player_goblin_side_right_walking2.png"));
-
-        }catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        idle_front = setup("Player_goblin_front_idle", "player");
+        front_walking1 = setup("Player_goblin_front_walking1", "player");
+        front_walking2 = setup("Player_goblin_front_walking2", "player");
+        idle_back = setup("Player_goblin_back_idle", "player");
+        back_walking1 = setup("Player_goblin_back_walking1", "player");
+        back_walking2 = setup("Player_goblin_back_walking2", "player");
+        idle_left = setup("Player_goblin_side_left_idle", "player");
+        left_walking1 = setup("Player_goblin_side_left_walking1", "player");
+        left_walking2 = setup("Player_goblin_side_left_walking2", "player");
+        idle_right = setup("Player_goblin_side_right_idle", "player");
+        right_walking1 = setup("Player_goblin_side_right_walking1", "player");
+        right_walking2 = setup("Player_goblin_side_right_walking2", "player");
     }
+
+
     //What can the player do at every update of the game
     public void update()
     {
@@ -93,6 +90,12 @@ public class Player extends Entity{
             // CHECK OBJECT COLLISION
             int objIndex = gp.Checker.checkObject(this, true);
             pickUpObject(objIndex);
+
+            // NPC COLLISION
+            int npcIndex = gp.Checker.checkEntity(this, gp.NPC);
+            interactNPC(npcIndex);
+
+            gp.eventHandler.checkEvent();
 
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (collisionOn == false)
@@ -137,6 +140,18 @@ public class Player extends Entity{
 
         }
     }
+    public void interactNPC(int i)
+    {
+        if (i != 999)
+        {
+            if (gp.keyHandler.enterPressed) {
+                gp.gameState = gp.dialogueState;
+                gp.NPC[i].speak();
+            }
+        }
+        gp.keyHandler.enterPressed = false;
+    }
+
 
     //Putting the images in the game
     public void draw(Graphics2D g2)
