@@ -1,19 +1,23 @@
 package object;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
+import entity.Entity;
+import main.GamePanel;
 
-public class DoorObject extends SuperObject {
+public class DoorObject extends Entity {
 
-    public DoorObject()
+    public DoorObject(GamePanel gp)
     {
+        super(gp);
         this.name = "Door";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/door_sprite.png"));
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        idle_front = setup("/door/door_sprite.png", "objects");
+
         collision = true;
+
+        solidArea.x = 0;
+        solidArea.y = 16;
+        solidArea.width = 48;
+        solidArea.height = 32;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 }

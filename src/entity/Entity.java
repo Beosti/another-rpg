@@ -13,7 +13,8 @@ public class Entity {
 
     GamePanel gp;
     public int worldX, worldY;
-    public int speed;
+    public String direction = "down";
+    public int speed; // TODO should be changed to float
     public String name;
 
     //Every sprite needed for a whole entity image in the game
@@ -21,7 +22,6 @@ public class Entity {
                          idle_back, back_walking1, back_walking2,
                          idle_left, left_walking1, left_walking2,
                          idle_right, right_walking1, right_walking2;
-    public String direction;
 
     //Variables for the sprite changing
     public int spriteCounter = 0;
@@ -33,6 +33,8 @@ public class Entity {
     public int actionLockCounter=0;
     public String dialogues[] = new String[20];
     public int dialogueIndex = 0;
+    public BufferedImage image;
+    public boolean collision = false;
 
     public Entity(GamePanel gp)
     {

@@ -27,13 +27,17 @@ public class EventHandler {
     public void checkEvent()
     {
         int coordinates = gp.tileManager.mapTileNum[gp.player.worldX/gp.tileSize][gp.player.worldY/gp.tileSize];
-        System.out.println(coordinates);
-        if (coordinates == 3) // TODO make it so you get speed on the path
+        System.out.println(gp.player.speed);
+        if (coordinates == 3 && !isOnPath)
         {
+            gp.player.speed += 1;
             isOnPath = true;
-            //gp.player.speed += 1;
         }
-        //System.out.println(gp.player.speed);
+        else if (coordinates != 3 && isOnPath) {
+            gp.player.speed -= 1;
+            isOnPath = false;
+        }
+        /*
         if (debug == 200)
         {
             System.out.println(gp.player.worldX);
@@ -41,6 +45,8 @@ public class EventHandler {
             debug = 0;
         }
         debug++;
+
+         */
     }
     public boolean hit(int eventCol, int eventRow, String reqDirection)
     {

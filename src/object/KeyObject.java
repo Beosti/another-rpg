@@ -1,18 +1,19 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class KeyObject extends SuperObject{
+public class KeyObject extends Entity {
 
-    public KeyObject()
+    public KeyObject(GamePanel gp)
     {
+        super(gp);
         this.name = "Key";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/key_sprite.png"));
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        idle_front = setup("/key/key_sprite.png", "objects");
+
+        collision = true;
     }
 }
