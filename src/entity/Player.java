@@ -226,7 +226,7 @@ public class Player extends Entity{
                 break;
         }
 
-        if (invincible == true)
+        if (invincible) // TODO add a thingy where the player goes in and off rendering as the classic rpgs
         {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         }
