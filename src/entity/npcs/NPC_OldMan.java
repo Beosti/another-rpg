@@ -15,12 +15,12 @@ public class NPC_OldMan extends Entity {
         direction = "up";
         speed = 1;
 
-        getNpcImage();
+        getImage();
         setDialogue();
     }
 
-    public void getNpcImage()
-    {
+    @Override
+    public void getImage() {
         front_walking1 = setup("oldman_down_1", "oldman");
         front_walking2 = setup("oldman_down_2", "oldman");
         back_walking1 = setup("oldman_up_1", "oldman");
@@ -29,7 +29,10 @@ public class NPC_OldMan extends Entity {
         left_walking2 = setup("oldman_left_2", "oldman");
         right_walking1 = setup("oldman_right_1", "oldman");
         right_walking2 = setup("oldman_right_2", "oldman");
+
     }
+
+
 
     public void setDialogue()
     {

@@ -26,17 +26,7 @@ public class EventHandler {
 
     public void checkEvent()
     {
-        int coordinates = gp.tileManager.mapTileNum[gp.player.worldX/gp.tileSize][gp.player.worldY/gp.tileSize];
-        System.out.println(gp.player.speed);
-        if (coordinates == 3 && !isOnPath)
-        {
-            gp.player.speed += 1;
-            isOnPath = true;
-        }
-        else if (coordinates != 3 && isOnPath) {
-            gp.player.speed -= 1;
-            isOnPath = false;
-        }
+        speedTiles();
         /*
         if (debug == 200)
         {
@@ -71,8 +61,17 @@ public class EventHandler {
 
         return hit;
     }
-    public void speedTiles(int gameState)
+    public void speedTiles()
     {
-        // TODO when on the tile that's a path you go faster
+        int coordinates = gp.tileManager.mapTileNum[gp.player.worldX/gp.tileSize][gp.player.worldY/gp.tileSize];
+        if (coordinates == 3 && !isOnPath)
+        {
+            gp.player.speed += 1;
+            isOnPath = true;
+        }
+        else if (coordinates != 3 && isOnPath) {
+            gp.player.speed -= 1;
+            isOnPath = false;
+        }
     }
 }

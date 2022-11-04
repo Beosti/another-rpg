@@ -12,8 +12,12 @@ public class ChestObject extends Entity {
     {
         super(gp);
         this.name = "Chest";
-        idle_front = setup("/chest/chest_sprite.png", "objects");
 
         collision = true;
+    }
+
+    @Override
+    public void getImage() {
+        idle_front = setup("/chest/chest_sprite.png", "objects");
     }
 }

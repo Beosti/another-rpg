@@ -9,7 +9,6 @@ public class DoorObject extends Entity {
     {
         super(gp);
         this.name = "Door";
-        idle_front = setup("/door/door_sprite.png", "objects");
 
         collision = true;
 
@@ -19,5 +18,10 @@ public class DoorObject extends Entity {
         solidArea.height = 32;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+    }
+
+    @Override
+    public void getImage() {
+        idle_front = setup("/door/door_sprite.png", "objects");
     }
 }

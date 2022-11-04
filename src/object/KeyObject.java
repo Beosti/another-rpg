@@ -3,8 +3,6 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
 
 public class KeyObject extends Entity {
 
@@ -15,5 +13,10 @@ public class KeyObject extends Entity {
         idle_front = setup("/key/key_sprite.png", "objects");
 
         collision = true;
+    }
+
+    @Override
+    public void getImage() {
+        idle_front = setup("/key/key_sprite.png", "objects");
     }
 }

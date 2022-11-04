@@ -18,7 +18,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
-
+    int invincibleCounter = 0;
     //Constructor
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
@@ -37,7 +37,7 @@ public class Player extends Entity{
         solidArea.height = 34;
 
         setDefaultValues();
-        getPlayerImage();
+        getImage();
 
     }
 
@@ -48,11 +48,15 @@ public class Player extends Entity{
         worldY = gp.tileSize * 45;
         speed = 2;
         direction = "down";
+
+        // STATUS
+        maxHealth = 6;
+        health = 6;
     }
 
     //Frame images used for the player
-    public void getPlayerImage()
-    {
+    @Override
+    public void getImage() {
         idle_front = setup("Player_goblin_front_idle", "player");
         front_walking1 = setup("Player_goblin_front_walking1", "player");
         front_walking2 = setup("Player_goblin_front_walking2", "player");
@@ -65,8 +69,8 @@ public class Player extends Entity{
         idle_right = setup("Player_goblin_side_right_idle", "player");
         right_walking1 = setup("Player_goblin_side_right_walking1", "player");
         right_walking2 = setup("Player_goblin_side_right_walking2", "player");
-    }
 
+    }
 
     //What can the player do at every update of the game
     public void update()
@@ -94,6 +98,9 @@ public class Player extends Entity{
             // NPC COLLISION
             int npcIndex = gp.Checker.checkEntity(this, gp.NPC);
             interactNPC(npcIndex);
+
+            int hostileIndex = gp.Checker.checkEntity(this, gp.Hostile);
+            contactHostile(hostileIndex);
 
             gp.eventHandler.checkEvent();
 
@@ -131,6 +138,17 @@ public class Player extends Entity{
         }
         else
             spriteNumber = 3;
+
+        // This needs to be outside of key if statement
+        if (invincible == true)
+        {
+            invincibleCounter++;
+            if(invincibleCounter > 60)
+            {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     public void pickUpObject(int i)
@@ -150,6 +168,18 @@ public class Player extends Entity{
             }
         }
         gp.keyHandler.enterPressed = false;
+    }
+
+    public void contactHostile(int i)
+    {
+        if (i != 999)
+        {
+            if (invincible == false)
+            {
+                health -= 1;
+                invincible = true;
+            }
+        }
     }
 
 
@@ -196,6 +226,12 @@ public class Player extends Entity{
                 break;
         }
 
+        if (invincible == true)
+        {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 }

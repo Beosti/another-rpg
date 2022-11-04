@@ -1,5 +1,6 @@
 package main;
 
+import entity.hostile.RedSlimeEntity;
 import entity.npcs.NPC_OldMan;
 import object.ChestObject;
 import object.DoorObject;
@@ -26,5 +27,12 @@ public class AssetSetter {
         gp.NPC[0].worldY = gp.tileSize*21;
 
 
+    }
+
+    public void setHostile()
+    {
+        gp.Hostile[0] = new RedSlimeEntity(gp);
+        gp.Hostile[0].worldX = gp.tileSize * 23;
+        gp.Hostile[0].worldY = gp.tileSize *23;
     }
 }

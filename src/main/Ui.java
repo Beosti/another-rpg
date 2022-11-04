@@ -1,6 +1,8 @@
 package main;
 
 import object.KeyObject;
+import ui.HealthUi;
+import ui.Screen;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,6 +20,7 @@ public class Ui {
     public boolean gameFinished = false;
     public String currentDialogue = "";
     public int commandNum = 0;
+    BufferedImage heart_full, heart_half, heart_empty;
     public Ui(GamePanel gp)
     {
         this.gp = gp;
@@ -32,7 +35,10 @@ public class Ui {
         {
             e.printStackTrace();
         }
-
+        Screen healthUi = new HealthUi(gp);
+        heart_full = healthUi.state1;
+        heart_half = healthUi.state2;
+        heart_empty = healthUi.state3;
     }
 
     public void showMessage(String text)
@@ -53,15 +59,17 @@ public class Ui {
         }
         if (gp.gameState == gp.playState)
         {
-
+            drawPlayerLife();
         }
         else if (gp.gameState == gp.pauseState)
         {
             drawPauseScreen();
+            drawPlayerLife();
         }
         else if (gp.gameState == gp.dialogueState)
         {
             drawDialogueScreen();
+            drawPlayerLife();
         }
     }
     public void drawTitleScreen()
@@ -142,6 +150,37 @@ public class Ui {
         {
             g2.drawString(currentDialogue, x - 20, y);
             y += 40;
+        }
+    }
+    public void drawPlayerLife()
+    {
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        int i = 0;
+
+        // BLANK HEART
+        while (i < gp.player.maxHealth/2)
+        {
+            g2.drawImage(heart_empty, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+        // RESET
+        x = gp.tileSize/2;
+        y = gp.tileSize/2;
+        i = 0;
+
+        while (i < gp.player.health)
+        {
+            g2.drawImage(heart_half, x, y, null);
+            i++;
+            if (i < gp.player.health)
+            {
+                g2.drawImage(heart_full, x, y, null);
+            }
+            i++;
+            x += gp.tileSize;
         }
     }
     public void drawSubWindow(int x, int y, int width, int height)

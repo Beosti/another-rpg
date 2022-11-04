@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 // Entity class for all the entities in the game
-public class Entity {
+public abstract class Entity {
 
     GamePanel gp;
     public int worldX, worldY;
@@ -35,18 +35,37 @@ public class Entity {
     public int dialogueIndex = 0;
     public BufferedImage image;
     public boolean collision = false;
+    public int maxHealth;
+    public int health;
+    public boolean invincible = false;
+    public int type; // 0 = player, 1 = npc, 2 monster;
 
     public Entity(GamePanel gp)
     {
         this.gp = gp;
     }
+
+    public abstract void getImage();
+
     public void setAction() {};
     public void update() {
         setAction();
         collisionOn = false;
         gp.Checker.checkTile(this);
         gp.Checker.checkObject(this, false);
-        gp.Checker.checkPlayer(this);
+        gp.Checker.checkEntity(this, gp.NPC);
+        gp.Checker.checkEntity(this, gp.Hostile);
+        boolean checkPlayer = gp.Checker.checkPlayer(this);
+
+        if (this.type == 2 && checkPlayer)
+        {
+            if (gp.player.invincible == false)
+            {
+                gp.player.health -= 1;
+                gp.player.invincible = true;
+            }
+        }
+
         if (collisionOn == false)
         {
             switch (direction)
