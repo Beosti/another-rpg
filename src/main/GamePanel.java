@@ -31,8 +31,8 @@ public class GamePanel extends JPanel implements Runnable{
     byte FPS = 60;
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 48;
-    public final int maxWorldRow = 48;
+    public final int maxWorldCol = 64;
+    public final int maxWorldRow = 68;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -192,11 +192,7 @@ public class GamePanel extends JPanel implements Runnable{
             for (Entity entity : entityList) {
                 entity.draw(g2);
             }
-            for (int i = 0; i< entityList.size(); i++)
-            {
-                entityList.remove(i);
-            }
-
+            entityList.clear();
             // UI
             ui.draw(g2);
         }

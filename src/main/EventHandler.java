@@ -64,7 +64,7 @@ public class EventHandler {
     public void speedTiles()
     {
         int coordinates = gp.tileManager.mapTileNum[gp.player.worldX/gp.tileSize][gp.player.worldY/gp.tileSize];
-        if (coordinates == 3 && !isOnPath)
+        if (coordinates == 4 && !isOnPath)
         {
             gp.player.speed += 1;
             isOnPath = true;

@@ -16,12 +16,13 @@ public abstract class Entity {
     public String direction = "down";
     public int speed; // TODO should be changed to float
     public String name;
-
+    public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     //Every sprite needed for a whole entity image in the game
     public BufferedImage idle_front, front_walking1, front_walking2,
                          idle_back, back_walking1, back_walking2,
                          idle_left, left_walking1, left_walking2,
                          idle_right, right_walking1, right_walking2;
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
     //Variables for the sprite changing
     public int spriteCounter = 0;
@@ -39,7 +40,8 @@ public abstract class Entity {
     public int health;
     public boolean invincible = false;
     public int type; // 0 = player, 1 = npc, 2 monster;
-
+    boolean attacking = false;
+    int invincibleCounter = 0;
     public Entity(GamePanel gp)
     {
         this.gp = gp;
@@ -57,31 +59,31 @@ public abstract class Entity {
         gp.Checker.checkEntity(this, gp.Hostile);
         boolean checkPlayer = gp.Checker.checkPlayer(this);
 
+        if (invincible)
+        {
+            invincibleCounter++;
+            if(invincibleCounter > 40)
+            {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
         if (this.type == 2 && checkPlayer)
         {
-            if (gp.player.invincible == false)
+            if (!gp.player.invincible)
             {
                 gp.player.health -= 1;
                 gp.player.invincible = true;
             }
         }
 
-        if (collisionOn == false)
+        if (!collisionOn)
         {
-            switch (direction)
-            {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+            switch (direction) {
+                case "up" -> worldY -= speed;
+                case "down" -> worldY += speed;
+                case "left" -> worldX -= speed;
+                case "right" -> worldX += speed;
             }
         }
 
@@ -98,20 +100,11 @@ public abstract class Entity {
         }
     }
     public void speak() {
-        switch (gp.player.direction)
-        {
-            case "up":
-                direction = "down";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "left":
-                direction = "right";
-                break;
-            case "right":
-                direction = "left";
-                break;
+        switch (gp.player.direction) {
+            case "up" -> direction = "down";
+            case "down" -> direction = "up";
+            case "left" -> direction = "right";
+            case "right" -> direction = "left";
         }
     }
     public void draw(Graphics2D g2)
@@ -171,6 +164,21 @@ public abstract class Entity {
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/entities/" + packageName + "/" + imageName + ".png"));
             image = utilityTool.scaleImage(image, gp.tileSize, gp.tileSize);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return image;
+    }
+    public BufferedImage setupCustom(String imageName, String packageName, int width, int height)
+    {
+        UtilityTool utilityTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream("/entities/" + packageName + "/" + imageName + ".png"));
+            image = utilityTool.scaleImage(image, width, height);
         }
         catch (IOException e)
         {

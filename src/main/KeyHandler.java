@@ -50,19 +50,15 @@ public class KeyHandler implements KeyListener {
                 }
             }
         }
-
-        if (code == KeyEvent.VK_Z)
+        else if (code == KeyEvent.VK_Z)
             upPressed = true;
-
-        if (code == KeyEvent.VK_Q)
+        else if (code == KeyEvent.VK_Q)
             leftPressed = true;
-
-        if (code == KeyEvent.VK_D)
+        else if (code == KeyEvent.VK_D)
             rightPressed = true;
-
-        if (code == KeyEvent.VK_S)
+        else if (code == KeyEvent.VK_S)
             downPressed = true;
-        if (code == KeyEvent.VK_ENTER)
+        else if (code == KeyEvent.VK_ENTER)
             enterPressed = true;
 
         if (code == KeyEvent.VK_P) // pause button
