@@ -1,15 +1,19 @@
 package main;
 
-import entity.Entity;
-import entity.Player;
-import object.KeyObject;
-import tile.TileManager;
+import main.api.AssetSetter;
+import main.api.CollisionChecker;
+import main.entity.Entity;
+import main.entity.Player;
+import main.handlers.EventHandler;
+import main.handlers.KeyHandler;
+import main.sound.Sound;
+import main.tile.TileManager;
+import main.ui.Ui;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -38,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int worldHeight = tileSize * maxWorldRow;
 
     // SYSTEM
-    TileManager tileManager = new TileManager(this);
+    public TileManager tileManager = new TileManager(this);
     public KeyHandler keyHandler = new KeyHandler(this);
     Sound sound = new Sound();
     Sound se = new Sound();
