@@ -33,7 +33,6 @@ public class NPC_OldMan extends Entity {
     }
 
 
-
     public void setDialogue()
     {
         dialogues[0] = "Danal is autistic af";
@@ -42,6 +41,7 @@ public class NPC_OldMan extends Entity {
         dialogues[3] = "Ok boomer?";
 
     }
+    @Override
     public void setAction()
     {
         actionLockCounter++;

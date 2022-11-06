@@ -11,7 +11,7 @@ public class RedSlimeEntity extends Entity {
         name = "Red slime";
         type = 2;
         speed = 1;
-        maxHealth = 4;
+        maxHealth = 5;
         health = maxHealth;
 
         solidArea.x = 3;
@@ -27,7 +27,6 @@ public class RedSlimeEntity extends Entity {
     @Override
     public void getImage() // TODO check if you want it to be in entity or not
     {
-
         front_walking1 = setup("redslime_down_1", "hostile/slime/red");
         front_walking2 = setup("redslime_down_2", "hostile/slime/red");
         back_walking1 = setup("redslime_down_1", "hostile/slime/red");
@@ -36,8 +35,6 @@ public class RedSlimeEntity extends Entity {
         left_walking2 = setup("redslime_down_2", "hostile/slime/red");
         right_walking1 = setup("redslime_down_1", "hostile/slime/red");
         right_walking2 = setup("redslime_down_2", "hostile/slime/red");
-
-
     }
 
     @Override

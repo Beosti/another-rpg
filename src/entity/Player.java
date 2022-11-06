@@ -250,7 +250,8 @@ public class Player extends Entity{
                 gp.Hostile[i].invincible = true;
                 if (gp.Hostile[i].health <= 0)
                 {
-                    gp.Hostile[i] = null;
+
+                    gp.Hostile[i].dying = true;
                 }
             }
         }

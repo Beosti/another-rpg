@@ -1,11 +1,12 @@
 package main;
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
+
 //MADE BY YUANNO GAME CORPARATION
 public class Main {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws FileNotFoundException {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);

@@ -42,6 +42,9 @@ public abstract class Entity {
     public int type; // 0 = player, 1 = npc, 2 monster;
     boolean attacking = false;
     int invincibleCounter = 0;
+    public boolean alive = true;
+    public boolean dying = false;
+    public int dyingCounter = 0;
     public Entity(GamePanel gp)
     {
         this.gp = gp;
@@ -53,6 +56,9 @@ public abstract class Entity {
     public void update() {
         setAction();
         collisionOn = false;
+        Graphics2D Graphics2D = null;
+        Graphics2D g2 = null;
+
         gp.Checker.checkTile(this);
         gp.Checker.checkObject(this, false);
         gp.Checker.checkEntity(this, gp.NPC);
@@ -99,6 +105,21 @@ public abstract class Entity {
             spriteCounter = 0;
         }
     }
+    public void dyingAnimation(Graphics2D g2)
+    {
+        dyingCounter++;
+        int i = 5;
+        if (dyingCounter <= i) g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+        if (dyingCounter > i && dyingCounter <= i *2) g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        if (dyingCounter > i*2 && dyingCounter <= i * 3) g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+        if (dyingCounter > i*3 && dyingCounter <= i * 4) g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        if (dyingCounter > i*4)
+        {
+            System.out.println("Died");
+            dying = false;
+            alive = false;
+        }
+    }
     public void speak() {
         switch (gp.player.direction) {
             case "up" -> direction = "down";
@@ -112,7 +133,10 @@ public abstract class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         BufferedImage image = null;
-
+        if (dying == true)
+        {
+            dyingAnimation(g2);
+        }
         //How does the player look in what direction
         switch (direction) {
             case "up" -> {
@@ -146,6 +170,20 @@ public abstract class Entity {
                     image = right_walking2;
                 if (spriteNumber == 3)
                     image = idle_right;
+            }
+        }
+        // MONSTER HP BAR
+        if (type == 2)
+        {
+            double oneScale = (double) gp.tileSize/maxHealth;
+            double healthBarValue = oneScale*health;
+
+            if (health < maxHealth && !dying)
+            {
+                g2.setColor(new Color(150, 255, 255));
+                g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
+                g2.setColor(new Color(255, 0, 30));
+                g2.fillRect(screenX, screenY - 15, (int) healthBarValue, 10);
             }
         }
         // Draws the tiles specifically around the player, so spare on efficiency

@@ -7,6 +7,7 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -61,8 +62,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int pauseState = 2;
     public final int dialogueState = 3;
 
-    public GamePanel()
-    {
+    public GamePanel() throws FileNotFoundException {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
     {
         assetSetter.setObject();
         assetSetter.setHostile();
-        //playMusic(0);
+        //playMusic(0); //TODO fix music
         gameState = titleScreenState;
         assetSetter.setNpc();
     }
@@ -129,9 +129,12 @@ public class GamePanel extends JPanel implements Runnable{
                     entity.update();
                 }
             }
-            for (Entity entity : Hostile) {
-                if (entity != null) {
-                    entity.update();
+            for (int i = 0; i < Hostile.length; i++) {
+                if (Hostile[i] != null) {
+                    if (Hostile[i].alive && !Hostile[i].dying)
+                        Hostile[i].update();
+                    if (!Hostile[i].alive)
+                        Hostile[i] = null;
                 }
             }
         }
