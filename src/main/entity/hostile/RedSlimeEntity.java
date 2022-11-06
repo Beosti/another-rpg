@@ -1,5 +1,6 @@
 package main.entity.hostile;
 
+import main.api.DamageCalculation;
 import main.api.GameValues;
 import main.entity.Entity;
 import main.GamePanel;
@@ -10,6 +11,7 @@ public class RedSlimeEntity extends Entity {
     public RedSlimeEntity(GamePanel gp) {
         super(gp);
         this.name = "Red slime";
+        this.attackDamage = DamageCalculation.damageCalculation(1, 2);
         this.type = GameValues.HOSTILE;
         this.speed = 1;
         this.maxHealth = 5;

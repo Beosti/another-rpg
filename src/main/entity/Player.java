@@ -1,5 +1,6 @@
 package main.entity;
 
+import main.api.GameValues;
 import main.entity.npcs.NPCEntity;
 import main.GamePanel;
 import main.handlers.KeyHandler;
@@ -25,6 +26,7 @@ public class Player extends Entity{
         this.maxHealth = 6;
         this.health = 6;
         this.speed = 2;
+        this.type = GameValues.PLAYER;
 
         direction = "down";
         this.keyHandler = keyHandler;
@@ -107,6 +109,7 @@ public class Player extends Entity{
             int npcIndex = gp.Checker.checkEntity(this, gp.NPC);
             interactNPC(npcIndex);
 
+            // HOSTILE COLLISION
             int hostileIndex = gp.Checker.checkEntity(this, gp.Hostile);
             contactHostile(hostileIndex);
 
@@ -209,9 +212,8 @@ public class Player extends Entity{
             if (i != 999)
             {
                 gp.gameState = gp.dialogueState;
-                if (gp.NPC[i] instanceof NPCEntity)
+                if (gp.NPC[i] instanceof NPCEntity npcEntity)
                 {
-                    NPCEntity npcEntity = (NPCEntity) gp.NPC[i];
                     npcEntity.speak();
                 }
             }
@@ -226,9 +228,9 @@ public class Player extends Entity{
     {
         if (i != 999)
         {
-            if (invincible == false)
+            if (!invincible)
             {
-                health -= 1;
+                health -= gp.Hostile[i].attackDamage;
                 invincible = true;
             }
         }

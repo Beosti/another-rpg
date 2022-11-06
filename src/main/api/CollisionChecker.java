@@ -97,7 +97,8 @@ public class CollisionChecker {
                             if (player == true)
                             {
                                 index = i;
-                            }                        }
+                            }
+                        }
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
@@ -123,7 +124,8 @@ public class CollisionChecker {
                             if (player == true)
                             {
                                 index = i;
-                            }                        }
+                            }
+                        }
                         break;
                 }
                 entity.solidArea.x = entity.solidAreaDefaultX;
