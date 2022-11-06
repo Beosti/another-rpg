@@ -2,6 +2,7 @@ package main.entity;
 
 import main.GamePanel;
 import main.api.UtilityTool;
+import main.object.item.Item;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,10 +16,23 @@ public abstract class Entity {
     // STATS
     public String name;
     public int attackDamage;
+    public int defenseValue;
+    public int dexterity;
+    public int strength;
     public int speed; // TODO should be changed to float
     public int maxHealth;
     public int health;
+    public int exp;
+    public int maxExperience;
+    public int level;
+    public int defense;
+    public int currency;
     public int type; // 0 = player, 1 = npc, 2 monster;
+
+    // ITEM
+    public Item firstHand;
+    public Item secondHand;
+
 
     // IMAGES
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;

@@ -1,6 +1,7 @@
 package main.ui;
 
 import main.GamePanel;
+import main.api.GameValues;
 import main.ui.HealthUi;
 import main.ui.Screen;
 
@@ -53,23 +54,28 @@ public class Ui {
         g2.setFont(maruMonica);
         g2.setColor(Color.white);
 
-        if (gp.gameState == gp.titleScreenState)
+        if (gp.gameState == GameValues.TITLE_SCREEN)
         {
             drawTitleScreen();
         }
-        if (gp.gameState == gp.playState)
+        if (gp.gameState == GameValues.PLAYSTATE)
         {
             drawPlayerLife();
         }
-        else if (gp.gameState == gp.pauseState)
+        else if (gp.gameState == GameValues.PAUSESTATE)
         {
             drawPauseScreen();
             drawPlayerLife();
         }
-        else if (gp.gameState == gp.dialogueState)
+        else if (gp.gameState == GameValues.DIALOGUESTATE)
         {
             drawDialogueScreen();
             drawPlayerLife();
+        }
+        else if (gp.gameState == GameValues.PLAYER_STATS)
+        {
+            drawPlayerLife();
+            characterScreen();
         }
     }
     public void drawTitleScreen()
@@ -151,6 +157,70 @@ public class Ui {
             g2.drawString(currentDialogue, x - 20, y);
             y += 40;
         }
+    }
+    public void characterScreen()
+    {
+        // CREATE A FRAME
+        final int frameX = gp.tileSize * 2 - 85;
+        final int frameY = gp.tileSize + 40;
+        final int frameWidth = gp.tileSize * 5;
+        final int frameHeight = gp.tileSize * 10;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(32F));
+
+        int textX = frameX + 20;
+        int textY = frameY + gp.tileSize;
+        final int lineHeight = 32;
+
+        // NAMES
+        g2.drawString("Level: " + gp.player.level, textX, textY);
+        textY += lineHeight;
+        g2.drawString("Experience: " + gp.player.exp + "/" + gp.player.maxExperience, textX, textY);
+        textY += lineHeight;
+        g2.drawString("Health: " + gp.player.health + "/" + gp.player.maxHealth, textX, textY);
+        textY += lineHeight;
+        g2.drawString("Speed: " + gp.player.speed, textX, textY);
+        textY += lineHeight;
+        g2.drawString("Strength: " + gp.player.strength, textX, textY);
+        textY += lineHeight;
+        g2.drawString("Dexterity: " + gp.player.dexterity, textX, textY);
+        textY += lineHeight;
+        g2.drawString("Defense: " + gp.player.defense, textX, textY);
+        textY += lineHeight;
+        g2.drawString("First hand: ", textX, textY);
+        textY += lineHeight;
+        if (gp.player.firstHand != null)
+        {
+            g2.drawString("" + gp.player.firstHand.name, textX, textY);
+            textY += lineHeight;
+        }
+        g2.drawString("Second hand: ", textX, textY);
+        textY += lineHeight;
+        if (gp.player.secondHand != null)
+        {
+            g2.drawString("" + gp.player.secondHand.name, textX, textY);
+            textY += lineHeight;
+        }
+        /*
+        // VALUES
+        int tailX = (frameX + frameWidth) - 30;
+        // Reset textY
+        textY = frameY + gp.tileSize;
+        String value;
+
+        value = String.valueOf(gp.player.level);
+        textX = getXforAlignToRightText(value, tailX);
+        g2.drawString(value, textX, textY);
+
+         */
+    }
+    public int getXforAlignToRightText(String text, int tailX)
+    {
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = tailX - length;
+        return x;
     }
     public void drawPlayerLife()
     {

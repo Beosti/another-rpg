@@ -5,6 +5,8 @@ import main.entity.npcs.NPCEntity;
 import main.GamePanel;
 import main.handlers.KeyHandler;
 import main.api.DamageCalculation;
+import main.object.item.weapons.BasicSwordItem;
+import main.object.item.weapons.BasicShieldItem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,11 +24,14 @@ public class Player extends Entity{
         super(gp);
 
         this.name = "Player";
-        this.attackDamage = DamageCalculation.damageCalculation(1, 2);
+        this.strength = 0;
+        this.defense = 0;
         this.maxHealth = 6;
         this.health = 6;
         this.speed = 2;
         this.type = GameValues.PLAYER;
+        firstHand = new BasicSwordItem(gp);
+        secondHand = new BasicShieldItem(gp);
 
         direction = "down";
         this.keyHandler = keyHandler;
@@ -49,7 +54,14 @@ public class Player extends Entity{
         getImage();
         getAttackImage();
     }
-
+    public int getAttackDamageMelee()
+    {
+        return attackDamage = strength + DamageCalculation.damageCalculation(1, 2) + firstHand.attackValue;
+    }
+    public int getDefenseValueMelee()
+    {
+        return defenseValue = strength + secondHand.defenseValue;
+    }
     public void getAttackImage()
     {
         attackUp1 = setupCustom("Goblin_Attack_up_1", "player", gp.tileSize, gp.tileSize * 2);
@@ -211,7 +223,7 @@ public class Player extends Entity{
         {
             if (i != 999)
             {
-                gp.gameState = gp.dialogueState;
+                gp.gameState = GameValues.DIALOGUESTATE;
                 if (gp.NPC[i] instanceof NPCEntity npcEntity)
                 {
                     npcEntity.speak();
@@ -242,7 +254,7 @@ public class Player extends Entity{
         {
             if (!gp.Hostile[i].invincible)
             {
-                gp.Hostile[i].health -= attackDamage;
+                gp.Hostile[i].health -= gp.player.getAttackDamageMelee();
                 gp.Hostile[i].invincible = true;
                 if (gp.Hostile[i].health <= 0)
                 {

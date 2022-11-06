@@ -2,6 +2,7 @@ package main;
 
 import main.api.AssetSetter;
 import main.api.CollisionChecker;
+import main.api.GameValues;
 import main.entity.Entity;
 import main.entity.Player;
 import main.handlers.EventHandler;
@@ -61,10 +62,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // GAME STATE
     public int gameState;
-    public final int titleScreenState = 0;
-    public final int playState = 1;
-    public final int pauseState = 2;
-    public final int dialogueState = 3;
+
 
     public GamePanel() throws FileNotFoundException {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -79,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable{
         assetSetter.setObject();
         assetSetter.setHostile();
         //playMusic(0); //TODO fix music
-        gameState = titleScreenState;
+        gameState = GameValues.TITLE_SCREEN;
         assetSetter.setNpc();
     }
 
@@ -123,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update()
     {
-        if (gameState == playState)
+        if (gameState == GameValues.PLAYSTATE)
         {
             //PLAYER
             player.update();
@@ -142,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         }
-        else if (gameState == pauseState)
+        else if (gameState == GameValues.PAUSESTATE)
         {
             // GAME PAUSED
         }
@@ -156,7 +154,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
         // TITLE SCREEN
-        if (gameState == titleScreenState)
+        if (gameState == GameValues.TITLE_SCREEN)
         {
             ui.draw(g2);
         }
