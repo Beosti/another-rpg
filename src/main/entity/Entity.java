@@ -1,6 +1,7 @@
 package main.entity;
 
 import main.GamePanel;
+import main.api.GameValues;
 import main.api.UtilityTool;
 import main.object.item.Item;
 
@@ -64,6 +65,9 @@ public abstract class Entity {
     public boolean alive = true;
     public boolean dying = false;
     public int dyingCounter = 0;
+    boolean gotHit = false;
+    int damageHit = 0;
+    int counter = 0;
     public Entity(GamePanel gp)
     {
         this.gp = gp;
@@ -185,10 +189,22 @@ public abstract class Entity {
             }
         }
         // MONSTER HP BAR
-        if (type == 2)
+        if (type == GameValues.HOSTILE)
         {
             double oneScale = (double) gp.tileSize/maxHealth;
             double healthBarValue = oneScale*health;
+
+            if (gotHit)
+            {
+                counter++;
+                g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
+                g2.setColor(Color.RED);
+                g2.drawString("" + damageHit, screenX + 20, screenY-32 - counter / 5);
+                if (counter > 80) {
+                    gotHit = false;
+                    counter = 0;
+                }
+            }
 
             if (health < maxHealth && !dying)
             {

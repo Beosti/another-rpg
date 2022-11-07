@@ -30,7 +30,14 @@ public class AssetSetter {
     public void setHostile()
     {
         gp.Hostile[0] = new RedSlimeEntity(gp);
-        gp.Hostile[0].worldX = gp.tileSize * 23;
-        gp.Hostile[0].worldY = gp.tileSize *23;
+        gp.Hostile[0].worldX = gp.tileSize * 24;
+        gp.Hostile[0].worldY = gp.tileSize * 40;
+        gp.Hostile[1] = new RedSlimeEntity(gp);
+        gp.Hostile[1].worldX = gp.tileSize * 26;
+        gp.Hostile[1].worldY = gp.tileSize * 40;
+        gp.Hostile[2] = new RedSlimeEntity(gp);
+        gp.Hostile[2].worldX = gp.tileSize * 28;
+        gp.Hostile[2].worldY = gp.tileSize * 40;
+
     }
 }

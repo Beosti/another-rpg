@@ -254,12 +254,20 @@ public class Player extends Entity{
         {
             if (!gp.Hostile[i].invincible)
             {
-                gp.Hostile[i].health -= gp.player.getAttackDamageMelee();
+                int damageDealt = gp.player.getAttackDamageMelee();
+                gp.Hostile[i].health -= damageDealt;
+                //gp.ui.addMessage(gp.player.getAttackDamageMelee() + " damage");
+                gp.Hostile[i].damageHit = damageDealt;
+                if (gp.Hostile[i].gotHit) { // TODO might add an arraylist so damage is shown of multiple damages at the same time
+                    gp.Hostile[i].gotHit = false;
+                    gp.Hostile[i].counter = 0;
+                }
+                gp.Hostile[i].gotHit = true;
                 gp.Hostile[i].invincible = true;
                 if (gp.Hostile[i].health <= 0)
                 {
-
                     gp.Hostile[i].dying = true;
+                    gp.ui.addMessage("Killed the " + gp.Hostile[i].name);
                 }
             }
         }

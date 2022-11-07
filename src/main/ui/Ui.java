@@ -9,19 +9,19 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class Ui {
 
     GamePanel gp;
     Graphics2D g2;
     Font maruMonica, purisaB;
-    public boolean messageOn = false;
-    public String message = "";
-    int messageCounter = 0;
-    public boolean gameFinished = false;
     public String currentDialogue = "";
     public int commandNum = 0;
     BufferedImage heart_full, heart_half, heart_empty;
+    ArrayList<String> messageScroll = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
+
     public Ui(GamePanel gp)
     {
         this.gp = gp;
@@ -42,10 +42,10 @@ public class Ui {
         heart_empty = healthUi.state3;
     }
 
-    public void showMessage(String text)
+    public void addMessage(String text)
     {
-        message = text;
-        messageOn = true;
+        messageScroll.add(text);
+        messageCounter.add(0);
     }
     public void draw(Graphics2D g2)
     {
@@ -53,7 +53,6 @@ public class Ui {
 
         g2.setFont(maruMonica);
         g2.setColor(Color.white);
-
         if (gp.gameState == GameValues.TITLE_SCREEN)
         {
             drawTitleScreen();
@@ -61,6 +60,7 @@ public class Ui {
         if (gp.gameState == GameValues.PLAYSTATE)
         {
             drawPlayerLife();
+            drawMessageScroll();
         }
         else if (gp.gameState == GameValues.PAUSESTATE)
         {
@@ -252,6 +252,33 @@ public class Ui {
             i++;
             x += gp.tileSize;
         }
+    }
+    public void drawMessageScroll()
+    {
+        int messageX = gp.tileSize;
+        int messageY = gp.tileSize * 4;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16));
+
+        for (int i = 0; i<messageScroll.size(); i++)
+        {
+            if (messageScroll.get(i) != null)
+            {
+                g2.setColor(Color.WHITE);
+                g2.drawString(messageScroll.get(i), messageX, messageY);
+                int counter = messageCounter.get(i) + 1; // message counter ++
+                messageCounter.set(i, counter); // set the counter to the array
+                messageY += 50;
+
+                if (messageCounter.get(i) > 180)
+                {
+                    messageScroll.remove(i);
+                    messageCounter.remove(i);
+
+                }
+            }
+        }
+
+
     }
     public void drawSubWindow(int x, int y, int width, int height)
     {
