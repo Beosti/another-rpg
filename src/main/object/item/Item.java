@@ -13,8 +13,9 @@ public class Item {
 
     public int attackValue;
     public int defenseValue;
-    public String name;
+    public String name = "";
     public BufferedImage down;
+    public String description = "";
     public Item(GamePanel gp)
     {
         this.gp = gp;
@@ -22,6 +23,10 @@ public class Item {
 
     }
 
+    public String getDescription()
+    {
+        return "[" + name + "]\n" + description;
+    }
     public BufferedImage setup(String imageName, String packageName)
     {
         UtilityTool utilityTool = new UtilityTool();

@@ -10,7 +10,7 @@ import java.util.Random;
 public class RedSlimeEntity extends Entity {
     public RedSlimeEntity(GamePanel gp) {
         super(gp);
-        this.name = "Red slime";
+        this.name = "red slime";
         this.attackDamage = DamageCalculation.damageCalculation(1, 2);
         this.type = GameValues.HOSTILE;
         this.speed = 1;

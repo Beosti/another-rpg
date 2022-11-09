@@ -21,6 +21,8 @@ public class Ui {
     BufferedImage heart_full, heart_half, heart_empty;
     ArrayList<String> messageScroll = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
+    public int slotCol = 0;
+    public int slotRow = 0;
 
     public Ui(GamePanel gp)
     {
@@ -76,8 +78,71 @@ public class Ui {
         {
             drawPlayerLife();
             characterScreen();
+            drawInventory();
         }
     }
+
+    public void drawInventory()
+    {
+        // FRAME
+        int frameX = gp.tileSize * 9;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize*6;
+        int frameHeight = gp.tileSize*5;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        // SLOT
+        final int slotXstart = frameX + 20;
+        final int slotYstart = frameY + 20;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize + 3;
+
+        // DRAW ITEMS
+        for (int i = 0; i <gp.player.inventory.size(); i++)
+        {
+            g2.drawImage(gp.player.inventory.get(i).down, slotX, slotY, null);
+            slotX += slotSize;
+            if (i == 4 || i == 9 || i == 14)
+            {
+                slotX = slotXstart;
+                slotY += slotSize;
+            }
+        }
+
+        // CURSOR
+        int cursorX = slotXstart + (slotSize * slotCol);
+        int cursorY = slotYstart + (slotSize * slotRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+        // DRAW CURSOR
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
+        // DESCRIPTION FRAME
+        int dFrameX = frameX;
+        int dFrameY = frameY + frameHeight;
+        int dFrameWidth = frameWidth;
+        int dFrameHeight = gp.tileSize*3;
+        // DESCRIPTION
+        int textX = dFrameX + 20;
+        int textY = dFrameY + gp.tileSize;
+        g2.setFont(g2.getFont().deriveFont(26F));
+
+        int itemIndex = getItemIndexOnSlot();
+        if (itemIndex < gp.player.inventory.size())
+        {
+            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+            for (String line: gp.player.inventory.get(itemIndex).getDescription().split("\n"))
+            {
+                g2.drawString(line, textX, textY);
+                textY += 32;
+            }
+        }
+    }
+
+
     public void drawTitleScreen()
     {
         //TODO change the background to the map and seeing npcs and stuff
@@ -296,5 +361,10 @@ public class Ui {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2 - length/2;
         return x;
+    }
+    public int getItemIndexOnSlot()
+    {
+        int itemIndex = slotCol + (slotRow * 5);
+        return itemIndex;
     }
 }

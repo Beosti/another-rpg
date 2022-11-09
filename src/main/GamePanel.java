@@ -4,6 +4,7 @@ import main.api.AssetSetter;
 import main.api.CollisionChecker;
 import main.api.GameValues;
 import main.entity.Entity;
+import main.entity.ItemEntity;
 import main.entity.Player;
 import main.handlers.EventHandler;
 import main.handlers.KeyHandler;
@@ -58,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Entity object[] = new Entity[10];
     public Entity NPC[] = new Entity[10];
     public Entity Hostile[] = new Entity[20];
+    public Entity itemEntity[] = new ItemEntity[10]; // TODO make an entity item thingy
     ArrayList<Entity> entityList = new ArrayList<>();
 
     // GAME STATE

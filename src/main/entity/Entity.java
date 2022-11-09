@@ -42,7 +42,7 @@ public abstract class Entity {
             idle_back, back_walking1, back_walking2,
             idle_left, left_walking1, left_walking2,
             idle_right, right_walking1, right_walking2;
-
+    public BufferedImage down;
     // SPRITE RELATED
     public int spriteCounter = 0;
     public int spriteNumber = 1;
@@ -79,8 +79,6 @@ public abstract class Entity {
     public void update() {
         setAction();
         collisionOn = false;
-        Graphics2D Graphics2D = null;
-        Graphics2D g2 = null;
 
         gp.Checker.checkTile(this);
         gp.Checker.checkObject(this, false);
@@ -153,41 +151,47 @@ public abstract class Entity {
         {
             dyingAnimation(g2);
         }
+
         //How does the player look in what direction
-        switch (direction) {
-            case "up" -> {
-                if (spriteNumber == 1)
-                    image = back_walking1;
-                if (spriteNumber == 2)
-                    image = back_walking2;
-                if (spriteNumber == 3)
-                    image = idle_back;
-            }
-            case "down" -> {
-                if (spriteNumber == 1)
-                    image = front_walking1;
-                if (spriteNumber == 2)
-                    image = front_walking2;
-                if (spriteNumber == 3)
-                    image = idle_front;
-            }
-            case "left" -> {
-                if (spriteNumber == 1)
-                    image = left_walking1;
-                if (spriteNumber == 2)
-                    image = left_walking2;
-                if (spriteNumber == 3)
-                    image = idle_left;
-            }
-            case "right" -> {
-                if (spriteNumber == 1)
-                    image = right_walking1;
-                if (spriteNumber == 2)
-                    image = right_walking2;
-                if (spriteNumber == 3)
-                    image = idle_right;
+        if (down == null)
+        {
+            switch (direction) {
+                case "up" -> {
+                    if (spriteNumber == 1)
+                        image = back_walking1;
+                    if (spriteNumber == 2)
+                        image = back_walking2;
+                    if (spriteNumber == 3)
+                        image = idle_back;
+                }
+                case "down" -> {
+                    if (spriteNumber == 1)
+                        image = front_walking1;
+                    if (spriteNumber == 2)
+                        image = front_walking2;
+                    if (spriteNumber == 3)
+                        image = idle_front;
+                }
+                case "left" -> {
+                    if (spriteNumber == 1)
+                        image = left_walking1;
+                    if (spriteNumber == 2)
+                        image = left_walking2;
+                    if (spriteNumber == 3)
+                        image = idle_left;
+                }
+                case "right" -> {
+                    if (spriteNumber == 1)
+                        image = right_walking1;
+                    if (spriteNumber == 2)
+                        image = right_walking2;
+                    if (spriteNumber == 3)
+                        image = idle_right;
+                }
             }
         }
+        else
+            image = down;
         // MONSTER HP BAR
         if (type == GameValues.HOSTILE)
         {
@@ -220,6 +224,7 @@ public abstract class Entity {
                 worldY  + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY  - gp.tileSize < gp.player.worldY + gp.player.screenY)
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
 
     }
     public BufferedImage setup(String imageName, String packageName)

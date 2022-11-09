@@ -5,11 +5,13 @@ import main.entity.npcs.NPCEntity;
 import main.GamePanel;
 import main.handlers.KeyHandler;
 import main.api.DamageCalculation;
+import main.object.item.Item;
 import main.object.item.weapons.BasicSwordItem;
 import main.object.item.weapons.BasicShieldItem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 
 //Class for the player
@@ -19,6 +21,8 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+    public ArrayList<Item> inventory = new ArrayList<>();
+    public final int inventorySize = 20;
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
         super(gp);
@@ -53,6 +57,12 @@ public class Player extends Entity{
         attackArea.height = 36;
         getImage();
         getAttackImage();
+        setItems();
+    }
+    public void setItems()
+    {
+        inventory.add(firstHand);
+        inventory.add(secondHand);
     }
     public int getAttackDamageMelee()
     {
@@ -267,7 +277,7 @@ public class Player extends Entity{
                 if (gp.Hostile[i].health <= 0)
                 {
                     gp.Hostile[i].dying = true;
-                    gp.ui.addMessage("Killed the " + gp.Hostile[i].name);
+                    gp.ui.addMessage("killed the " + gp.Hostile[i].name);
                 }
             }
         }

@@ -11,6 +11,7 @@ public class BasicShieldItem extends Item {
         super(gp);
         this.name = "Basic Shield";
         this.defenseValue = DamageCalculation.damageCalculation(1, 2); // 1D2
+        this.description = "Just a basic shield";
         down = setup("shield_normal", "weapons");
     }
 }

@@ -1,8 +1,12 @@
 package main.api;
 
 import main.GamePanel;
+import main.entity.Entity;
+import main.entity.ItemEntity;
 import main.entity.hostile.RedSlimeEntity;
 import main.entity.npcs.NPC_OldMan;
+import main.object.KeyObject;
+import main.object.item.weapons.BasicSwordItem;
 
 public class AssetSetter {
 
@@ -15,7 +19,10 @@ public class AssetSetter {
 
     public void setObject()
     {
-
+        BasicSwordItem item = new BasicSwordItem(gp);
+        gp.object[0] = new KeyObject(gp);
+        gp.object[0].worldX = gp.tileSize * 24;
+        gp.object[0].worldY = gp.tileSize * 40;
     }
 
     public void setNpc()

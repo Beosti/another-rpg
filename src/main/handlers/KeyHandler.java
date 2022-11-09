@@ -75,6 +75,14 @@ public class KeyHandler implements KeyListener {
             if (gp.gameState == GameValues.PLAYSTATE) gp.gameState = GameValues.PLAYER_STATS;
             else if (gp.gameState == GameValues.PLAYER_STATS) gp.gameState = GameValues.PLAYSTATE;
         }
+        if (gp.gameState == GameValues.PLAYER_STATS)
+        {
+            if (code == KeyEvent.VK_Z && gp.ui.slotRow != 0) gp.ui.slotRow--;
+            if (code == KeyEvent.VK_Q && gp.ui.slotCol != 0) gp.ui.slotCol--;
+            if (code == KeyEvent.VK_D && gp.ui.slotCol != 4) gp.ui.slotCol++;
+            if (code == KeyEvent.VK_S && gp.ui.slotRow != 3) gp.ui.slotRow++;
+            //if (code == KeyEvent.VK_ENTER) enterPressed = true;
+        }
     }
 
     @Override

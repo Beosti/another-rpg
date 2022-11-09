@@ -10,13 +10,13 @@ public class KeyObject extends Entity {
     {
         super(gp);
         this.name = "Key";
-        idle_front = setup("/key/key_sprite.png", "objects");
-
         collision = true;
+
+        getImage();
     }
 
     @Override
     public void getImage() {
-        idle_front = setup("/key/key_sprite.png", "objects");
+        down = setup("key/key_sprite", "objects");
     }
 }
