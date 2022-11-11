@@ -19,10 +19,13 @@ public class Item {
     public Item(GamePanel gp)
     {
         this.gp = gp;
-
-
     }
 
+
+    public BufferedImage getDown()
+    {
+        return this.down;
+    }
     public String getDescription()
     {
         return "[" + name + "]\n" + description;

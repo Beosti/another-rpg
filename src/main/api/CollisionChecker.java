@@ -2,6 +2,8 @@ package main.api;
 
 import main.GamePanel;
 import main.entity.Entity;
+import main.entity.ItemEntity;
+import main.object.item.Item;
 
 public class CollisionChecker {
 
@@ -56,6 +58,33 @@ public class CollisionChecker {
                     entity.collisionOn = true;
             }
         }
+    }
+    public int checkItemEntity(Entity entity, boolean player)
+    {
+        int index = 999;
+        for (int i = 0; i < gp.itemEntity.length; i++)
+        {
+            if (gp.itemEntity[i] != null)
+            {
+                //Get entity solid area position
+                entity.solidArea.x = entity.worldX + entity.solidArea.x;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
+                //Get the objects solid area position
+                gp.itemEntity[i].solidArea.x = gp.itemEntity[i].worldX + gp.itemEntity[i].solidArea.x;
+                gp.itemEntity[i].solidArea.y = gp.itemEntity[i].worldY + gp.itemEntity[i].solidArea.y;
+
+                if (entity.solidArea.intersects(gp.itemEntity[i].solidArea))
+                {
+                    if (player)
+                        index = i;
+                }
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                gp.itemEntity[i].solidArea.x = gp.itemEntity[i].solidAreaDefaultX;
+                gp.itemEntity[i].solidArea.y = gp.itemEntity[i].solidAreaDefaultY;
+            }
+        }
+        return index;
     }
     public int checkObject(Entity entity, boolean player)
     {

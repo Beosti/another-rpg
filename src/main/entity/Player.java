@@ -123,6 +123,10 @@ public class Player extends Entity{
             collisionOn = false;
             gp.Checker.checkTile(this);
 
+            // ITEM ENTITY COLLISION
+            int itemEntityIndex = gp.Checker.checkItemEntity(this, true);
+            pickUpItemEntity(itemEntityIndex);
+
             // CHECK OBJECT COLLISION
             int objIndex = gp.Checker.checkObject(this, true);
             pickUpObject(objIndex);
@@ -177,12 +181,19 @@ public class Player extends Entity{
         }
     }
 
+    public void pickUpItemEntity(int i)
+    {
+        if (i != 999 && inventorySize > inventory.size())
+        {
+            Item pickedItem = gp.itemEntity[i].item;
+            gp.player.inventory.add(pickedItem);
+            gp.itemEntity[i] = null;
+        }
+    }
+
     public void pickUpObject(int i)
     {
-        if (i != 999)
-        {
 
-        }
     }
     public void attacking()
     {

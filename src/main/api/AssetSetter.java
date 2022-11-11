@@ -17,12 +17,18 @@ public class AssetSetter {
         this.gp = gp;
     }
 
-    public void setObject()
+    public void setItem()
     {
         BasicSwordItem item = new BasicSwordItem(gp);
-        gp.object[0] = new KeyObject(gp);
-        gp.object[0].worldX = gp.tileSize * 24;
-        gp.object[0].worldY = gp.tileSize * 40;
+        gp.itemEntity[0] = new ItemEntity(gp, item);
+        gp.itemEntity[0].worldX = gp.tileSize * 24;
+        gp.itemEntity[0].worldY = gp.tileSize * 40;
+
+    }
+
+    public void setObject()
+    {
+
     }
 
     public void setNpc()

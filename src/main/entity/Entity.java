@@ -82,6 +82,7 @@ public abstract class Entity {
 
         gp.Checker.checkTile(this);
         gp.Checker.checkObject(this, false);
+        gp.Checker.checkItemEntity(this, false);
         gp.Checker.checkEntity(this, gp.NPC);
         gp.Checker.checkEntity(this, gp.Hostile);
         boolean checkPlayer = gp.Checker.checkPlayer(this);
