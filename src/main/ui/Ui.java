@@ -23,6 +23,7 @@ public class Ui {
     ArrayList<Integer> messageCounter = new ArrayList<>();
     public int slotCol = 0;
     public int slotRow = 0;
+    public boolean drawItemInfo = false;
 
     public Ui(GamePanel gp)
     {
@@ -79,14 +80,41 @@ public class Ui {
             drawPlayerLife();
             characterScreen();
             drawInventory();
+            drawItemInfo();
         }
+    }
+
+    public void drawItemInfo() // TODO equip and unequip items
+    {
+        if (!drawItemInfo)
+            return;
+        int itemIndex = getItemIndexOnSlot();
+        if (itemIndex > gp.player.inventory.size())
+        {
+            this.drawItemInfo = false;
+            return;
+        }
+        int frameX = gp.tileSize * 9;
+        int frameY = gp.tileSize * 8 + 22;
+        int frameWidth = gp.tileSize * 6;
+        int frameHeight = gp.tileSize * 3;
+
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+        g2.drawString("DROP", gp.tileSize * 9 + 35, gp.tileSize * 10 + 35);
+        g2.drawString("USE", gp.tileSize * 11 + 57, gp.tileSize * 9 + 35);
+        g2.drawString("EXAMINE", gp.tileSize * 11 + 35, gp.tileSize * 10 + 35);
+
     }
 
     public void drawInventory()
     {
         // FRAME
         int frameX = gp.tileSize * 9;
-        int frameY = gp.tileSize;
+        int frameY = gp.tileSize / 2;
         int frameWidth = gp.tileSize*6;
         int frameHeight = gp.tileSize*5;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);

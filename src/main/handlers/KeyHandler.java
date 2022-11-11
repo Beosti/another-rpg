@@ -81,7 +81,9 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_Q && gp.ui.slotCol != 0) gp.ui.slotCol--;
             if (code == KeyEvent.VK_D && gp.ui.slotCol != 4) gp.ui.slotCol++;
             if (code == KeyEvent.VK_S && gp.ui.slotRow != 3) gp.ui.slotRow++;
-            //if (code == KeyEvent.VK_ENTER) enterPressed = true;
+            if (code == KeyEvent.VK_ENTER) {
+                gp.ui.drawItemInfo = !gp.ui.drawItemInfo;
+            }
         }
     }
 
