@@ -10,4 +10,7 @@ public class GameValues {
     public static final byte PAUSESTATE = 2;
     public static final byte DIALOGUESTATE = 3;
     public static final byte PLAYER_STATS = 4;
+    public static final byte PLAYER_INVENTORY = 5;
+    public static final byte PlAYER_QUESTS = 6;
+    public static final byte PLAYER_STATS_INVENTORY = 7;
 }

@@ -18,7 +18,6 @@ public class Screen {
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/ui/" + packageName + "/" + imageName + ".png"));
-            //image = utilityTool.scaleImage(image, gp.tileSize, gp.tileSize); //TODO see what the issue is and fix it
         }
         catch (IOException e)
         {

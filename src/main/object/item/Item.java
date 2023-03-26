@@ -1,6 +1,7 @@
 package main.object.item;
 
 import main.GamePanel;
+import main.api.DamageCalculation;
 import main.api.UtilityTool;
 
 import javax.imageio.ImageIO;
@@ -10,8 +11,10 @@ import java.io.IOException;
 public class Item {
 
     GamePanel gp;
+    public boolean hasEquipped = false;
+    public int attackAmount;
+    public int attackDice;
 
-    public int attackValue;
     public int defenseValue;
     public String name = "";
     public BufferedImage down;

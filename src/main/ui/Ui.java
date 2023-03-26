@@ -23,6 +23,8 @@ public class Ui {
     ArrayList<Integer> messageCounter = new ArrayList<>();
     public int slotCol = 0;
     public int slotRow = 0;
+    public int subSlotCol = 0;
+    public int subSlotRow = 0;
     public boolean drawItemInfo = false;
 
     public Ui(GamePanel gp)
@@ -79,8 +81,20 @@ public class Ui {
         {
             drawPlayerLife();
             characterScreen();
+        }
+        else if (gp.gameState == GameValues.PLAYER_INVENTORY)
+        {
+            drawPlayerLife();
             drawInventory();
             drawItemInfo();
+        }
+        else if (gp.gameState == GameValues.PLAYER_STATS_INVENTORY)
+        {
+            drawPlayerLife();
+            characterScreen();
+            drawInventory();
+            drawItemInfo();
+
         }
     }
 
@@ -103,10 +117,48 @@ public class Ui {
         g2.setStroke(new BasicStroke(3));
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
-        g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+        if (itemIndex < gp.player.inventory.size())
+        {
+            if (gp.player.inventory.get(itemIndex).hasEquipped)
+                g2.drawString("UNEQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+            else
+                g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+        }
+        /*
+            if (gp.player.firstHand != null && gp.player.firstHand.hasEquipped)
+                g2.drawString("UNEQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+            else
+                g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+
+         */
+        //g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
         g2.drawString("DROP", gp.tileSize * 9 + 35, gp.tileSize * 10 + 35);
-        g2.drawString("USE", gp.tileSize * 11 + 57, gp.tileSize * 9 + 35);
-        g2.drawString("EXAMINE", gp.tileSize * 11 + 35, gp.tileSize * 10 + 35);
+        g2.drawString("USE", gp.tileSize * 11 + 70, gp.tileSize * 9 + 35);
+        g2.drawString("EXIT", gp.tileSize * 11 + 63, gp.tileSize * 10 + 35);
+
+        // SLOT
+        final int slotXstart = frameX + 22;
+        final int slotYstart = frameY + 24;
+        int slotX = slotXstart;
+        int slotY = slotYstart;
+        int slotSize = gp.tileSize + 3;
+        // CURSOR
+        int cursorX = (int) (slotXstart + (slotSize * subSlotCol) * 2.5);
+        int cursorY = slotYstart + (slotSize * subSlotRow);
+        if (subSlotCol == 0 && subSlotRow == 0) // equip
+            ;
+        else if (subSlotCol == 0 && subSlotRow == 1) // drop
+            ;
+        else if (subSlotCol == 1 && subSlotRow == 0) // use
+            ;
+        else if (subSlotCol == 1 && subSlotRow == 1) // exit
+            ;
+        int cursorWidth = gp.tileSize * 2;
+        int cursorHeight = gp.tileSize;
+        // DRAW CURSOR
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
     }
 
@@ -126,6 +178,17 @@ public class Ui {
         int slotY = slotYstart;
         int slotSize = gp.tileSize + 3;
 
+        // CURSOR
+        int cursorX = slotXstart + (slotSize * slotCol);
+        int cursorY = slotYstart + (slotSize * slotRow);
+        int cursorWidth = gp.tileSize;
+        int cursorHeight = gp.tileSize;
+        // DRAW CURSOR
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
+
         // DRAW ITEMS
         for (int i = 0; i <gp.player.inventory.size(); i++)
         {
@@ -137,16 +200,6 @@ public class Ui {
                 slotY += slotSize;
             }
         }
-
-        // CURSOR
-        int cursorX = slotXstart + (slotSize * slotCol);
-        int cursorY = slotYstart + (slotSize * slotRow);
-        int cursorWidth = gp.tileSize;
-        int cursorHeight = gp.tileSize;
-        // DRAW CURSOR
-        g2.setColor(Color.WHITE);
-        g2.setStroke(new BasicStroke(3));
-        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
         // DESCRIPTION FRAME
         int dFrameX = frameX;
@@ -276,8 +329,16 @@ public class Ui {
         textY += lineHeight;
         g2.drawString("Speed: " + gp.player.speed, textX, textY);
         textY += lineHeight;
-        g2.drawString("Strength: " + gp.player.strength, textX, textY);
-        textY += lineHeight;
+        if (gp.player.firstHand != null)
+        {
+            g2.drawString("Strength: " + gp.player.strength + " + " + gp.player.firstHand.attackAmount + "D" + gp.player.firstHand.attackDice, textX, textY);
+            textY += lineHeight;
+        }
+        else
+        {
+            g2.drawString("Strength: " + gp.player.strength, textX, textY);
+            textY += lineHeight;
+        }
         g2.drawString("Dexterity: " + gp.player.dexterity, textX, textY);
         textY += lineHeight;
         g2.drawString("Defense: " + gp.player.defense, textX, textY);
@@ -289,11 +350,21 @@ public class Ui {
             g2.drawString("" + gp.player.firstHand.name, textX, textY);
             textY += lineHeight;
         }
+        else
+        {
+            g2.drawString("empty", textX, textY);
+            textY += lineHeight;
+        }
         g2.drawString("Second hand: ", textX, textY);
         textY += lineHeight;
         if (gp.player.secondHand != null)
         {
             g2.drawString("" + gp.player.secondHand.name, textX, textY);
+            textY += lineHeight;
+        }
+        else
+        {
+            g2.drawString("empty", textX, textY);
             textY += lineHeight;
         }
         /*

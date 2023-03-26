@@ -39,7 +39,7 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNum == 0)
                 {
                     gp.gameState = GameValues.PLAYSTATE;
-                    gp.playMusic(0);
+                    //gp.playMusic(0); // TODO make it play it again
                 }
                 if (gp.ui.commandNum == 1)
                 {
@@ -52,14 +52,16 @@ public class KeyHandler implements KeyListener {
             }
         }
         // PLAY STATE
-        else if (gp.gameState == GameValues.PLAYSTATE) {
-
+        else if (gp.gameState == GameValues.PLAYSTATE || gp.gameState == GameValues.PLAYER_STATS || gp.gameState == GameValues.PlAYER_QUESTS) {
+            if (gp.gameState == GameValues.PLAYER_STATS || gp.gameState == GameValues.PlAYER_QUESTS)
+            {
+                if (code == KeyEvent.VK_ESCAPE) gp.gameState = GameValues.PLAYSTATE;
+            }
             if (code == KeyEvent.VK_Z) upPressed = true;
             if (code == KeyEvent.VK_Q) leftPressed = true;
             if (code == KeyEvent.VK_D) rightPressed = true;
             if (code == KeyEvent.VK_S) downPressed = true;
             if (code == KeyEvent.VK_ENTER) enterPressed = true;
-            if (code == KeyEvent.VK_I) gp.gameState = GameValues.PLAYER_STATS;
         }
         // DIALOGUE STATE
         if (gp.gameState == GameValues.DIALOGUESTATE && code == KeyEvent.VK_ESCAPE) gp.gameState = GameValues.PLAYSTATE;
@@ -69,20 +71,113 @@ public class KeyHandler implements KeyListener {
             if (gp.gameState == GameValues.PLAYSTATE) gp.gameState = GameValues.PAUSESTATE;
             else if (gp.gameState == GameValues.PAUSESTATE) gp.gameState = GameValues.PLAYSTATE;
         }
-        // CHARACTER STATE
+        // CHARACTER STATE //todo make it so you can access inventory during character state
         if (code == KeyEvent.VK_C)
         {
             if (gp.gameState == GameValues.PLAYSTATE) gp.gameState = GameValues.PLAYER_STATS;
             else if (gp.gameState == GameValues.PLAYER_STATS) gp.gameState = GameValues.PLAYSTATE;
+
         }
-        if (gp.gameState == GameValues.PLAYER_STATS)
+        // INVENTORY STATE
+        if (code == KeyEvent.VK_I)
         {
-            if (code == KeyEvent.VK_Z && gp.ui.slotRow != 0) gp.ui.slotRow--;
-            if (code == KeyEvent.VK_Q && gp.ui.slotCol != 0) gp.ui.slotCol--;
-            if (code == KeyEvent.VK_D && gp.ui.slotCol != 4) gp.ui.slotCol++;
-            if (code == KeyEvent.VK_S && gp.ui.slotRow != 3) gp.ui.slotRow++;
+            if (gp.gameState == GameValues.PLAYSTATE) gp.gameState = GameValues.PLAYER_INVENTORY;
+            else if (gp.gameState == GameValues.PLAYER_INVENTORY) gp.gameState = GameValues.PLAYSTATE;
+            if (gp.gameState == GameValues.PLAYER_STATS) gp.gameState = GameValues.PLAYER_STATS_INVENTORY;
+            else if (gp.gameState == GameValues.PLAYER_STATS_INVENTORY) gp.gameState = GameValues.PLAYER_STATS;
+        }
+        // SCROLLING INVENTORY
+        if (gp.gameState == GameValues.PLAYER_INVENTORY || gp.gameState == GameValues.PLAYER_STATS_INVENTORY)
+        {
+            if (code == KeyEvent.VK_ESCAPE)
+                gp.gameState = GameValues.PLAYSTATE;
+            if (!gp.ui.drawItemInfo)
+            {
+                if (code == KeyEvent.VK_Z && gp.ui.slotRow != 0) gp.ui.slotRow--;
+                if (code == KeyEvent.VK_Q && gp.ui.slotCol != 0) gp.ui.slotCol--;
+                if (code == KeyEvent.VK_D && gp.ui.slotCol != 4) gp.ui.slotCol++;
+                if (code == KeyEvent.VK_S && gp.ui.slotRow != 3) gp.ui.slotRow++;
+            }
+            else {
+                if (code == KeyEvent.VK_Z && gp.ui.subSlotRow != 0) gp.ui.subSlotRow--;
+                if (code == KeyEvent.VK_Q && gp.ui.subSlotCol != 0) gp.ui.subSlotCol--;
+                if (code == KeyEvent.VK_D && gp.ui.subSlotCol != 1) gp.ui.subSlotCol++;
+                if (code == KeyEvent.VK_S && gp.ui.subSlotRow != 1) gp.ui.subSlotRow++;
+            }
+
             if (code == KeyEvent.VK_ENTER) {
-                gp.ui.drawItemInfo = !gp.ui.drawItemInfo;
+                if (!gp.ui.drawItemInfo)
+                    gp.ui.drawItemInfo = true;
+                else
+                {
+                    if (gp.ui.subSlotCol == 0 && gp.ui.subSlotRow == 0) // equip
+                    {
+                        int itemIndex = gp.ui.getItemIndexOnSlot();
+                        if (itemIndex < gp.player.inventory.size())
+                        {
+                            if (gp.player.firstHand != null && gp.player.inventory.get(itemIndex) == gp.player.firstHand)
+                                // item is in firsthand + unequip
+                            {
+                                gp.player.firstHand = null;
+                                gp.player.inventory.get(itemIndex).hasEquipped = false;
+                            }
+                            else if (gp.player.secondHand != null && gp.player.inventory.get(itemIndex) == gp.player.secondHand)
+                                // item is in secondhand + unequip
+                            {
+                                gp.player.secondHand = null;
+                                gp.player.inventory.get(itemIndex).hasEquipped = false;
+                            }
+                            else
+                                // item is not in hand
+                            if (gp.player.firstHand != null && gp.player.secondHand != null)
+                            // hands are full
+                            {
+                                return;
+                            }
+                            else
+                            //hands are not full
+                            {
+
+                                if (gp.player.firstHand != null && gp.player.secondHand == null) {
+                                    gp.player.secondHand = gp.player.inventory.get(itemIndex);
+                                    gp.player.secondHand.hasEquipped = true;
+                                }
+                                else if (gp.player.firstHand == null && gp.player.secondHand != null) {
+                                    gp.player.firstHand = gp.player.inventory.get(itemIndex);
+                                    gp.player.firstHand.hasEquipped = true;
+                                }
+                                else {
+                                    gp.player.firstHand = gp.player.inventory.get(itemIndex);
+                                    gp.player.firstHand.hasEquipped = true;
+                                }
+                            }
+
+
+                        }
+                        /*
+                        if (gp.player.firstHand != null && gp.player.firstHand.hasEquipped)
+                            gp.player.firstHand = null;
+                        else
+                        {
+                            // this gets the item in inventory
+                            int itemIndex = gp.ui.getItemIndexOnSlot();
+                            if (itemIndex < gp.player.inventory.size())
+                            {
+                                gp.player.firstHand = gp.player.inventory.get(itemIndex);
+                                gp.player.inventory.get(itemIndex).hasEquipped = true;
+                            }
+                        }
+
+                         */
+                    }
+                    else if (gp.ui.subSlotCol == 0 && gp.ui.subSlotRow == 1) // drop
+                        ;
+                    else if (gp.ui.subSlotCol == 1 && gp.ui.subSlotRow == 0) // use
+                        ;
+                    else if (gp.ui.subSlotCol == 1 && gp.ui.subSlotRow == 1) // exit
+                        gp.ui.drawItemInfo = false;
+                    // code if pressed entered
+                }
             }
         }
     }

@@ -28,7 +28,7 @@ public class Player extends Entity{
         super(gp);
 
         this.name = "Player";
-        this.strength = 0;
+        this.strength = 3;
         this.defense = 0;
         this.maxHealth = 6;
         this.health = 6;
@@ -63,10 +63,15 @@ public class Player extends Entity{
     {
         inventory.add(firstHand);
         inventory.add(secondHand);
+        firstHand.hasEquipped = true;
+        secondHand.hasEquipped = true;
     }
     public int getAttackDamageMelee()
     {
-        return attackDamage = strength + DamageCalculation.damageCalculation(1, 2) + firstHand.attackValue;
+        if (firstHand != null)
+            return attackDamage = strength + DamageCalculation.damageCalculation(firstHand.attackAmount, firstHand.attackDice);
+        else
+            return  attackDamage = strength;
     }
     public int getDefenseValueMelee()
     {

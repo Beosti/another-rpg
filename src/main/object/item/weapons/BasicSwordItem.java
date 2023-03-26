@@ -10,7 +10,9 @@ public class BasicSwordItem extends Item {
     {
         super(gp);
         this.name = "Basic sword";
-        this.attackValue = DamageCalculation.damageCalculation(1, 2); // 1D2
+        // 1D2
+        this.attackAmount = 1;
+        this.attackDice = 2;
         this.description = "Just a basic sword";
         down = setup("sword_normal", "weapons");
     }

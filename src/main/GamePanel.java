@@ -124,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update()
     {
-        if (gameState == GameValues.PLAYSTATE)
+        if (gameState == GameValues.PLAYSTATE || gameState == GameValues.PLAYER_STATS || gameState == GameValues.PlAYER_QUESTS)
         {
             //PLAYER
             player.update();
