@@ -49,7 +49,7 @@ public abstract class Entity {
 
     // COLLISION
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
-    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public Rectangle solidArea = new Rectangle(0, 0, 32, 48);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public boolean collision = false;
@@ -148,10 +148,7 @@ public abstract class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
         BufferedImage image = null;
-        if (dying == true)
-        {
-            dyingAnimation(g2);
-        }
+
 
         //How does the player look in what direction
         if (down == null)
@@ -198,8 +195,13 @@ public abstract class Entity {
         {
             double oneScale = (double) gp.tileSize/maxHealth;
             double healthBarValue = oneScale*health;
-
-            if (gotHit)
+            // the flashing away when you get hit
+            if (dying)
+            {
+                dyingAnimation(g2);
+            }
+            // when a monster gets hit, the health bar appears
+            if (gotHit && !dying)
             {
                 counter++;
                 g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));

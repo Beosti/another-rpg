@@ -51,8 +51,8 @@ public class Player extends Entity{
         solidArea.y = 30;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        solidArea.width = 33;
-        solidArea.height = 34;
+        solidArea.width = 30;
+        solidArea.height = 6;
         attackArea.width = 36;
         attackArea.height = 36;
         getImage();
@@ -202,12 +202,15 @@ public class Player extends Entity{
     }
     public void attacking()
     {
+        // counts up the sprite during the whole attack
         spriteCounter++;
 
+        // first sprite the first 5 frames
         if (spriteCounter <= 5)
         {
             spriteNumber = 1;
         }
+        // exactly the actual attacking
         if (spriteCounter > 5 && spriteCounter <= 25)
         {
             spriteNumber = 2;
@@ -233,14 +236,18 @@ public class Player extends Entity{
             damageMonster(monsterIndex);
             worldX = currentWorldX;
             worldY = currentWorldY;
+
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
         }
+        // resets everything after attacking
         if (spriteCounter > 25)
         {
             spriteNumber = 1;
             spriteCounter = 0;
             attacking = false;
+            solidArea.width = 30;
+            solidArea.height = 6;
         }
     }
     public void interactNPC(int i)

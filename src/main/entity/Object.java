@@ -18,14 +18,13 @@ public class Object extends Entity{
         BufferedImage image = null;
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/" + packageName + "/" + imageName + ".png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/entities/objects/" + packageName + "/" + imageName + ".png"));
             image = utilityTool.scaleImage(image, gp.tileSize, gp.tileSize);
-            System.out.println(image.toString());
         }
         catch (IOException e)
         {
             e.printStackTrace();
-            System.out.println(getClass().getResourceAsStream("/objects/" + packageName + "/" + imageName + ".png").toString() + " not found");
+            System.out.println(getClass().getResourceAsStream("/entities/objects/" + packageName + "/" + imageName + ".png").toString() + " not found");
         }
         return image;
     }
