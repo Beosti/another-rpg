@@ -36,7 +36,7 @@ public class NPC_OldMan extends NPCEntity {
     {
         dialogues[0] = "Danal is autistic af";
         dialogues[1] = "You should go look somewhere else";
-        dialogues[2] = "WHat?";
+        dialogues[2] = "What?";
         dialogues[3] = "Ok boomer?";
     }
     @Override

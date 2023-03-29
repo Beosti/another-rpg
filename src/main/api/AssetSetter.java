@@ -5,6 +5,7 @@ import main.entity.Entity;
 import main.entity.ItemEntity;
 import main.entity.hostile.RedSlimeEntity;
 import main.entity.npcs.NPC_OldMan;
+import main.object.ChestObject;
 import main.object.KeyObject;
 import main.object.item.weapons.BasicSwordItem;
 
@@ -28,7 +29,9 @@ public class AssetSetter {
 
     public void setObject()
     {
-
+        gp.object[0] = new ChestObject(gp);
+        gp.object[0].worldX = gp.tileSize * 26;
+        gp.object[0].worldY = gp.tileSize * 46;
     }
 
     public void setNpc()

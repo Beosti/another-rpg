@@ -2,8 +2,9 @@ package main.object;
 
 import main.entity.Entity;
 import main.GamePanel;
+import main.entity.Object;
 
-public class ChestObject extends Entity {
+public class ChestObject extends Object {
 
     public ChestObject(GamePanel gp)
     {
@@ -11,10 +12,14 @@ public class ChestObject extends Entity {
         this.name = "Chest";
 
         collision = true;
+        down = setupObject("chest_sprite1", "chest");
     }
 
+    /*
     @Override
     public void getImage() {
-        idle_front = setup("/chest/chest_sprite.png", "objects");
+        down = setup("/chest/chest_sprite1.png", "objects");
     }
+
+     */
 }
