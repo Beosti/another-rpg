@@ -4,10 +4,11 @@ import main.api.DamageCalculation;
 import main.api.GameValues;
 import main.entity.Entity;
 import main.GamePanel;
+import main.entity.MonsterEntity;
 
 import java.util.Random;
 
-public class RedSlimeEntity extends Entity {
+public class RedSlimeEntity extends MonsterEntity {
     public RedSlimeEntity(GamePanel gp) {
         super(gp);
         this.name = "red slime";
