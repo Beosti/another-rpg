@@ -128,6 +128,8 @@ public class Player extends Entity{
             collisionOn = false;
             gp.Checker.checkTile(this);
 
+            //TODO check this for chest attack
+
             // ITEM ENTITY COLLISION
             int itemEntityIndex = gp.Checker.checkItemEntity(this, true);
             pickUpItemEntity(itemEntityIndex);
@@ -250,7 +252,7 @@ public class Player extends Entity{
             solidArea.height = 6;
         }
     }
-    public void interactNPC(int i)
+    public void interactNPC(int i) // TODO make it so you don't attack when you have a chest in front of you
     {
         if (gp.keyHandler.enterPressed)
         {

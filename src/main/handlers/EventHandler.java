@@ -28,16 +28,7 @@ public class EventHandler {
     public void checkEvent()
     {
         speedTiles();
-        /*
-        if (debug == 200)
-        {
-            System.out.println(gp.player.worldX);
-            System.out.println(gp.player.worldY);
-            debug = 0;
-        }
-        debug++;
 
-         */
     }
     public boolean hit(int eventCol, int eventRow, String reqDirection)
     {
