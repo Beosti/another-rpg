@@ -3,17 +3,21 @@ package main.entity;
 import main.GamePanel;
 import main.api.GameValues;
 import main.api.UtilityTool;
+import main.data.quest.Quest;
 import main.object.item.Item;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 // Entity class for all the entities in the game
 public abstract class Entity {
     GamePanel gp;
-
+    private List<Quest> quests;
     // STATS
     public String name;
     public int attackDamage;
@@ -71,8 +75,21 @@ public abstract class Entity {
     public Entity(GamePanel gp)
     {
         this.gp = gp;
+        quests = new ArrayList<>();
+    }
+    public List<Quest> getQuests() {
+        return quests;
     }
 
+    public void addQuest(Quest quest)
+    {
+        quests.add(quest);
+    }
+
+    public void removeQuest(Quest quest)
+    {
+        quests.remove(quest);
+    }
     public void getImage() {};
 
     public void setAction() {};

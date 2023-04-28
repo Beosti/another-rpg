@@ -2,6 +2,7 @@ package main.ui;
 
 import main.GamePanel;
 import main.api.GameValues;
+import main.data.quest.Quest;
 import main.ui.HealthUi;
 import main.ui.Screen;
 
@@ -304,6 +305,47 @@ public class Ui {
             y += 40;
         }
     }
+    public void showQuestAcceptance(Quest quest) {
+
+        // Draw the window background
+        int x = gp.tileSize*2;
+        int y = gp.tileSize/2 + 395;
+        int width = gp.screenWidth - (gp.tileSize*3);
+        int height = gp.tileSize * 3;
+        drawSubWindow(x, y, width, height);
+
+        // Draw the text
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+        x += gp.tileSize;
+        y += gp.tileSize;
+
+        // Draw the quest title
+        g2.drawString(quest.getTitle(), x - 20, y);
+        y += 40;
+
+        // Draw the quest description
+        for (String line : quest.getDescription().split("\n")) {
+            g2.drawString(line, x - 20, y);
+            y += 40;
+        }
+
+        // Draw the accept and decline buttons
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+        x = gp.screenWidth / 2 - 150;
+        y = gp.tileSize * 3 + 500;
+        int buttonWidth = 100;
+        int buttonHeight = 40;
+
+        // Draw the accept button
+        drawSubWindow(x, y, buttonWidth, buttonHeight);
+        g2.drawString("Accept", x + 20, y + 27);
+
+        // Draw the decline button
+        x += buttonWidth + 50;
+        drawSubWindow(x, y, buttonWidth, buttonHeight);
+        g2.drawString("Decline", x + 12, y + 27);
+    }
+
     public void characterScreen()
     {
         // CREATE A FRAME
