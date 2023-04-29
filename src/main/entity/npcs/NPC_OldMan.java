@@ -34,7 +34,7 @@ public class NPC_OldMan extends NPCEntity {
     @Override
     public void setDialogue()
     {
-        dialogues[0] = "Danal is autistic af";
+        dialogues[0] = "Haven't seen you around here before, how are you?";
         dialogues[1] = "You should go look somewhere else";
         dialogues[2] = "What?";
         dialogues[3] = "Ok boomer?";
@@ -64,7 +64,8 @@ public class NPC_OldMan extends NPCEntity {
     public void speak()
     {
         if (dialogues[dialogueIndex] == null)
-            dialogueIndex =0;
+            dialogueIndex = 0;
+        gp.ui.choiceDialogue = dialogueIndex == 2;
         gp.ui.currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++;
 

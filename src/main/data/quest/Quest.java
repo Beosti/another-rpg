@@ -7,6 +7,7 @@ public abstract class Quest {
     private String title;
     private String description;
     private List<Objective> objectives;
+    private int reward;
 
     public Quest(String title, String description, List<Objective> objectives) {
         this.title = title;
@@ -24,5 +25,13 @@ public abstract class Quest {
 
     public List<Objective> getObjectives() {
         return objectives;
+    }
+    public void setReward(int valueReward)
+    {
+        this.reward = valueReward;
+    }
+    public int getReward()
+    {
+        return this.reward;
     }
 }

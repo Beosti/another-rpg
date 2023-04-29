@@ -13,9 +13,9 @@ import java.util.List;
 
 public class KillSlimesQuest extends Quest {
 
-
     public KillSlimesQuest() {
         super("Kill Slimes", "Slay 3 slimes to complete this quest", getSlimeObjectives());
+        this.setReward(50);
     }
 
     private static List<Objective> getSlimeObjectives() {

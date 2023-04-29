@@ -18,6 +18,7 @@ public class Ui {
     Graphics2D g2;
     Font maruMonica, purisaB;
     public String currentDialogue = "";
+    public boolean choiceDialogue = false;
     public int commandNum = 0;
     BufferedImage heart_full, heart_half, heart_empty;
     ArrayList<String> messageScroll = new ArrayList<>();
@@ -26,6 +27,8 @@ public class Ui {
     public int slotRow = 0;
     public int subSlotCol = 0;
     public int subSlotRow = 0;
+    public int dialogueCol = 0;
+
     public boolean drawItemInfo = false;
 
     public Ui(GamePanel gp)
@@ -304,46 +307,20 @@ public class Ui {
             g2.drawString(currentDialogue, x - 20, y);
             y += 40;
         }
-    }
-    public void showQuestAcceptance(Quest quest) {
+        if (choiceDialogue)
+        {
+            int buttonWidth = 100;
+            int buttonHeight = 40;
 
-        // Draw the window background
-        int x = gp.tileSize*2;
-        int y = gp.tileSize/2 + 395;
-        int width = gp.screenWidth - (gp.tileSize*3);
-        int height = gp.tileSize * 3;
-        drawSubWindow(x, y, width, height);
+            // Draw the accept button
+            drawSubWindow(x, y, buttonWidth, buttonHeight);
+            g2.drawString("Accept", x + 20, y + 27);
 
-        // Draw the text
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
-        x += gp.tileSize;
-        y += gp.tileSize;
-
-        // Draw the quest title
-        g2.drawString(quest.getTitle(), x - 20, y);
-        y += 40;
-
-        // Draw the quest description
-        for (String line : quest.getDescription().split("\n")) {
-            g2.drawString(line, x - 20, y);
-            y += 40;
+            // Draw the decline button
+            x += buttonWidth + 50;
+            drawSubWindow(x, y, buttonWidth, buttonHeight);
+            g2.drawString("Decline", x + 12, y + 27);
         }
-
-        // Draw the accept and decline buttons
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
-        x = gp.screenWidth / 2 - 150;
-        y = gp.tileSize * 3 + 500;
-        int buttonWidth = 100;
-        int buttonHeight = 40;
-
-        // Draw the accept button
-        drawSubWindow(x, y, buttonWidth, buttonHeight);
-        g2.drawString("Accept", x + 20, y + 27);
-
-        // Draw the decline button
-        x += buttonWidth + 50;
-        drawSubWindow(x, y, buttonWidth, buttonHeight);
-        g2.drawString("Decline", x + 12, y + 27);
     }
 
     public void characterScreen()

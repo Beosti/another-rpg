@@ -86,6 +86,16 @@ public class KeyHandler implements KeyListener {
             if (gp.gameState == GameValues.PLAYER_STATS) gp.gameState = GameValues.PLAYER_STATS_INVENTORY;
             else if (gp.gameState == GameValues.PLAYER_STATS_INVENTORY) gp.gameState = GameValues.PLAYER_STATS;
         }
+        // ACCEPTING OR DENYING QUEST
+        if (gp.gameState == GameValues.DIALOGUESTATE && gp.ui.choiceDialogue)
+        {
+            if (code == KeyEvent.VK_ESCAPE) {
+                gp.gameState = GameValues.PLAYSTATE;
+                gp.ui.choiceDialogue = false;
+            }
+            if (code == KeyEvent.VK_D && gp.ui.dialogueCol == 0) gp.ui.dialogueCol++;
+            if (code == KeyEvent.VK_Q && gp.ui.dialogueCol == 1) gp.ui.dialogueCol--;
+        }
         // SCROLLING INVENTORY
         if (gp.gameState == GameValues.PLAYER_INVENTORY || gp.gameState == GameValues.PLAYER_STATS_INVENTORY)
         {
