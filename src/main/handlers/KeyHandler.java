@@ -111,28 +111,28 @@ public class KeyHandler implements KeyListener {
         {
             if (code == KeyEvent.VK_ESCAPE)
                 gp.gameState = GameValues.PLAYSTATE;
-            if (!gp.ui.drawItemInfo)
+            if (!gp.ui.itemInfoScreen.drawItemInfo)
             {
-                if (code == KeyEvent.VK_Z && gp.ui.slotRow != 0) gp.ui.slotRow--;
-                if (code == KeyEvent.VK_Q && gp.ui.slotCol != 0) gp.ui.slotCol--;
-                if (code == KeyEvent.VK_D && gp.ui.slotCol != 4) gp.ui.slotCol++;
-                if (code == KeyEvent.VK_S && gp.ui.slotRow != 3) gp.ui.slotRow++;
+                if (code == KeyEvent.VK_Z && gp.ui.inventoryScreen.inventorySlotRow != 0) gp.ui.inventoryScreen.inventorySlotRow--;
+                if (code == KeyEvent.VK_Q && gp.ui.inventoryScreen.inventorySlotCol != 0) gp.ui.inventoryScreen.inventorySlotCol--;
+                if (code == KeyEvent.VK_D && gp.ui.inventoryScreen.inventorySlotCol != 4) gp.ui.inventoryScreen.inventorySlotCol++;
+                if (code == KeyEvent.VK_S && gp.ui.inventoryScreen.inventorySlotRow != 3) gp.ui.inventoryScreen.inventorySlotRow++;
             }
             else {
-                if (code == KeyEvent.VK_Z && gp.ui.subSlotRow != 0) gp.ui.subSlotRow--;
-                if (code == KeyEvent.VK_Q && gp.ui.subSlotCol != 0) gp.ui.subSlotCol--;
-                if (code == KeyEvent.VK_D && gp.ui.subSlotCol != 1) gp.ui.subSlotCol++;
-                if (code == KeyEvent.VK_S && gp.ui.subSlotRow != 1) gp.ui.subSlotRow++;
+                if (code == KeyEvent.VK_Z && gp.ui.itemInfoScreen.itemInfoSlotRow != 0) gp.ui.itemInfoScreen.itemInfoSlotRow--;
+                if (code == KeyEvent.VK_Q && gp.ui.itemInfoScreen.itemInfoSlotCol != 0) gp.ui.itemInfoScreen.itemInfoSlotCol--;
+                if (code == KeyEvent.VK_D && gp.ui.itemInfoScreen.itemInfoSlotCol != 1) gp.ui.itemInfoScreen.itemInfoSlotCol++;
+                if (code == KeyEvent.VK_S && gp.ui.itemInfoScreen.itemInfoSlotRow != 1) gp.ui.itemInfoScreen.itemInfoSlotRow++;
             }
 
             if (code == KeyEvent.VK_ENTER) {
-                if (!gp.ui.drawItemInfo)
-                    gp.ui.drawItemInfo = true;
+                if (!gp.ui.itemInfoScreen.drawItemInfo)
+                    gp.ui.itemInfoScreen.drawItemInfo = true;
                 else
                 {
-                    if (gp.ui.subSlotCol == 0 && gp.ui.subSlotRow == 0) // equip
+                    if (gp.ui.itemInfoScreen.itemInfoSlotCol == 0 && gp.ui.itemInfoScreen.itemInfoSlotRow == 0) // equip
                     {
-                        int itemIndex = gp.ui.getItemIndexOnSlot();
+                        int itemIndex = gp.ui.inventoryScreen.getItemIndexOnSlot();
                         if (itemIndex < gp.player.inventory.size())
                         {
                             if (gp.player.firstHand != null && gp.player.inventory.get(itemIndex) == gp.player.firstHand)
@@ -174,28 +174,13 @@ public class KeyHandler implements KeyListener {
 
 
                         }
-                        /*
-                        if (gp.player.firstHand != null && gp.player.firstHand.hasEquipped)
-                            gp.player.firstHand = null;
-                        else
-                        {
-                            // this gets the item in inventory
-                            int itemIndex = gp.ui.getItemIndexOnSlot();
-                            if (itemIndex < gp.player.inventory.size())
-                            {
-                                gp.player.firstHand = gp.player.inventory.get(itemIndex);
-                                gp.player.inventory.get(itemIndex).hasEquipped = true;
-                            }
-                        }
-
-                         */
                     }
-                    else if (gp.ui.subSlotCol == 0 && gp.ui.subSlotRow == 1) // drop
+                    else if (gp.ui.inventoryScreen.inventorySlotCol == 0 && gp.ui.inventoryScreen.inventorySlotRow == 1) // drop
                         ;
-                    else if (gp.ui.subSlotCol == 1 && gp.ui.subSlotRow == 0) // use
+                    else if (gp.ui.inventoryScreen.inventorySlotCol == 1 && gp.ui.inventoryScreen.inventorySlotRow == 0) // use
                         ;
-                    else if (gp.ui.subSlotCol == 1 && gp.ui.subSlotRow == 1) // exit
-                        gp.ui.drawItemInfo = false;
+                    else if (gp.ui.inventoryScreen.inventorySlotCol == 1 && gp.ui.inventoryScreen.inventorySlotRow == 1) // exit
+                        gp.ui.itemInfoScreen.drawItemInfo = false;
                     // code if pressed entered
                 }
             }
