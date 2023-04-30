@@ -1,6 +1,9 @@
 package main.entity;
 
 import main.api.GameValues;
+import main.data.quest.KillingObjective;
+import main.data.quest.Objective;
+import main.data.quest.Quest;
 import main.entity.npcs.NPCEntity;
 import main.GamePanel;
 import main.handlers.KeyHandler;
@@ -11,6 +14,8 @@ import main.object.item.weapons.BasicShieldItem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -23,6 +28,9 @@ public class Player extends Entity{
     public final int screenY;
     public ArrayList<Item> inventory = new ArrayList<>();
     public final int inventorySize = 20;
+    public int money;
+    public List<Quest> inProgressQuest = new ArrayList<Quest>();
+    public List<Quest> finishedQuest = new ArrayList<Quest>();
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
         super(gp);
@@ -33,6 +41,7 @@ public class Player extends Entity{
         this.maxHealth = 6;
         this.health = 6;
         this.speed = 2;
+        this.money = 0;
         this.type = GameValues.PLAYER;
         firstHand = new BasicSwordItem(gp);
         secondHand = new BasicShieldItem(gp);
@@ -65,6 +74,44 @@ public class Player extends Entity{
         inventory.add(secondHand);
         firstHand.hasEquipped = true;
         secondHand.hasEquipped = true;
+    }
+
+    public void addInProgressQuests(Quest inProgressQuest)
+    {
+        this.inProgressQuest.add(inProgressQuest);
+    }
+    public void removeInProgressQuests(Quest removeInProgressQuest)
+    {
+        this.inProgressQuest.remove(removeInProgressQuest);
+    }
+    public List<Quest> getInProgressQuests()
+    {
+        return this.inProgressQuest;
+    }
+    public void addFinishedQuests(Quest questFinished)
+    {
+        this.finishedQuest.add(questFinished);
+    }
+    public void removeFinishedQuests(Quest removeFinishedQuest)
+    {
+        this.finishedQuest.remove(removeFinishedQuest);
+    }
+    public List<Quest> getFinishedQuests()
+    {
+        return this.finishedQuest;
+    }
+
+    public void addMoney(int money)
+    {
+        this.money += money;
+    }
+    public int getMoney()
+    {
+        return this.money;
+    }
+    public void setMoney(int money)
+    {
+        this.money = money;
     }
     public int getAttackDamageMelee()
     {
@@ -302,6 +349,19 @@ public class Player extends Entity{
                 if (gp.Hostile[i].health <= 0)
                 {
                     gp.Hostile[i].dying = true;
+                    for (Quest quest : getInProgressQuests())
+                    {
+                        for (Objective objective : quest.getObjectives())
+                        {
+                            if (objective instanceof KillingObjective killingObjective)
+                            {
+                                if (killingObjective.getEntityKill().name.equals(gp.Hostile[i].name))
+                                {
+                                    killingObjective.incrementKilled();
+                                }
+                            }
+                        }
+                    }
                     gp.ui.addMessage("killed the " + gp.Hostile[i].name);
                 }
             }

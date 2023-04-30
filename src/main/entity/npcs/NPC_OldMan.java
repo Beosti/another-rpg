@@ -1,18 +1,25 @@
 package main.entity.npcs;
 
 import main.GamePanel;
+import main.data.quest.Objective;
+import main.data.quest.Quest;
+import main.quests.oldman.KillSlimesQuest;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class NPC_OldMan extends NPCEntity {
     GamePanel gp;
-
     public NPC_OldMan(GamePanel gp)
     {
         super(gp);
         this.gp = gp;
         direction = "up";
         speed = 1;
+        Quest quest = new KillSlimesQuest();
+        addQuest(quest);
 
         getImage();
         setDialogue();
@@ -65,8 +72,37 @@ public class NPC_OldMan extends NPCEntity {
     {
         if (dialogues[dialogueIndex] == null)
             dialogueIndex = 0;
-        gp.ui.choiceDialogue = dialogueIndex == 2;
-        gp.ui.currentDialogue = dialogues[dialogueIndex];
+
+        boolean inCommonQuest = Collections.disjoint(quests, gp.player.inProgressQuest);
+        if (!inCommonQuest) // has something in common
+        {
+            for (Quest quest : gp.player.inProgressQuest)
+            {
+                System.out.println(quest.areObjectivesComplete());
+                if (quests.contains(quest) && quest.areObjectivesComplete())
+                {
+                    gp.player.addMoney(quest.getReward());
+                    gp.ui.currentDialogue = "Good job on doing the quest, you've got a reward!";
+                    gp.player.removeInProgressQuests(quest);
+                    gp.player.addFinishedQuests(quest);
+                }
+                else
+                {
+                    gp.ui.currentDialogue = "When are you finished with the quest?";
+                }
+            }
+        }
+        else // has nothing in common
+        {
+            gp.ui.currentDialogue = dialogues[dialogueIndex];
+            if (dialogueIndex == 2 && !(gp.player.finishedQuest.contains(quests))) {
+                gp.ui.currentDialogue = "Could you please kill the slimes for me? 3 of em";
+                gp.ui.choiceDialogue = true;
+            }
+
+        }
+
+        gp.ui.questEntityNPC = this;
         dialogueIndex++;
 
         super.speak();

@@ -3,6 +3,8 @@ package main.ui;
 import main.GamePanel;
 import main.api.GameValues;
 import main.data.quest.Quest;
+import main.entity.Player;
+import main.entity.npcs.NPCEntity;
 import main.ui.HealthUi;
 import main.ui.Screen;
 
@@ -19,6 +21,8 @@ public class Ui {
     Font maruMonica, purisaB;
     public String currentDialogue = "";
     public boolean choiceDialogue = false;
+    public NPCEntity questEntityNPC = null;
+    public boolean acceptQuest = false;
     public int commandNum = 0;
     BufferedImage heart_full, heart_half, heart_empty;
     ArrayList<String> messageScroll = new ArrayList<>();
@@ -284,6 +288,7 @@ public class Ui {
         String text = "PAUSED";
         int x = getXforCenteredText(text);
         int y = gp.screenHeight/2;
+        System.out.println(gp.player.getQuests());
 
         g2.drawString(text, x, y);
     }
@@ -312,14 +317,28 @@ public class Ui {
             int buttonWidth = 100;
             int buttonHeight = 40;
 
-            // Draw the accept button
-            drawSubWindow(x, y, buttonWidth, buttonHeight);
-            g2.drawString("Accept", x + 20, y + 27);
+            int shiftChangeButtons = 300;
 
+            final int slotXstart = x + 6 + shiftChangeButtons;
+            int slotSize = gp.tileSize + 96;
+            int cursorX = slotXstart + (slotSize * dialogueCol);
+
+
+            // Draw the accept button
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke(3));
+            drawSubWindow(cursorX, y - 2, buttonWidth, buttonHeight);
+            g2.drawString("Accept", x + 20 + shiftChangeButtons, y + 27);
+            if (this.acceptQuest)
+            {
+                gp.player.addInProgressQuests(this.questEntityNPC.getQuests().get(0));
+                this.currentDialogue = "Thank you for this, come back when you ready!";
+                this.acceptQuest = false;
+                this.choiceDialogue = false;
+            }
             // Draw the decline button
             x += buttonWidth + 50;
-            drawSubWindow(x, y, buttonWidth, buttonHeight);
-            g2.drawString("Decline", x + 12, y + 27);
+            g2.drawString("Decline", x + 12 + shiftChangeButtons, y + 27);
         }
     }
 

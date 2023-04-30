@@ -3,6 +3,7 @@ package main;
 import main.api.AssetSetter;
 import main.api.CollisionChecker;
 import main.api.GameValues;
+import main.data.quest.Quest;
 import main.entity.Entity;
 import main.entity.ItemEntity;
 import main.entity.Player;

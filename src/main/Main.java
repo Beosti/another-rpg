@@ -1,5 +1,7 @@
 package main;
 
+import main.init.EntityManager;
+
 import javax.swing.*;
 import java.io.FileNotFoundException;
 
@@ -13,6 +15,7 @@ public class Main {
         window.setTitle("Another Rpg");
 
         GamePanel gamePanel = new GamePanel();
+        EntityManager.setGamePanel(gamePanel);
         window.add(gamePanel);
 
         window.pack();

@@ -29,6 +29,7 @@ public class KillingObjective extends Objective{
     {
         amountKilled++;
     }
+    @Override
     public boolean isComplete()
     {
         return amountKilled >= amountToKill;

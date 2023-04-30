@@ -95,6 +95,16 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_D && gp.ui.dialogueCol == 0) gp.ui.dialogueCol++;
             if (code == KeyEvent.VK_Q && gp.ui.dialogueCol == 1) gp.ui.dialogueCol--;
+            if (code == KeyEvent.VK_ENTER && gp.ui.dialogueCol == 0)
+            {
+                gp.ui.acceptQuest = true;
+            }
+            if (code == KeyEvent.VK_ENTER && gp.ui.dialogueCol == 1)
+            {
+                gp.gameState = GameValues.PLAYSTATE;
+                gp.ui.choiceDialogue = false;
+                gp.ui.acceptQuest = false;
+            }
         }
         // SCROLLING INVENTORY
         if (gp.gameState == GameValues.PLAYER_INVENTORY || gp.gameState == GameValues.PLAYER_STATS_INVENTORY)

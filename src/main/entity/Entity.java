@@ -17,7 +17,7 @@ import java.util.List;
 // Entity class for all the entities in the game
 public abstract class Entity {
     GamePanel gp;
-    private List<Quest> quests;
+    public List<Quest> quests;
     // STATS
     public String name;
     public int attackDamage;

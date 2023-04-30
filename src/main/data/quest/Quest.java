@@ -23,6 +23,14 @@ public abstract class Quest {
         return description;
     }
 
+    public boolean areObjectivesComplete() {
+        for (Objective objective : objectives) {
+            if (!objective.isComplete()) {
+                return false;
+            }
+        }
+        return true;
+    }
     public List<Objective> getObjectives() {
         return objectives;
     }
