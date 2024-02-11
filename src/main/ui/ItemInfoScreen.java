@@ -12,7 +12,7 @@ public class ItemInfoScreen extends InventoryScreen {
         super(g2, gp);
     }
 
-    public void drawItemInfo() {
+    public void drawItemInfo(Graphics2D g2) {
         if (!this.drawItemInfo)
             return;
         int itemIndex = getItemIndexOnSlot();
@@ -28,7 +28,7 @@ public class ItemInfoScreen extends InventoryScreen {
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3));
-        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight, g2);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
 
         if (itemIndex < gp.player.inventory.size()) {

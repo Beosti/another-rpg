@@ -113,10 +113,16 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = GameValues.PLAYSTATE;
             if (!gp.ui.itemInfoScreen.drawItemInfo)
             {
-                if (code == KeyEvent.VK_Z && gp.ui.inventoryScreen.inventorySlotRow != 0) gp.ui.inventoryScreen.inventorySlotRow--;
-                if (code == KeyEvent.VK_Q && gp.ui.inventoryScreen.inventorySlotCol != 0) gp.ui.inventoryScreen.inventorySlotCol--;
-                if (code == KeyEvent.VK_D && gp.ui.inventoryScreen.inventorySlotCol != 4) gp.ui.inventoryScreen.inventorySlotCol++;
-                if (code == KeyEvent.VK_S && gp.ui.inventoryScreen.inventorySlotRow != 3) gp.ui.inventoryScreen.inventorySlotRow++;
+                //System.out.println("Row: " + gp.ui.inventoryScreen.inventorySlotRow);
+                //System.out.println("Col: " + gp.ui.inventoryScreen.inventorySlotCol);
+                if (code == KeyEvent.VK_Z && gp.ui.inventoryScreen.inventorySlotRow != 0)
+                    gp.ui.inventoryScreen.inventorySlotRow--;
+                if (code == KeyEvent.VK_Q && gp.ui.inventoryScreen.inventorySlotCol != 0)
+                    gp.ui.inventoryScreen.inventorySlotCol--;
+                if (code == KeyEvent.VK_D && gp.ui.inventoryScreen.inventorySlotCol != 4)
+                    gp.ui.inventoryScreen.inventorySlotCol++;
+                if (code == KeyEvent.VK_S && gp.ui.inventoryScreen.inventorySlotRow != 3)
+                    gp.ui.inventoryScreen.inventorySlotRow++;
             }
             else {
                 if (code == KeyEvent.VK_Z && gp.ui.itemInfoScreen.itemInfoSlotRow != 0) gp.ui.itemInfoScreen.itemInfoSlotRow--;

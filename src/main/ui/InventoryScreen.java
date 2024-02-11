@@ -14,14 +14,14 @@ public class InventoryScreen extends Screen {
         super(g2, gp);
     }
 
-    public void drawInventory()
+    public void drawInventory(Graphics2D g2)
     {
         // FRAME
         int frameX = gp.tileSize * 9;
         int frameY = gp.tileSize / 2;
         int frameWidth = gp.tileSize*6;
         int frameHeight = gp.tileSize*5;
-        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight, g2);
 
         // SLOT
         final int slotXstart = frameX + 20;
@@ -31,6 +31,8 @@ public class InventoryScreen extends Screen {
         int slotSize = gp.tileSize + 3;
 
         // CURSOR
+        System.out.println("Col: " + inventorySlotCol);
+        System.out.println("Row: " + inventorySlotRow);
         int cursorX = slotXstart + (slotSize * inventorySlotCol);
         int cursorY = slotYstart + (slotSize * inventorySlotRow);
         int cursorWidth = gp.tileSize;
@@ -66,7 +68,7 @@ public class InventoryScreen extends Screen {
         int itemIndex = getItemIndexOnSlot();
         if (itemIndex < gp.player.inventory.size())
         {
-            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight, g2);
             for (String line: gp.player.inventory.get(itemIndex).getDescription().split("\n"))
             {
                 g2.drawString(line, textX, textY);

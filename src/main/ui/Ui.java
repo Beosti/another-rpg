@@ -62,7 +62,6 @@ public class Ui {
     public void draw(Graphics2D g2)
     {
         this.g2 = g2;
-        InventoryScreen inventoryScreen = new InventoryScreen(g2, gp);
         PauseScreen pauseScreen = new PauseScreen(g2, gp);
 
         g2.setFont(maruMonica);
@@ -94,8 +93,8 @@ public class Ui {
         else if (gp.gameState == GameValues.PLAYER_INVENTORY)
         {
             drawPlayerLife();
-            inventoryScreen.drawInventory();
-            itemInfoScreen.drawItemInfo();
+            inventoryScreen.drawInventory(g2);
+            itemInfoScreen.drawItemInfo(g2);
         }
         else if (gp.gameState == GameValues.PLAYER_STATS_INVENTORY)
         {
