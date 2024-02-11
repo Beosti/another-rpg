@@ -2,11 +2,7 @@ package main.ui;
 
 import main.GamePanel;
 import main.api.GameValues;
-import main.data.quest.Quest;
-import main.entity.Player;
 import main.entity.npcs.NPCEntity;
-import main.ui.HealthUi;
-import main.ui.Screen;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -34,11 +30,14 @@ public class Ui {
     public int dialogueCol = 0;
 
     public boolean drawItemInfo = false;
+    public InventoryScreen inventoryScreen;
+    public ItemInfoScreen itemInfoScreen;
 
     public Ui(GamePanel gp)
     {
         this.gp = gp;
-
+        this.inventoryScreen = new InventoryScreen(g2, gp);
+        this.itemInfoScreen = new ItemInfoScreen(g2, gp);
         try
         {
             InputStream is = getClass().getResourceAsStream("/font/MaruMonica.ttf");
@@ -49,10 +48,10 @@ public class Ui {
         {
             e.printStackTrace();
         }
-        Screen healthUi = new HealthUi(gp);
-        heart_full = healthUi.state1;
-        heart_half = healthUi.state2;
-        heart_empty = healthUi.state3;
+        HealthScreen healthUi = new HealthScreen(g2, gp);
+        heart_full = healthUi.heart_full;
+        heart_half = healthUi.heart_half;
+        heart_empty = healthUi.heart_empty;
     }
 
     public void addMessage(String text)
@@ -63,6 +62,7 @@ public class Ui {
     public void draw(Graphics2D g2)
     {
         this.g2 = g2;
+        PauseScreen pauseScreen = new PauseScreen(g2, gp);
 
         g2.setFont(maruMonica);
         g2.setColor(Color.white);
@@ -77,7 +77,7 @@ public class Ui {
         }
         else if (gp.gameState == GameValues.PAUSESTATE)
         {
-            drawPauseScreen();
+            pauseScreen.drawPauseScreen();
             drawPlayerLife();
         }
         else if (gp.gameState == GameValues.DIALOGUESTATE)
@@ -93,8 +93,8 @@ public class Ui {
         else if (gp.gameState == GameValues.PLAYER_INVENTORY)
         {
             drawPlayerLife();
-            drawInventory();
-            drawItemInfo();
+            inventoryScreen.drawInventory(g2);
+            itemInfoScreen.drawItemInfo(g2);
         }
         else if (gp.gameState == GameValues.PLAYER_STATS_INVENTORY)
         {
@@ -167,7 +167,6 @@ public class Ui {
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
-
     }
 
     public void drawInventory()
