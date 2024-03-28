@@ -23,7 +23,6 @@ public class Screen {
     }
     public BufferedImage setup(String imageName, String packageName)
     {
-        UtilityTool utilityTool = new UtilityTool();
         BufferedImage image = null;
 
         try {

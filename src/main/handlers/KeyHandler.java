@@ -113,8 +113,6 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = GameValues.PLAYSTATE;
             if (!gp.ui.itemInfoScreen.drawItemInfo)
             {
-                //System.out.println("Row: " + gp.ui.inventoryScreen.inventorySlotRow);
-                //System.out.println("Col: " + gp.ui.inventoryScreen.inventorySlotCol);
                 if (code == KeyEvent.VK_Z && gp.ui.inventoryScreen.inventorySlotRow != 0)
                     gp.ui.inventoryScreen.inventorySlotRow--;
                 if (code == KeyEvent.VK_Q && gp.ui.inventoryScreen.inventorySlotCol != 0)
@@ -163,7 +161,6 @@ public class KeyHandler implements KeyListener {
                             else
                             //hands are not full
                             {
-
                                 if (gp.player.firstHand != null && gp.player.secondHand == null) {
                                     gp.player.secondHand = gp.player.inventory.get(itemIndex);
                                     gp.player.secondHand.hasEquipped = true;
@@ -181,13 +178,15 @@ public class KeyHandler implements KeyListener {
 
                         }
                     }
-                    else if (gp.ui.inventoryScreen.inventorySlotCol == 0 && gp.ui.inventoryScreen.inventorySlotRow == 1) // drop
-                        ;
-                    else if (gp.ui.inventoryScreen.inventorySlotCol == 1 && gp.ui.inventoryScreen.inventorySlotRow == 0) // use
-                        ;
-                    else if (gp.ui.inventoryScreen.inventorySlotCol == 1 && gp.ui.inventoryScreen.inventorySlotRow == 1) // exit
+                    else if (gp.ui.itemInfoScreen.itemInfoSlotCol == 0 && gp.ui.itemInfoScreen.itemInfoSlotRow == 1) // drop
+                        System.out.println("ENTERED DROP");
+                    else if (gp.ui.itemInfoScreen.itemInfoSlotCol == 1 && gp.ui.itemInfoScreen.itemInfoSlotRow == 0) // use
+                        System.out.println("ENTERED USE");
+                    else if (gp.ui.itemInfoScreen.itemInfoSlotCol == 1 && gp.ui.itemInfoScreen.itemInfoSlotRow == 1) // exit
+                    {
+                        System.out.println("ENTERED EXIT");
                         gp.ui.itemInfoScreen.drawItemInfo = false;
-                    // code if pressed entered
+                    }                    // code if pressed entered
                 }
             }
         }
