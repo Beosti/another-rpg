@@ -12,10 +12,7 @@ public class Item {
 
     GamePanel gp;
     public boolean hasEquipped = false;
-    public int attackAmount;
-    public int attackDice;
 
-    public int defenseValue;
     public String name = "";
     public BufferedImage down;
     public String description = "";

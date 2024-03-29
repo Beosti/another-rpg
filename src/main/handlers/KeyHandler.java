@@ -184,7 +184,6 @@ public class KeyHandler implements KeyListener {
                         System.out.println("ENTERED USE");
                     else if (gp.ui.itemInfoScreen.itemInfoSlotCol == 1 && gp.ui.itemInfoScreen.itemInfoSlotRow == 1) // exit
                     {
-                        System.out.println("ENTERED EXIT");
                         gp.ui.itemInfoScreen.drawItemInfo = false;
                     }                    // code if pressed entered
                 }

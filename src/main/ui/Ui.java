@@ -3,6 +3,7 @@ package main.ui;
 import main.GamePanel;
 import main.api.GameValues;
 import main.entity.npcs.NPCEntity;
+import main.object.item.weapons.WeaponItem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -366,9 +367,9 @@ public class Ui {
         textY += lineHeight;
         g2.drawString("Speed: " + gp.player.speed, textX, textY);
         textY += lineHeight;
-        if (gp.player.firstHand != null)
+        if (gp.player.firstHand != null && gp.player.firstHand instanceof WeaponItem)
         {
-            g2.drawString("Strength: " + gp.player.strength + " + " + gp.player.firstHand.attackAmount + "D" + gp.player.firstHand.attackDice, textX, textY);
+            g2.drawString("Strength: " + gp.player.strength + " + " + ((WeaponItem) gp.player.firstHand).getAmount() + "D" + ((WeaponItem) gp.player.firstHand).getDice(), textX, textY);
             textY += lineHeight;
         }
         else

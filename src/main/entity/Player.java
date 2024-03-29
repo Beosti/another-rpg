@@ -11,12 +11,14 @@ import main.api.DamageCalculation;
 import main.object.item.Item;
 import main.object.item.weapons.BasicSwordItem;
 import main.object.item.weapons.BasicShieldItem;
+import main.object.item.weapons.WeaponItem;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 //Class for the player
@@ -113,16 +115,28 @@ public class Player extends Entity{
     {
         this.money = money;
     }
+
+    /**
+     * Method for the calculating of all the damage, counting the dices amount of it + the extra and other effects
+     * @return the total attack damage calculated
+     */
     public int getAttackDamageMelee()
     {
-        if (firstHand != null)
-            return attackDamage = strength + DamageCalculation.damageCalculation(firstHand.attackAmount, firstHand.attackDice);
+        if (firstHand != null && firstHand instanceof WeaponItem) {
+            int totalDamageFromWeapon = 0;
+            for (int i = 0; i < ((WeaponItem) firstHand).getAmount(); i++)
+            {
+                Random random = new Random();
+                totalDamageFromWeapon += random.nextInt(((WeaponItem) firstHand).getDice()) + 1;
+            }
+            return attackDamage = strength + totalDamageFromWeapon + ((WeaponItem) firstHand).getExtra();
+        }
         else
             return  attackDamage = strength;
     }
     public int getDefenseValueMelee()
     {
-        return defenseValue = strength + secondHand.defenseValue;
+        return defenseValue = strength;
     }
     public void getAttackImage()
     {
