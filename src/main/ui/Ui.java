@@ -359,27 +359,25 @@ public class Ui {
         final int lineHeight = 32;
 
         // NAMES
-        g2.drawString("Level: " + gp.player.level, textX, textY);
+        g2.drawString("Level: " + gp.player.getLevel(), textX, textY);
         textY += lineHeight;
-        g2.drawString("Experience: " + gp.player.exp + "/" + gp.player.maxExperience, textX, textY);
+        g2.drawString("Experience: " + gp.player.getLevel().getCurrentExperience() + "/" + gp.player.getLevel().getMaxExperience(), textX, textY);
         textY += lineHeight;
-        g2.drawString("Health: " + gp.player.health + "/" + gp.player.maxHealth, textX, textY);
+        g2.drawString("Health: " + gp.player.getHealth().getCurrentHealth() + "/" + gp.player.getHealth().getMaxHealth(), textX, textY);
         textY += lineHeight;
-        g2.drawString("Speed: " + gp.player.speed, textX, textY);
+        g2.drawString("Speed: " + gp.player.getSpeed(), textX, textY);
         textY += lineHeight;
         if (gp.player.firstHand != null && gp.player.firstHand instanceof WeaponItem)
         {
-            g2.drawString("Strength: " + gp.player.strength + " + " + ((WeaponItem) gp.player.firstHand).getAmount() + "D" + ((WeaponItem) gp.player.firstHand).getDice(), textX, textY);
+            g2.drawString("Strength: " + gp.player.getStrength() + " + " + ((WeaponItem) gp.player.firstHand).getDamageAmount().getAmount() + "D" + ((WeaponItem) gp.player.firstHand).getDamageAmount().getDice(), textX, textY);
             textY += lineHeight;
         }
         else
         {
-            g2.drawString("Strength: " + gp.player.strength, textX, textY);
+            g2.drawString("Strength: " + gp.player.getStrength(), textX, textY);
             textY += lineHeight;
         }
-        g2.drawString("Dexterity: " + gp.player.dexterity, textX, textY);
-        textY += lineHeight;
-        g2.drawString("Defense: " + gp.player.defense, textX, textY);
+        g2.drawString("Dexterity: " + gp.player.getDexterity(), textX, textY);
         textY += lineHeight;
         g2.drawString("First hand: ", textX, textY);
         textY += lineHeight;
@@ -431,7 +429,7 @@ public class Ui {
         int i = 0;
 
         // BLANK HEART
-        while (i < gp.player.maxHealth/2)
+        while (i < gp.player.getHealth().getMaxHealth()/2)
         {
             g2.drawImage(heart_empty, x, y, null);
             i++;
@@ -443,11 +441,11 @@ public class Ui {
         y = gp.tileSize/2;
         i = 0;
 
-        while (i < gp.player.health)
+        while (i < gp.player.getHealth().getCurrentHealth())
         {
             g2.drawImage(heart_half, x, y, null);
             i++;
-            if (i < gp.player.health)
+            if (i < gp.player.getHealth().getCurrentHealth())
             {
                 g2.drawImage(heart_full, x, y, null);
             }

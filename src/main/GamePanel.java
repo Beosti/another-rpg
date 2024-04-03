@@ -6,6 +6,7 @@ import main.api.GameValues;
 import main.data.quest.Quest;
 import main.entity.Entity;
 import main.entity.ItemEntity;
+import main.entity.LivingEntity;
 import main.entity.Player;
 import main.handlers.EventHandler;
 import main.handlers.KeyHandler;
@@ -59,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyHandler);
     public Entity object[] = new Entity[10];
     public Entity NPC[] = new Entity[10];
-    public Entity Hostile[] = new Entity[20];
+    public LivingEntity Hostile[] = new LivingEntity[20];
     public ItemEntity itemEntity[] = new ItemEntity[10]; // TODO make an entity item thingy
     ArrayList<Entity> entityList = new ArrayList<>();
 
@@ -132,13 +133,13 @@ public class GamePanel extends JPanel implements Runnable{
             //NPC
             for (Entity entity : NPC) {
                 if (entity != null) {
-                    entity.update();
+                    ((LivingEntity) entity).update();
                 }
             }
             for (int i = 0; i < Hostile.length; i++) {
                 if (Hostile[i] != null) {
                     if (Hostile[i].alive && !Hostile[i].dying)
-                        Hostile[i].update();
+                        ((LivingEntity) Hostile[i]).update();
                     if (!Hostile[i].alive)
                         Hostile[i] = null;
                 }

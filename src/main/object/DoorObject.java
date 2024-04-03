@@ -22,6 +22,6 @@ public class DoorObject extends Entity {
 
     @Override
     public void getImage() {
-        idle_front = setup("/door/door_sprite.png", "objects");
+        down = setup("/door/door_sprite.png", "objects");
     }
 }

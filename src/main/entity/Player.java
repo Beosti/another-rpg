@@ -1,6 +1,8 @@
 package main.entity;
 
+import main.api.EntityCategory;
 import main.api.GameValues;
+import main.api.entity.Health;
 import main.data.quest.KillingObjective;
 import main.data.quest.Objective;
 import main.data.quest.Quest;
@@ -22,7 +24,7 @@ import java.util.Random;
 
 
 //Class for the player
-public class Player extends Entity{
+public class Player extends LivingEntity {
 
     KeyHandler keyHandler;
 
@@ -37,14 +39,12 @@ public class Player extends Entity{
     {
         super(gp);
 
-        this.name = "Player";
-        this.strength = 3;
-        this.defense = 0;
-        this.maxHealth = 6;
-        this.health = 6;
-        this.speed = 2;
+        this.setName("Player");
+        this.setStrength(3);
+        this.setHealth(new Health().setRandomizedHealth((byte) 1, (byte) 5));
+        this.setSpeed(2);
         this.money = 0;
-        this.type = GameValues.PLAYER;
+        this.setEntityCategory(EntityCategory.GOBLIN);
         firstHand = new BasicSwordItem(gp);
         secondHand = new BasicShieldItem(gp);
 
@@ -123,20 +123,11 @@ public class Player extends Entity{
     public int getAttackDamageMelee()
     {
         if (firstHand != null && firstHand instanceof WeaponItem) {
-            int totalDamageFromWeapon = 0;
-            for (int i = 0; i < ((WeaponItem) firstHand).getAmount(); i++)
-            {
-                Random random = new Random();
-                totalDamageFromWeapon += random.nextInt(((WeaponItem) firstHand).getDice()) + 1;
-            }
-            return attackDamage = strength + totalDamageFromWeapon + ((WeaponItem) firstHand).getExtra();
+            WeaponItem weaponItem = (WeaponItem) firstHand;
+            return weaponItem.getDamageAmount().getDamage() + this.getStrength();
         }
         else
-            return  attackDamage = strength;
-    }
-    public int getDefenseValueMelee()
-    {
-        return defenseValue = strength;
+            return this.getDamageAmount().getDamage() + this.getStrength();
     }
     public void getAttackImage()
     {
@@ -213,10 +204,10 @@ public class Player extends Entity{
             if (!collisionOn && !keyHandler.enterPressed)
             {
                 switch (direction) {
-                    case "up" -> worldY -= speed;
-                    case "down" -> worldY += speed;
-                    case "left" -> worldX -= speed;
-                    case "right" -> worldX += speed;
+                    case "up" -> worldY -= this.getSpeed();
+                    case "down" -> worldY += this.getSpeed();
+                    case "left" -> worldX -= this.getSpeed();
+                    case "right" -> worldX += this.getSpeed();
                 }
             }
 
@@ -338,7 +329,7 @@ public class Player extends Entity{
         {
             if (!invincible)
             {
-                health -= gp.Hostile[i].attackDamage;
+                this.getHealth().alterCurrentHealth(((LivingEntity) gp.Hostile[i]).getDamageAmount().getDamage());
                 invincible = true;
             }
         }
@@ -351,7 +342,7 @@ public class Player extends Entity{
             if (!gp.Hostile[i].invincible)
             {
                 int damageDealt = gp.player.getAttackDamageMelee();
-                gp.Hostile[i].health -= damageDealt;
+                gp.Hostile[i].getHealth().alterCurrentHealth(damageDealt);
                 //gp.ui.addMessage(gp.player.getAttackDamageMelee() + " damage");
                 gp.Hostile[i].damageHit = damageDealt;
                 if (gp.Hostile[i].gotHit) { // TODO might add an arraylist so damage is shown of multiple damages at the same time
@@ -360,7 +351,7 @@ public class Player extends Entity{
                 }
                 gp.Hostile[i].gotHit = true;
                 gp.Hostile[i].invincible = true;
-                if (gp.Hostile[i].health <= 0)
+                if (gp.Hostile[i].getHealth().getCurrentHealth() <= 0)
                 {
                     gp.Hostile[i].dying = true;
                     for (Quest quest : getInProgressQuests())
@@ -369,14 +360,14 @@ public class Player extends Entity{
                         {
                             if (objective instanceof KillingObjective killingObjective)
                             {
-                                if (killingObjective.getEntityKill().name.equals(gp.Hostile[i].name))
+                                if (killingObjective.getEntityKill().name.equals(gp.Hostile[i].getName()))
                                 {
                                     killingObjective.incrementKilled();
                                 }
                             }
                         }
                     }
-                    gp.ui.addMessage("killed the " + gp.Hostile[i].name);
+                    gp.ui.addMessage("killed the " + gp.Hostile[i].getName());
                 }
             }
         }

@@ -1,17 +1,19 @@
 package main.entity.npcs;
 
+import main.api.EntityCategory;
 import main.api.GameValues;
 import main.entity.Entity;
 import main.GamePanel;
+import main.entity.LivingEntity;
 
-public class NPCEntity extends Entity {
+public class NPCEntity extends LivingEntity {
     GamePanel gp;
     public int dialogueIndex = 0;
     public String dialogues[] = new String[20];
     public NPCEntity(GamePanel gp) {
         super(gp);
         this.gp = gp;
-        this.type = GameValues.NPC;
+        this.setEntityCategory(EntityCategory.HUMAN);
     }
 
     public void setDialogue() {};

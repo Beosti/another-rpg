@@ -1,6 +1,7 @@
 package main.entity.npcs;
 
 import main.GamePanel;
+import main.api.EntityCategory;
 import main.data.quest.Objective;
 import main.data.quest.Quest;
 import main.quests.oldman.KillSlimesQuest;
@@ -17,7 +18,8 @@ public class NPC_OldMan extends NPCEntity {
         super(gp);
         this.gp = gp;
         direction = "up";
-        speed = 1;
+        this.setEntityCategory(EntityCategory.HUMAN);
+        this.setSpeed(1);
         Quest quest = new KillSlimesQuest();
         addQuest(quest);
 

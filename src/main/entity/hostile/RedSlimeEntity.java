@@ -1,23 +1,26 @@
 package main.entity.hostile;
 
+import main.DamageAmount;
 import main.api.DamageCalculation;
+import main.api.EntityCategory;
+import main.api.EntityState;
 import main.api.GameValues;
+import main.api.entity.Health;
 import main.entity.Entity;
 import main.GamePanel;
+import main.entity.LivingEntity;
 import main.entity.MonsterEntity;
 
 import java.util.Random;
 
-public class RedSlimeEntity extends MonsterEntity {
+public class RedSlimeEntity extends LivingEntity {
     public RedSlimeEntity(GamePanel gp) {
         super(gp);
-        this.name = "red slime";
-        this.attackDamage = DamageCalculation.damageCalculation(1, 2);
-        this.type = GameValues.HOSTILE;
-        this.speed = 1;
-        this.maxHealth = 5;
-        this.health = maxHealth;
-
+        this.setName("Red Slime");
+        this.setHealth(new Health().setRandomizedHealth((byte) 1, (byte) 2));
+        this.setDamageAmount(new DamageAmount((byte) 1, (byte) 2));
+        this.setEntityCategory(EntityCategory.SLIME);
+        this.setEntityState(EntityState.HOSTILE);
         solidArea.x = 3;
         solidArea.y = 18;
         solidArea.width = 42;

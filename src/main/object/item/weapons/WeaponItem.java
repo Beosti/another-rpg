@@ -1,5 +1,6 @@
 package main.object.item.weapons;
 
+import main.DamageAmount;
 import main.GamePanel;
 import main.object.item.Item;
 
@@ -8,40 +9,16 @@ public class WeaponItem extends Item {
     private int dice;
     private int amount;
     private int extra;
+    private DamageAmount damageAmount;
     public WeaponItem(GamePanel gp) {
         super(gp);
     }
 
-    public void setDamage(int dice, int amount, int extra)
-    {
-        this.dice = dice;
-        this.amount = amount;
-        this.extra = extra;
+    public void setDamageAmount(DamageAmount damageAmount) {
+        this.damageAmount = damageAmount;
     }
 
-    public int getDice()
-    {
-        return this.dice;
+    public DamageAmount getDamageAmount() {
+        return damageAmount;
     }
-    public void setDice(int amount)
-    {
-        this.dice = amount;
-    }
-    public int getAmount()
-    {
-        return this.amount;
-    }
-    public void setAmount(int amount)
-    {
-        this.amount = amount;
-    }
-    public int getExtra()
-    {
-        return this.extra;
-    }
-    public void setExtra(int amount)
-    {
-        this.extra = amount;
-    }
-
 }

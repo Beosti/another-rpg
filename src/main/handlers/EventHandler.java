@@ -58,11 +58,11 @@ public class EventHandler {
         int coordinates = gp.tileManager.mapTileNum[gp.player.worldX/gp.tileSize][gp.player.worldY/gp.tileSize];
         if (coordinates == 4 && !isOnPath)
         {
-            gp.player.speed += 1;
+            gp.player.alterSpeed(1);
             isOnPath = true;
         }
         else if (coordinates != 3 && isOnPath) {
-            gp.player.speed -= 1;
+            gp.player.alterSpeed(-1);
             isOnPath = false;
         }
     }
