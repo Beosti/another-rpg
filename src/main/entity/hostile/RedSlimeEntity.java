@@ -18,7 +18,7 @@ public class RedSlimeEntity extends LivingEntity {
     public RedSlimeEntity(GamePanel gp) {
         super(gp);
         this.setName("Red Slime");
-        this.setHealth(new Health().setRandomizedHealth((byte) 1, (byte) 2));
+        this.setHealth(new Health().setRandomizedHealth((byte) 3, (byte) 2));
         this.setEntityStats(new EntityStats(3, 0, 0, 0, 1f));
         this.setDamageAmount(new DamageAmount((byte) 1, (byte) 2));
         this.setEntityCategory(EntityCategory.SLIME);

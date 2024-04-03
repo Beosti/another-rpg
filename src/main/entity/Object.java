@@ -2,12 +2,13 @@ package main.entity;
 
 import main.GamePanel;
 import main.api.UtilityTool;
+import main.init.ModValues;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Object extends Entity{
+public class Object extends Entity {
     public Object(GamePanel gp) {
         super(gp);
     }
@@ -19,7 +20,7 @@ public class Object extends Entity{
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/entities/objects/" + packageName + "/" + imageName + ".png"));
-            image = utilityTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image = utilityTool.scaleImage(image, ModValues.TILE_SIZE, ModValues.TILE_SIZE);
         }
         catch (IOException e)
         {

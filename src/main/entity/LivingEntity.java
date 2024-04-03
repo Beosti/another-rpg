@@ -4,12 +4,11 @@ import main.DamageAmount;
 import main.GamePanel;
 import main.api.EntityCategory;
 import main.api.EntityState;
-import main.api.GameValues;
 import main.api.entity.EntityStats;
 import main.api.entity.Health;
 import main.api.entity.Level;
+import main.init.ModValues;
 import main.object.item.Item;
-import main.api.entity.EntityStats;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -46,8 +45,8 @@ public class LivingEntity extends Entity{
     int counter = 0;
 
     // ITEM
-    public Item firstHand;
-    public Item secondHand;
+    public Item firstHand = null;
+    public Item secondHand = null;
 
     public LivingEntity(GamePanel gp)
     {
@@ -79,10 +78,10 @@ public class LivingEntity extends Entity{
         }
         if (this.entityCategory.equals(EntityCategory.MONSTER) && checkPlayer)
         {
-            if (!gp.player.invincible)
+            if (!gp.playerEntity.invincible)
             {
-                gp.player.getHealth().alterCurrentHealth(-1);
-                gp.player.invincible = true;
+                gp.playerEntity.getHealth().alterCurrentHealth(-1);
+                gp.playerEntity.invincible = true;
             }
         }
 
@@ -125,8 +124,8 @@ public class LivingEntity extends Entity{
 
     public void draw(Graphics2D g2)
     {
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        int screenX = worldX - gp.playerEntity.worldX + gp.playerEntity.screenX;
+        int screenY = worldY - gp.playerEntity.worldY + gp.playerEntity.screenY;
         BufferedImage image = null;
 
 
@@ -173,8 +172,7 @@ public class LivingEntity extends Entity{
         // MONSTER HP BAR
         if (this.entityState.equals(EntityState.HOSTILE))
         {
-            System.out.println(this.getHealth().getCurrentHealth());
-            double oneScale = (double) gp.tileSize/this.health.getMaxHealth();
+            double oneScale = (double) ModValues.TILE_SIZE/this.health.getMaxHealth();
             double healthBarValue = oneScale*this.health.getCurrentHealth();
             // the flashing away when you get hit
             if (dying)
@@ -197,17 +195,17 @@ public class LivingEntity extends Entity{
             if (this.health.getCurrentHealth() < this.health.getMaxHealth() && !dying)
             {
                 g2.setColor(new Color(150, 255, 255));
-                g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
+                g2.fillRect(screenX - 1, screenY - 16, ModValues.TILE_SIZE + 2, 12);
                 g2.setColor(new Color(255, 0, 30));
                 g2.fillRect(screenX, screenY - 15, (int) healthBarValue, 10);
             }
         }
         // Draws the tiles specifically around the player, so spare on efficiency
-        if (worldX  + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX  - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY  + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY  - gp.tileSize < gp.player.worldY + gp.player.screenY)
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        if (worldX  + ModValues.TILE_SIZE > gp.playerEntity.worldX - gp.playerEntity.screenX &&
+                worldX  - ModValues.TILE_SIZE < gp.playerEntity.worldX + gp.playerEntity.screenX &&
+                worldY  + ModValues.TILE_SIZE > gp.playerEntity.worldY - gp.playerEntity.screenY &&
+                worldY  - ModValues.TILE_SIZE < gp.playerEntity.worldY + gp.playerEntity.screenY)
+            g2.drawImage(image, screenX, screenY, ModValues.TILE_SIZE, ModValues.TILE_SIZE, null);
     }
 
     public String getName()

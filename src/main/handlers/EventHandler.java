@@ -1,7 +1,7 @@
 package main.handlers;
 
 import main.GamePanel;
-import org.w3c.dom.css.Rect;
+import main.init.ModValues;
 
 import java.awt.*;
 
@@ -34,20 +34,20 @@ public class EventHandler {
     {
         boolean hit = false;
 
-        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
-        eventRectangle.x = eventCol*gp.tileSize + eventRectangle.x;
+        gp.playerEntity.solidArea.x = gp.playerEntity.worldX + gp.playerEntity.solidArea.x;
+        gp.playerEntity.solidArea.y = gp.playerEntity.worldY + gp.playerEntity.solidArea.y;
+        eventRectangle.x = eventCol* ModValues.TILE_SIZE + eventRectangle.x;
 
-        if (gp.player.solidArea.intersects(eventRectangle))
+        if (gp.playerEntity.solidArea.intersects(eventRectangle))
         {
-            if (gp.player.direction.equals(reqDirection) || reqDirection.contentEquals("any"))
+            if (gp.playerEntity.direction.equals(reqDirection) || reqDirection.contentEquals("any"))
             {
                 hit = true;
             }
         }
 
-        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
-        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+        gp.playerEntity.solidArea.x = gp.playerEntity.solidAreaDefaultX;
+        gp.playerEntity.solidArea.y = gp.playerEntity.solidAreaDefaultY;
         eventRectangle.x = eventRectangleDefaultX;
         eventRectangle.y = eventRectangleDefaultY;
 
@@ -55,14 +55,14 @@ public class EventHandler {
     }
     public void speedTiles()
     {
-        int coordinates = gp.tileManager.mapTileNum[gp.player.worldX/gp.tileSize][gp.player.worldY/gp.tileSize];
+        int coordinates = gp.tileManager.mapTileNum[gp.playerEntity.worldX/ModValues.TILE_SIZE][gp.playerEntity.worldY/ModValues.TILE_SIZE];
         if (coordinates == 4 && !isOnPath)
         {
-            gp.player.getEntityStats().alterSpeed(1);
+            gp.playerEntity.getEntityStats().alterSpeed(1);
             isOnPath = true;
         }
         else if (coordinates != 3 && isOnPath) {
-            gp.player.getEntityStats().alterSpeed(-1);
+            gp.playerEntity.getEntityStats().alterSpeed(-1);
             isOnPath = false;
         }
     }

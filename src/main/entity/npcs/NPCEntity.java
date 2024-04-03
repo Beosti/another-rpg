@@ -1,8 +1,6 @@
 package main.entity.npcs;
 
 import main.api.EntityCategory;
-import main.api.GameValues;
-import main.entity.Entity;
 import main.GamePanel;
 import main.entity.LivingEntity;
 
@@ -18,7 +16,7 @@ public class NPCEntity extends LivingEntity {
 
     public void setDialogue() {};
     public void speak() {
-        switch (gp.player.direction) {
+        switch (gp.playerEntity.direction) {
             case "up" -> direction = "down";
             case "down" -> direction = "up";
             case "left" -> direction = "right";

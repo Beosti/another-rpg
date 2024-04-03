@@ -3,13 +3,10 @@ package main.entity.npcs;
 import main.GamePanel;
 import main.api.EntityCategory;
 import main.api.entity.EntityStats;
-import main.data.quest.Objective;
 import main.data.quest.Quest;
 import main.quests.oldman.KillSlimesQuest;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class NPC_OldMan extends NPCEntity {
@@ -76,18 +73,18 @@ public class NPC_OldMan extends NPCEntity {
         if (dialogues[dialogueIndex] == null)
             dialogueIndex = 0;
 
-        boolean inCommonQuest = Collections.disjoint(quests, gp.player.inProgressQuest);
+        boolean inCommonQuest = Collections.disjoint(quests, gp.playerEntity.inProgressQuest);
         if (!inCommonQuest) // has something in common
         {
-            for (Quest quest : gp.player.inProgressQuest)
+            for (Quest quest : gp.playerEntity.inProgressQuest)
             {
                 System.out.println(quest.areObjectivesComplete());
                 if (quests.contains(quest) && quest.areObjectivesComplete())
                 {
-                    gp.player.addMoney(quest.getReward());
+                    gp.playerEntity.addMoney(quest.getReward());
                     gp.ui.currentDialogue = "Good job on doing the quest, you've got a reward!";
-                    gp.player.removeInProgressQuests(quest);
-                    gp.player.addFinishedQuests(quest);
+                    gp.playerEntity.removeInProgressQuests(quest);
+                    gp.playerEntity.addFinishedQuests(quest);
                 }
                 else
                 {
@@ -98,7 +95,7 @@ public class NPC_OldMan extends NPCEntity {
         else // has nothing in common
         {
             gp.ui.currentDialogue = dialogues[dialogueIndex];
-            if (dialogueIndex == 2 && !(gp.player.finishedQuest.contains(quests))) {
+            if (dialogueIndex == 2 && !(gp.playerEntity.finishedQuest.contains(quests))) {
                 gp.ui.currentDialogue = "Could you please kill the slimes for me? 3 of em";
                 gp.ui.choiceDialogue = true;
             }

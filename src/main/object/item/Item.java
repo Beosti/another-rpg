@@ -3,6 +3,7 @@ package main.object.item;
 import main.GamePanel;
 import main.api.DamageCalculation;
 import main.api.UtilityTool;
+import main.init.ModValues;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,7 @@ public class Item {
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/items/" + packageName + "/" + imageName + ".png"));
-            image = utilityTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image = utilityTool.scaleImage(image, ModValues.TILE_SIZE, ModValues.TILE_SIZE);
         }
         catch (IOException e)
         {

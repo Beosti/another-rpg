@@ -1,6 +1,8 @@
 package main.handlers;
 
 import main.GamePanel;
+import main.GameState;
+import main.IKeyHandling;
 import main.api.GameValues;
 
 import java.awt.event.KeyEvent;
@@ -11,7 +13,6 @@ public class KeyHandler implements KeyListener {
 
     //Initialization of what buttons that are usable
     GamePanel gp;
-    public boolean upPressed, leftPressed, rightPressed, downPressed, enterPressed;
 
     public KeyHandler(GamePanel gamePanel)
     {
@@ -24,6 +25,17 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+        if (gp.ui.hasScreen() && gp.ui.getCurrentScreen() instanceof IKeyHandling)
+            ((IKeyHandling) gp.ui.getCurrentScreen()).init(code);
+        if (this.gp.gameState.equals(GameState.PLAY_STATE)) {
+            ((IKeyHandling) gp.playerEntity).init(code);
+        }
+    }
+
+    /*
     @Override
     public void keyPressed(KeyEvent e)
     {
@@ -191,25 +203,14 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+     */
+
     @Override
     public void keyReleased(KeyEvent e)
     {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_Z)
-        {
-            upPressed = false;
-        }
-        if (code == KeyEvent.VK_Q)
-        {
-            leftPressed = false;
-        }
-        if (code == KeyEvent.VK_D)
-        {
-            rightPressed = false;
-        }
-        if (code == KeyEvent.VK_S)
-        {
-            downPressed = false;
+        if (this.gp.gameState.equals(GameState.PLAY_STATE)) {
+            ((IKeyHandling) gp.playerEntity).released(code);
         }
     }
 }

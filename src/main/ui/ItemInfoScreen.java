@@ -1,6 +1,7 @@
 package main.ui;
 
-import main.GamePanel;
+import main.api.screen.ScreenHelper;
+import main.init.ModValues;
 
 import java.awt.*;
 
@@ -8,46 +9,44 @@ public class ItemInfoScreen extends InventoryScreen {
     public boolean drawItemInfo;
     public int itemInfoSlotCol;
     public int itemInfoSlotRow;
-    public ItemInfoScreen(Graphics2D g2, GamePanel gp) {
-        super(g2, gp);
-    }
+
 
     public void drawItemInfo(Graphics2D g2) {
         if (!this.drawItemInfo)
             return;
         int itemIndex = getItemIndexOnSlot();
-        if (itemIndex > gp.player.inventory.size()) {
+        if (itemIndex > gp.playerEntity.inventory.size()) {
             this.drawItemInfo = false;
             return;
         }
 
-        int frameX = gp.tileSize * 9;
-        int frameY = gp.tileSize * 8 + 22;
-        int frameWidth = gp.tileSize * 6;
-        int frameHeight = gp.tileSize * 3;
+        int frameX = ModValues.TILE_SIZE * 9;
+        int frameY = ModValues.TILE_SIZE * 8 + 22;
+        int frameWidth = ModValues.TILE_SIZE * 6;
+        int frameHeight = ModValues.TILE_SIZE * 3;
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3));
-        drawSubWindow(frameX, frameY, frameWidth, frameHeight, g2);
+        ScreenHelper.drawSubWindow(g2, frameX, frameY, frameWidth, frameHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
 
-        if (itemIndex < gp.player.inventory.size()) {
-            if (gp.player.inventory.get(itemIndex).hasEquipped)
-                g2.drawString("UNEQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+        if (itemIndex < gp.playerEntity.inventory.size()) {
+            if (gp.playerEntity.inventory.get(itemIndex).hasEquipped)
+                g2.drawString("UNEQUIP", ModValues.TILE_SIZE * 9 + 35, ModValues.TILE_SIZE * 9 + 35);
             else
-                g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
+                g2.drawString("EQUIP", ModValues.TILE_SIZE * 9 + 35, ModValues.TILE_SIZE * 9 + 35);
         }
 
-        g2.drawString("DROP", gp.tileSize * 9 + 35, gp.tileSize * 10 + 35);
-        g2.drawString("USE", gp.tileSize * 11 + 70, gp.tileSize * 9 + 35);
-        g2.drawString("EXIT", gp.tileSize * 11 + 63, gp.tileSize * 10 + 35);
+        g2.drawString("DROP", ModValues.TILE_SIZE * 9 + 35, ModValues.TILE_SIZE * 10 + 35);
+        g2.drawString("USE", ModValues.TILE_SIZE * 11 + 70, ModValues.TILE_SIZE * 9 + 35);
+        g2.drawString("EXIT", ModValues.TILE_SIZE * 11 + 63, ModValues.TILE_SIZE * 10 + 35);
 
         // SLOT
         final int slotXstart = frameX + 22;
         final int slotYstart = frameY + 24;
         int slotX = slotXstart;
         int slotY = slotYstart;
-        int slotSize = gp.tileSize + 3;
+        int slotSize = ModValues.TILE_SIZE + 3;
 
         // CURSOR
         int cursorX = (int) (slotXstart + (slotSize * itemInfoSlotCol) * 2.5);
@@ -63,8 +62,8 @@ public class ItemInfoScreen extends InventoryScreen {
             // exit
         }
 
-        int cursorWidth = gp.tileSize * 2;
-        int cursorHeight = gp.tileSize;
+        int cursorWidth = ModValues.TILE_SIZE * 2;
+        int cursorHeight = ModValues.TILE_SIZE;
 
         // DRAW CURSOR
         g2.setColor(Color.WHITE);

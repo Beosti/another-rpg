@@ -2,16 +2,18 @@ package main;
 
 import main.api.AssetSetter;
 import main.api.CollisionChecker;
-import main.api.GameValues;
-import main.data.quest.Quest;
 import main.entity.Entity;
 import main.entity.ItemEntity;
 import main.entity.LivingEntity;
-import main.entity.Player;
+import main.entity.PlayerEntity;
 import main.handlers.EventHandler;
 import main.handlers.KeyHandler;
+import main.init.ModValues;
+import main.screens.TitleScreen;
 import main.sound.Sound;
 import main.tile.TileManager;
+import main.ui.HealthScreen;
+import main.ui.Screen;
 import main.ui.Ui;
 
 import javax.swing.*;
@@ -25,25 +27,10 @@ import java.util.Comparator;
 // Basically interface we walking on
 // tl;dr handles the game
 public class GamePanel extends JPanel implements Runnable{
-
-    // SCREEN SETTINGS
-    final int originalTileSize = 16; // 16x16 tile (default size of everything)
-    final int scale = 3;
-
-    public final int tileSize = originalTileSize * scale; // 48x48 tile
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-    public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
+    ArrayList<Screen> overlays = new ArrayList<>();
 
     //FPS
     byte FPS = 60;
-
-    // WORLD SETTINGS
-    public final int maxWorldCol = 64;
-    public final int maxWorldRow = 68;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
 
     // SYSTEM
     public TileManager tileManager = new TileManager(this);
@@ -57,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
     // ENTITY AND OBJECT
-    public Player player = new Player(this, keyHandler);
+    public PlayerEntity playerEntity = new PlayerEntity(this, keyHandler);
     public Entity object[] = new Entity[10];
     public LivingEntity NPC[] = new LivingEntity[10];
     public LivingEntity Hostile[] = new LivingEntity[20];
@@ -65,11 +52,11 @@ public class GamePanel extends JPanel implements Runnable{
     ArrayList<Entity> entityList = new ArrayList<>();
 
     // GAME STATE
-    public int gameState;
+    public GameState gameState;
 
 
     public GamePanel() throws FileNotFoundException {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setPreferredSize(new Dimension(ModValues.SCREEN_WIDTH, ModValues.SCREEN_HEIGHT));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
@@ -78,11 +65,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame()
     {
+        ArrayList<Screen> overlays = new ArrayList<>();
+        overlays.add(new HealthScreen());
+        ui.setScreen(new TitleScreen(this));
         assetSetter.setItem();
         assetSetter.setObject();
         assetSetter.setHostile();
         playMusic(0);
-        gameState = GameValues.TITLE_SCREEN;
+        gameState = GameState.TITLE_SCREEN;
         assetSetter.setNpc();
     }
 
@@ -126,10 +116,10 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update()
     {
-        if (gameState == GameValues.PLAYSTATE || gameState == GameValues.PLAYER_STATS || gameState == GameValues.PlAYER_QUESTS)
+        if (GameState.updateState(gameState))
         {
             //PLAYER
-            player.update();
+            playerEntity.update();
             //NPC
             for (LivingEntity entity : NPC) {
                 if (entity != null) {
@@ -145,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         }
-        else if (gameState == GameValues.PAUSESTATE)
+        else if (GameState.pauseState(gameState))
         {
             // GAME PAUSED
         }
@@ -157,18 +147,18 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) graphics;
 
-
-        // TITLE SCREEN
-        if (gameState == GameValues.TITLE_SCREEN)
-        {
-            ui.draw(g2);
+        for (Screen overlay : this.overlays) {
+            overlay.draw(g2);
         }
+        if (ui.hasScreen())
+            ui.getCurrentScreen().draw(g2);
+
         else
         {
             tileManager.draw(g2);
-            player.draw(g2);
+            playerEntity.draw(g2);
 
-            entityList.add(player);
+            entityList.add(playerEntity);
             for (Entity value : itemEntity)
             {
                 if (value != null)
@@ -210,8 +200,6 @@ public class GamePanel extends JPanel implements Runnable{
                 entity.draw(g2);
             }
             entityList.clear();
-            // UI
-            ui.draw(g2);
         }
 
 

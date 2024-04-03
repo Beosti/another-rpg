@@ -1,6 +1,7 @@
 package main.tile;
 
 import main.GamePanel;
+import main.init.ModValues;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[10];
-        mapTileNum = new int [gp.maxWorldCol] [gp.maxWorldRow];
+        mapTileNum = new int [ModValues.MAX_WORLD_COL] [ModValues.MAX_WORLD_ROW];
 
         getTileImage();
         loadMap("/maps/GoblinMapText");
@@ -61,11 +62,11 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while (col < gp.maxWorldCol && row < gp.maxWorldRow)
+            while (col < ModValues.MAX_WORLD_COL && row < ModValues.MAX_WORLD_ROW)
             {
                 String line = br.readLine();
 
-                while (col < gp.maxWorldCol)
+                while (col < ModValues.MAX_WORLD_COL)
                 {
                     String numbers[] = line.split(" ");
 
@@ -74,7 +75,7 @@ public class TileManager {
                     mapTileNum[col][row] = num;
                     col++;
                 }
-                if (col == gp.maxWorldCol)
+                if (col == ModValues.MAX_WORLD_COL)
                 {
                     col = 0;
                     row++;
@@ -94,24 +95,24 @@ public class TileManager {
         int worldRow = 0;
 
         // Draws the tiles
-        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow)
+        while (worldCol < ModValues.MAX_WORLD_COL && worldRow < ModValues.MAX_WORLD_ROW)
         {
             int tileNum = mapTileNum[worldCol][worldRow];
 
-            int worldX = worldCol * gp.tileSize;
-            int worldY = worldRow * gp.tileSize;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+            int worldX = worldCol * ModValues.TILE_SIZE;
+            int worldY = worldRow * ModValues.TILE_SIZE;
+            int screenX = worldX - gp.playerEntity.worldX + gp.playerEntity.screenX;
+            int screenY = worldY - gp.playerEntity.worldY + gp.playerEntity.screenY;
 
             // Draws the tiles specifically around the player, so spare on efficiency
-            if (worldX  + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX  - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY  + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY  - gp.tileSize < gp.player.worldY + gp.player.screenY)
-                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            if (worldX  + ModValues.TILE_SIZE > gp.playerEntity.worldX - gp.playerEntity.screenX &&
+                worldX  - ModValues.TILE_SIZE < gp.playerEntity.worldX + gp.playerEntity.screenX &&
+                worldY  + ModValues.TILE_SIZE > gp.playerEntity.worldY - gp.playerEntity.screenY &&
+                worldY  - ModValues.TILE_SIZE < gp.playerEntity.worldY + gp.playerEntity.screenY)
+                g2.drawImage(tile[tileNum].image, screenX, screenY, ModValues.TILE_SIZE, ModValues.TILE_SIZE, null);
             worldCol++;
 
-            if (worldCol == gp.maxWorldCol)
+            if (worldCol == ModValues.MAX_WORLD_COL)
             {
                 worldCol = 0;
                 worldRow++;

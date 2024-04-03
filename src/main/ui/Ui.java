@@ -1,7 +1,9 @@
 package main.ui;
 
 import main.GamePanel;
+import main.GameState;
 import main.api.GameValues;
+import main.api.screen.ScreenHelper;
 import main.entity.npcs.NPCEntity;
 import main.object.item.weapons.WeaponItem;
 
@@ -31,14 +33,10 @@ public class Ui {
     public int dialogueCol = 0;
 
     public boolean drawItemInfo = false;
-    public InventoryScreen inventoryScreen;
-    public ItemInfoScreen itemInfoScreen;
-
+    private Screen currentScreen = null;
     public Ui(GamePanel gp)
     {
         this.gp = gp;
-        this.inventoryScreen = new InventoryScreen(g2, gp);
-        this.itemInfoScreen = new ItemInfoScreen(g2, gp);
         try
         {
             InputStream is = getClass().getResourceAsStream("/font/MaruMonica.ttf");
@@ -49,11 +47,27 @@ public class Ui {
         {
             e.printStackTrace();
         }
-        HealthScreen healthUi = new HealthScreen(g2, gp);
-        heart_full = healthUi.heart_full;
-        heart_half = healthUi.heart_half;
-        heart_empty = healthUi.heart_empty;
     }
+
+    public Screen getCurrentScreen()
+    {
+        return this.currentScreen;
+    }
+    public void closeScreen()
+    {
+        this.currentScreen = null;
+    }
+    public boolean hasScreen()
+    {
+        if (currentScreen != null)
+            return true;
+        return false;
+    }
+    public void setScreen(Screen screen)
+    {
+        this.currentScreen = screen;
+    }
+    /*
 
     public void addMessage(String text)
     {
@@ -67,29 +81,20 @@ public class Ui {
 
         g2.setFont(maruMonica);
         g2.setColor(Color.white);
-        if (gp.gameState == GameValues.TITLE_SCREEN)
+        /*
+        if (gp.gameState.equals(GameState.TITLE_SCREEN))
         {
             drawTitleScreen();
         }
-        if (gp.gameState == GameValues.PLAYSTATE)
+        if (GameState.updateState(gp.gameState))
         {
             drawPlayerLife();
             drawMessageScroll();
         }
-        else if (gp.gameState == GameValues.PAUSESTATE)
+        else if (gp.gameState.equals(GameState.PAUSE_STATE))
         {
             pauseScreen.drawPauseScreen();
             drawPlayerLife();
-        }
-        else if (gp.gameState == GameValues.DIALOGUESTATE)
-        {
-            drawDialogueScreen();
-            drawPlayerLife();
-        }
-        else if (gp.gameState == GameValues.PLAYER_STATS)
-        {
-            drawPlayerLife();
-            characterScreen();
         }
         else if (gp.gameState == GameValues.PLAYER_INVENTORY)
         {
@@ -105,6 +110,8 @@ public class Ui {
             drawItemInfo();
 
         }
+
+
     }
 
     public void drawItemInfo() // TODO equip and unequip items
@@ -139,7 +146,7 @@ public class Ui {
             else
                 g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
 
-         */
+
         //g2.drawString("EQUIP", gp.tileSize * 9 + 35, gp.tileSize * 9 + 35);
         g2.drawString("DROP", gp.tileSize * 9 + 35, gp.tileSize * 10 + 35);
         g2.drawString("USE", gp.tileSize * 11 + 70, gp.tileSize * 9 + 35);
@@ -414,7 +421,7 @@ public class Ui {
         textX = getXforAlignToRightText(value, tailX);
         g2.drawString(value, textX, textY);
 
-         */
+
     }
     public int getXforAlignToRightText(String text, int tailX)
     {
@@ -480,23 +487,8 @@ public class Ui {
 
 
     }
-    public void drawSubWindow(int x, int y, int width, int height)
-    {
-        Color c = new Color(0, 0, 0, 220);
-        g2.setColor(c);
-        g2.fillRoundRect(x , y, width, height, 35, 35);
 
-        c = new Color(255, 255, 255);
-        g2.setColor(c);
-        g2.setStroke(new BasicStroke(5));
-        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
-    }
-    public int getXforCenteredText(String text)
-    {
-        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = gp.screenWidth/2 - length/2;
-        return x;
-    }
+     */
     public int getItemIndexOnSlot()
     {
         int itemIndex = slotCol + (slotRow * 5);
