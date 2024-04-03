@@ -31,28 +31,28 @@ public class CollisionChecker {
 
         switch (entity.direction) { // TODO check this code out interesting for events
             case "up" -> {
-                entityTopRow = (entityTopWorldY - entity.getSpeed()) / gp.tileSize;
+                entityTopRow = (int) ((entityTopWorldY - entity.getEntityStats().getSpeed()) / gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityTopRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision)
                     entity.collisionOn = true;
             }
             case "down" -> {
-                entityBottomRow = (entityBottomWorldY - entity.getSpeed()) / gp.tileSize;
+                entityBottomRow = (int) ((entityBottomWorldY - entity.getEntityStats().getSpeed()) / gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
                 tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision)
                     entity.collisionOn = true;
             }
             case "left" -> {
-                entityLeftCol = (entityLeftWorldX - entity.getSpeed()) / gp.tileSize;
+                entityLeftCol = (int) ((entityLeftWorldX - entity.getEntityStats().getSpeed()) / gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
                 tileNum2 = gp.tileManager.mapTileNum[entityLeftCol][entityTopRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision)
                     entity.collisionOn = true;
             }
             case "right" -> {
-                entityRightCol = (entityRightWorldX + entity.getSpeed()) / gp.tileSize;
+                entityRightCol = (int) ((entityRightWorldX + entity.getEntityStats().getSpeed()) / gp.tileSize);
                 tileNum1 = gp.tileManager.mapTileNum[entityRightCol][entityTopRow];
                 tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
                 if (gp.tileManager.tile[tileNum1].collision || gp.tileManager.tile[tileNum2].collision)
@@ -104,7 +104,7 @@ public class CollisionChecker {
                 switch (entity.direction)
                 {
                     case "up":
-                        entity.solidArea.y -= entity.getSpeed();
+                        entity.solidArea.y -= entity.getEntityStats().getSpeed();
                         if (entity.solidArea.intersects(gp.object[i].solidArea)) {
                             if (gp.object[i].collision == true)
                             {
@@ -117,7 +117,7 @@ public class CollisionChecker {
                         }
                         break;
                     case "down":
-                        entity.solidArea.y += entity.getSpeed();
+                        entity.solidArea.y += entity.getEntityStats().getSpeed();
                         if (entity.solidArea.intersects(gp.object[i].solidArea))
                         {
                             if (gp.object[i].collision == true)
@@ -131,7 +131,7 @@ public class CollisionChecker {
                         }
                         break;
                     case "left":
-                        entity.solidArea.x -= entity.getSpeed();
+                        entity.solidArea.x -= entity.getEntityStats().getSpeed();
                         if (entity.solidArea.intersects(gp.object[i].solidArea))
                         {
                             if (gp.object[i].collision == true)
@@ -144,7 +144,7 @@ public class CollisionChecker {
                             }                        }
                         break;
                     case "right":
-                        entity.solidArea.x += entity.getSpeed();
+                        entity.solidArea.x += entity.getEntityStats().getSpeed();
                         if (entity.solidArea.intersects(gp.object[i].solidArea))
                         {
                             if (gp.object[i].collision == true)
@@ -182,10 +182,10 @@ public class CollisionChecker {
                 target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 
                 switch (entity.direction) {
-                    case "up" -> entity.solidArea.y -= entity.getSpeed();
-                    case "down" -> entity.solidArea.y += entity.getSpeed();
-                    case "left" -> entity.solidArea.x -= entity.getSpeed();
-                    case "right" -> entity.solidArea.x += entity.getSpeed();
+                    case "up" -> entity.solidArea.y -= entity.getEntityStats().getSpeed();
+                    case "down" -> entity.solidArea.y += entity.getEntityStats().getSpeed();
+                    case "left" -> entity.solidArea.x -= entity.getEntityStats().getSpeed();
+                    case "right" -> entity.solidArea.x += entity.getEntityStats().getSpeed();
                 }
                 if (entity.solidArea.intersects(target[i].solidArea))
                 {
@@ -214,10 +214,10 @@ public class CollisionChecker {
         gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
 
         switch (entity.direction) {
-            case "up" -> entity.solidArea.y -= entity.getSpeed();
-            case "down" -> entity.solidArea.y += entity.getSpeed();
-            case "left" -> entity.solidArea.x -= entity.getSpeed();
-            case "right" -> entity.solidArea.x += entity.getSpeed();
+            case "up" -> entity.solidArea.y -= entity.getEntityStats().getSpeed();
+            case "down" -> entity.solidArea.y += entity.getEntityStats().getSpeed();
+            case "left" -> entity.solidArea.x -= entity.getEntityStats().getSpeed();
+            case "right" -> entity.solidArea.x += entity.getEntityStats().getSpeed();
         }
         if (entity.solidArea.intersects(gp.player.solidArea)) {
             entity.collisionOn = true;

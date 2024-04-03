@@ -5,21 +5,18 @@ import main.GamePanel;
 import main.api.EntityCategory;
 import main.api.EntityState;
 import main.api.GameValues;
+import main.api.entity.EntityStats;
 import main.api.entity.Health;
 import main.api.entity.Level;
 import main.object.item.Item;
+import main.api.entity.EntityStats;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class LivingEntity extends Entity{
     private String name;
-    private int strength;
-    private int dexterity;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
-    private int speed;
+    private EntityStats entityStats;
     private Health health;
     private Level level;
     private EntityCategory entityCategory;
@@ -92,10 +89,10 @@ public class LivingEntity extends Entity{
         if (!collisionOn)
         {
             switch (direction) {
-                case "up" -> worldY -= speed;
-                case "down" -> worldY += speed;
-                case "left" -> worldX -= speed;
-                case "right" -> worldX += speed;
+                case "up" -> worldY -= this.entityStats.getSpeed();
+                case "down" -> worldY += this.entityStats.getSpeed();
+                case "left" -> worldX -= this.entityStats.getSpeed();
+                case "right" -> worldX += this.entityStats.getSpeed();
             }
         }
 
@@ -229,18 +226,6 @@ public class LivingEntity extends Entity{
     {
         this.health = health;
     }
-    public void setStrength(int strength)
-    {
-        this.strength = strength;
-    }
-    public int getStrength()
-    {
-        return this.strength;
-    }
-    public void alterStrength(int amount)
-    {
-        this.strength += amount;
-    }
     public DamageAmount getDamageAmount()
     {
         return this.damageAmount;
@@ -265,26 +250,6 @@ public class LivingEntity extends Entity{
     {
         this.level = level;
     }
-    public int getDexterity()
-    {
-        return this.dexterity;
-    }
-    public void setDexterity(int dexterity)
-    {
-        this.dexterity = dexterity;
-    }
-    public void setSpeed(int speed)
-    {
-        this.speed = speed;
-    }
-    public void alterSpeed(int amount)
-    {
-        this.speed += amount;
-    }
-    public int getSpeed()
-    {
-        return this.speed;
-    }
     public void setEntityState(EntityState entityState)
     {
         this.entityState = entityState;
@@ -292,5 +257,13 @@ public class LivingEntity extends Entity{
     public EntityState getEntityState()
     {
         return this.entityState;
+    }
+    public void setEntityStats(EntityStats entityStats)
+    {
+        this.entityStats = entityStats;
+    }
+    public EntityStats getEntityStats()
+    {
+        return this.entityStats;
     }
 }

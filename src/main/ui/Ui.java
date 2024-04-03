@@ -365,19 +365,19 @@ public class Ui {
         textY += lineHeight;
         g2.drawString("Health: " + gp.player.getHealth().getCurrentHealth() + "/" + gp.player.getHealth().getMaxHealth(), textX, textY);
         textY += lineHeight;
-        g2.drawString("Speed: " + gp.player.getSpeed(), textX, textY);
+        g2.drawString("Speed: " + gp.player.getEntityStats().getSpeed(), textX, textY);
         textY += lineHeight;
         if (gp.player.firstHand != null && gp.player.firstHand instanceof WeaponItem)
         {
-            g2.drawString("Strength: " + gp.player.getStrength() + " + " + ((WeaponItem) gp.player.firstHand).getDamageAmount().getAmount() + "D" + ((WeaponItem) gp.player.firstHand).getDamageAmount().getDice(), textX, textY);
+            g2.drawString("Strength: " + gp.player.getEntityStats().getStrength() + " + " + ((WeaponItem) gp.player.firstHand).getDamageAmount().getAmount() + "D" + ((WeaponItem) gp.player.firstHand).getDamageAmount().getDice(), textX, textY);
             textY += lineHeight;
         }
         else
         {
-            g2.drawString("Strength: " + gp.player.getStrength(), textX, textY);
+            g2.drawString("Strength: " + gp.player.getEntityStats().getStrength(), textX, textY);
             textY += lineHeight;
         }
-        g2.drawString("Dexterity: " + gp.player.getDexterity(), textX, textY);
+        g2.drawString("Dexterity: " + gp.player.getEntityStats().getDexterity(), textX, textY);
         textY += lineHeight;
         g2.drawString("First hand: ", textX, textY);
         textY += lineHeight;

@@ -2,6 +2,7 @@ package main.entity;
 
 import main.api.EntityCategory;
 import main.api.GameValues;
+import main.api.entity.EntityStats;
 import main.api.entity.Health;
 import main.data.quest.KillingObjective;
 import main.data.quest.Objective;
@@ -40,9 +41,8 @@ public class Player extends LivingEntity {
         super(gp);
 
         this.setName("Player");
-        this.setStrength(3);
+        this.setEntityStats(new EntityStats(3, 0, 0, 0, 3));
         this.setHealth(new Health().setRandomizedHealth((byte) 1, (byte) 5));
-        this.setSpeed(2);
         this.money = 0;
         this.setEntityCategory(EntityCategory.GOBLIN);
         firstHand = new BasicSwordItem(gp);
@@ -124,10 +124,10 @@ public class Player extends LivingEntity {
     {
         if (firstHand != null && firstHand instanceof WeaponItem) {
             WeaponItem weaponItem = (WeaponItem) firstHand;
-            return weaponItem.getDamageAmount().getDamage() + this.getStrength();
+            return weaponItem.getDamageAmount().getDamage() + this.getEntityStats().getStrength();
         }
         else
-            return this.getDamageAmount().getDamage() + this.getStrength();
+            return this.getEntityStats().getStrength();
     }
     public void getAttackImage()
     {
@@ -204,10 +204,10 @@ public class Player extends LivingEntity {
             if (!collisionOn && !keyHandler.enterPressed)
             {
                 switch (direction) {
-                    case "up" -> worldY -= this.getSpeed();
-                    case "down" -> worldY += this.getSpeed();
-                    case "left" -> worldX -= this.getSpeed();
-                    case "right" -> worldX += this.getSpeed();
+                    case "up" -> worldY -= this.getEntityStats().getSpeed();
+                    case "down" -> worldY += this.getEntityStats().getSpeed();
+                    case "left" -> worldX -= this.getEntityStats().getSpeed();
+                    case "right" -> worldX += this.getEntityStats().getSpeed();
                 }
             }
 
