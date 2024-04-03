@@ -21,6 +21,7 @@ public class RedSlimeEntity extends LivingEntity {
         this.setDamageAmount(new DamageAmount((byte) 1, (byte) 2));
         this.setEntityCategory(EntityCategory.SLIME);
         this.setEntityState(EntityState.HOSTILE);
+        this.setSpeed(1);
         solidArea.x = 3;
         solidArea.y = 18;
         solidArea.width = 42;

@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyHandler);
     public Entity object[] = new Entity[10];
-    public Entity NPC[] = new Entity[10];
+    public LivingEntity NPC[] = new LivingEntity[10];
     public LivingEntity Hostile[] = new LivingEntity[20];
     public ItemEntity itemEntity[] = new ItemEntity[10]; // TODO make an entity item thingy
     ArrayList<Entity> entityList = new ArrayList<>();
@@ -131,15 +131,15 @@ public class GamePanel extends JPanel implements Runnable{
             //PLAYER
             player.update();
             //NPC
-            for (Entity entity : NPC) {
+            for (LivingEntity entity : NPC) {
                 if (entity != null) {
-                    ((LivingEntity) entity).update();
+                    entity.update();
                 }
             }
             for (int i = 0; i < Hostile.length; i++) {
                 if (Hostile[i] != null) {
                     if (Hostile[i].alive && !Hostile[i].dying)
-                        ((LivingEntity) Hostile[i]).update();
+                        Hostile[i].update();
                     if (!Hostile[i].alive)
                         Hostile[i] = null;
                 }
@@ -176,7 +176,7 @@ public class GamePanel extends JPanel implements Runnable{
                     entityList.add(value);
                 }
             }
-            for (Entity value : NPC) {
+            for (LivingEntity value : NPC) {
                 if (value != null) {
                     entityList.add(value);
                 }
