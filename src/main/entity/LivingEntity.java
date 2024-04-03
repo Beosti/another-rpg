@@ -84,7 +84,7 @@ public class LivingEntity extends Entity{
         {
             if (!gp.player.invincible)
             {
-                gp.player.getHealth().alterCurrentHealth(1);
+                gp.player.getHealth().alterCurrentHealth(-1);
                 gp.player.invincible = true;
             }
         }
@@ -121,7 +121,6 @@ public class LivingEntity extends Entity{
         if (dyingCounter > i*3 && dyingCounter <= i * 4) g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         if (dyingCounter > i*4)
         {
-            System.out.println("Died");
             dying = false;
             alive = false;
         }
@@ -177,8 +176,9 @@ public class LivingEntity extends Entity{
         // MONSTER HP BAR
         if (this.entityState.equals(EntityState.HOSTILE))
         {
-            double oneScale = (double) gp.tileSize/this.getHealth().getMaxHealth();
-            double healthBarValue = oneScale*health.getCurrentHealth();
+            System.out.println(this.getHealth().getCurrentHealth());
+            double oneScale = (double) gp.tileSize/this.health.getMaxHealth();
+            double healthBarValue = oneScale*this.health.getCurrentHealth();
             // the flashing away when you get hit
             if (dying)
             {

@@ -329,7 +329,7 @@ public class Player extends LivingEntity {
         {
             if (!invincible)
             {
-                this.getHealth().alterCurrentHealth(((LivingEntity) gp.Hostile[i]).getDamageAmount().getDamage());
+                this.getHealth().alterCurrentHealth(-gp.Hostile[i].getDamageAmount().getDamage());
                 invincible = true;
             }
         }
@@ -342,7 +342,7 @@ public class Player extends LivingEntity {
             if (!gp.Hostile[i].invincible)
             {
                 int damageDealt = gp.player.getAttackDamageMelee();
-                gp.Hostile[i].getHealth().alterCurrentHealth(damageDealt);
+                gp.Hostile[i].getHealth().alterCurrentHealth(-damageDealt);
                 //gp.ui.addMessage(gp.player.getAttackDamageMelee() + " damage");
                 gp.Hostile[i].damageHit = damageDealt;
                 if (gp.Hostile[i].gotHit) { // TODO might add an arraylist so damage is shown of multiple damages at the same time
