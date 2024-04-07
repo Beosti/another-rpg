@@ -1,5 +1,6 @@
 package main.ui;
 
+import main.GamePanel;
 import main.api.screen.ScreenHelper;
 import main.init.ModValues;
 
@@ -9,6 +10,10 @@ public class ItemInfoScreen extends InventoryScreen {
     public boolean drawItemInfo;
     public int itemInfoSlotCol;
     public int itemInfoSlotRow;
+
+    public ItemInfoScreen(GamePanel gamePanel) {
+        super(gamePanel);
+    }
 
 
     public void drawItemInfo(Graphics2D g2) {

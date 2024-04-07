@@ -14,6 +14,7 @@ import main.handlers.KeyHandler;
 import main.init.ModValues;
 import main.object.item.Item;
 import main.object.item.weapons.WeaponItem;
+import main.ui.InventoryScreen;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -77,7 +78,18 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
                 case (KeyEvent.VK_S) -> this.downPressed = true;
                 case (KeyEvent.VK_Q) -> this.leftPressed = true;
                 case (KeyEvent.VK_D) -> this.rightPressed = true;
+                case (KeyEvent.VK_E) -> {
+                    this.inInventory = true;
+                    gp.ui.setScreen(new InventoryScreen(gp));
+                }
             }
+        }
+        else {
+            if (keyCode == KeyEvent.VK_E) {
+                this.inInventory = false;
+                gp.ui.setScreen(null);
+            }
+            this.inInventory = false;
         }
     }
 

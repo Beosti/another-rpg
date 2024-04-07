@@ -1,5 +1,6 @@
 package main.ui;
 
+import main.GamePanel;
 import main.api.screen.ScreenHelper;
 import main.init.ModValues;
 
@@ -10,9 +11,9 @@ public class InventoryScreen extends Screen {
     public int inventorySlotCol;
     public int inventorySlotRow;
 
-    public InventoryScreen()
+    public InventoryScreen(GamePanel gamePanel)
     {
-
+        this.gp = gamePanel;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class InventoryScreen extends Screen {
 
 
         // DRAW ITEMS
-        for (int i = 0; i <gp.playerEntity.inventory.size(); i++)
+        for (int i = 0; i < gp.playerEntity.inventory.size(); i++)
         {
             g2.drawImage(gp.playerEntity.inventory.get(i).down, slotX, slotY, null);
             slotX += slotSize;
