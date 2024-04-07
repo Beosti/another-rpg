@@ -1,15 +1,21 @@
 package main.ui;
 
 import main.GamePanel;
+import main.IKeyHandling;
 import main.api.screen.ScreenHelper;
 import main.init.ModValues;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.security.Key;
 
-public class InventoryScreen extends Screen {
+/**
+ * Inventory screen that the player opens
+ */
+public class InventoryScreen extends Screen implements IKeyHandling {
 
-    public int inventorySlotCol;
-    public int inventorySlotRow;
+    private int inventorySlotCol;
+    private int inventorySlotRow;
 
     public InventoryScreen(GamePanel gamePanel)
     {
@@ -19,7 +25,7 @@ public class InventoryScreen extends Screen {
     @Override
     public void draw(Graphics2D g2)
     {
-        // FRAME
+        // FRAME of the actual inventory
         int frameX = ModValues.TILE_SIZE * 9;
         int frameY = ModValues.TILE_SIZE / 2;
         int frameWidth = ModValues.TILE_SIZE*6;
@@ -58,31 +64,19 @@ public class InventoryScreen extends Screen {
             }
         }
 
-        // DESCRIPTION FRAME
-        int dFrameX = frameX;
-        int dFrameY = frameY + frameHeight;
-        int dFrameWidth = frameWidth;
-        int dFrameHeight = ModValues.TILE_SIZE*3;
-        // DESCRIPTION
-        int textX = dFrameX + 20;
-        int textY = dFrameY + ModValues.TILE_SIZE;
-        g2.setFont(g2.getFont().deriveFont(26F));
-
-        int itemIndex = getItemIndexOnSlot();
-        if (itemIndex < gp.playerEntity.inventory.size())
-        {
-            ScreenHelper.drawSubWindow(g2, dFrameX, dFrameY, dFrameWidth, dFrameHeight);
-            for (String line: gp.playerEntity.inventory.get(itemIndex).getDescription().split("\n"))
-            {
-                g2.drawString(line, textX, textY);
-                textY += 32;
-            }
-        }
     }
 
     public int getItemIndexOnSlot()
     {
         int itemIndex = this.inventorySlotCol + (this.inventorySlotRow * 5);
         return itemIndex;
+    }
+
+    @Override
+    public void init(int keyCode) {
+        if (keyCode == KeyEvent.VK_DOWN && !(inventorySlotRow == 3) ) inventorySlotRow++;
+        if (keyCode == KeyEvent.VK_UP && !(inventorySlotRow == 0)) inventorySlotRow--;
+        if (keyCode == KeyEvent.VK_LEFT && !(inventorySlotCol == 0)) inventorySlotCol--;
+        if (keyCode == KeyEvent.VK_RIGHT && !(inventorySlotCol == 4)) inventorySlotCol++;
     }
 }

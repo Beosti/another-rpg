@@ -71,38 +71,37 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
 
     @Override
     public void init(int keyCode) {
-        if (!this.inInventory)
-        {
-            switch (keyCode) {
-                case (KeyEvent.VK_Z) -> this.upPressed = true;
-                case (KeyEvent.VK_S) -> this.downPressed = true;
-                case (KeyEvent.VK_Q) -> this.leftPressed = true;
-                case (KeyEvent.VK_D) -> this.rightPressed = true;
-                case (KeyEvent.VK_E) -> {
-                    this.inInventory = true;
-                    gp.ui.setScreen(new InventoryScreen(gp));
-                }
-            }
+        switch (keyCode) {
+            case (KeyEvent.VK_Z) -> this.upPressed = true;
+            case (KeyEvent.VK_S) -> this.downPressed = true;
+            case (KeyEvent.VK_Q) -> this.leftPressed = true;
+            case (KeyEvent.VK_D) -> this.rightPressed = true;
+
         }
-        else {
-            if (keyCode == KeyEvent.VK_E) {
+        if (keyCode == KeyEvent.VK_E)
+        {
+            if (this.inInventory)
+            {
                 this.inInventory = false;
                 gp.ui.setScreen(null);
             }
-            this.inInventory = false;
+            else
+            {
+                this.inInventory = true;
+                gp.ui.setScreen(new InventoryScreen(gp));
+            }
         }
+
+
     }
 
     @Override
     public void released(int keyCode) {
-        if (!this.inInventory)
-        {
-            switch (keyCode) {
-                case (KeyEvent.VK_Z) -> this.upPressed = false;
-                case (KeyEvent.VK_S) -> this.downPressed = false;
-                case (KeyEvent.VK_Q) -> this.leftPressed = false;
-                case (KeyEvent.VK_D) -> this.rightPressed = false;
-            }
+        switch (keyCode) {
+            case (KeyEvent.VK_Z) -> this.upPressed = false;
+            case (KeyEvent.VK_S) -> this.downPressed = false;
+            case (KeyEvent.VK_Q) -> this.leftPressed = false;
+            case (KeyEvent.VK_D) -> this.rightPressed = false;
         }
     }
 

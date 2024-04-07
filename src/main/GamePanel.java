@@ -147,47 +147,39 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) graphics;
 
-        for (Screen overlay : this.overlays) {
-            overlay.draw(g2);
-        }
-        if (ui.hasScreen())
-            ui.getCurrentScreen().draw(g2);
 
-        else
+        tileManager.draw(g2);
+        playerEntity.draw(g2);
+
+        entityList.add(playerEntity);
+        for (Entity value : itemEntity)
         {
-            tileManager.draw(g2);
-            playerEntity.draw(g2);
-
-            entityList.add(playerEntity);
-            for (Entity value : itemEntity)
+            if (value != null)
             {
-                if (value != null)
-                {
-                    entityList.add(value);
-                }
+                entityList.add(value);
             }
-            for (LivingEntity value : NPC) {
-                if (value != null) {
-                    entityList.add(value);
-                }
+        }
+        for (LivingEntity value : NPC) {
+            if (value != null) {
+                entityList.add(value);
             }
-            for (Entity object : object) {
-                if (object != null) {
-                    entityList.add(object);
-                }
+        }
+        for (Entity object : object) {
+            if (object != null) {
+                entityList.add(object);
             }
-            for (Entity hostile : Hostile) {
-                if (hostile != null) {
-                    entityList.add(hostile);
-                }
+        }
+        for (Entity hostile : Hostile) {
+            if (hostile != null) {
+                entityList.add(hostile);
             }
 
-            // SORT
-            Collections.sort(entityList, new Comparator<Entity>() {
-                @Override
-                public int compare(Entity entity1, Entity entity2) {
-                    int result = Integer.compare(entity1.worldY, entity2.worldY);
-
+        }
+        // SORT
+        Collections.sort(entityList, new Comparator<Entity>() {
+            @Override
+            public int compare(Entity entity1, Entity entity2) {
+                int result = Integer.compare(entity1.worldY, entity2.worldY);
                     return result;
                 }
 
@@ -200,7 +192,11 @@ public class GamePanel extends JPanel implements Runnable{
                 entity.draw(g2);
             }
             entityList.clear();
+        for (Screen overlay : this.overlays) {
+            overlay.draw(g2);
         }
+        if (ui.hasScreen())
+            ui.getCurrentScreen().draw(g2);
 
 
 

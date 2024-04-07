@@ -1,6 +1,7 @@
 package main.ui;
 
 import main.GamePanel;
+import main.IKeyHandling;
 import main.api.screen.ScreenHelper;
 import main.init.ModValues;
 
@@ -75,7 +76,4 @@ public class ItemInfoScreen extends InventoryScreen {
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
     }
-
-
-
 }
