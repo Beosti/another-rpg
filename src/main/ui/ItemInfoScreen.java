@@ -1,7 +1,6 @@
 package main.ui;
 
 import main.GamePanel;
-import main.IKeyHandling;
 import main.api.screen.ScreenHelper;
 import main.init.ModValues;
 
@@ -21,7 +20,7 @@ public class ItemInfoScreen extends InventoryScreen {
         if (!this.drawItemInfo)
             return;
         int itemIndex = getItemIndexOnSlot();
-        if (itemIndex > gp.playerEntity.inventory.size()) {
+        if (itemIndex > gp.playerEntity.oldInventory.size()) {
             this.drawItemInfo = false;
             return;
         }
@@ -36,8 +35,8 @@ public class ItemInfoScreen extends InventoryScreen {
         ScreenHelper.drawSubWindow(g2, frameX, frameY, frameWidth, frameHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
 
-        if (itemIndex < gp.playerEntity.inventory.size()) {
-            if (gp.playerEntity.inventory.get(itemIndex).hasEquipped)
+        if (itemIndex < gp.playerEntity.oldInventory.size()) {
+            if (gp.playerEntity.oldInventory.get(itemIndex).hasEquipped)
                 g2.drawString("UNEQUIP", ModValues.TILE_SIZE * 9 + 35, ModValues.TILE_SIZE * 9 + 35);
             else
                 g2.drawString("EQUIP", ModValues.TILE_SIZE * 9 + 35, ModValues.TILE_SIZE * 9 + 35);

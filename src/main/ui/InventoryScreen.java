@@ -7,7 +7,6 @@ import main.init.ModValues;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 /**
  * Inventory screen that the player opens
@@ -52,9 +51,11 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
         // DRAW ITEMS
-        for (int i = 0; i < gp.playerEntity.inventory.size(); i++)
+        for ()
+        /*
+        for (int i = 0; i < gp.playerEntity.getInventory().getItemCount(); i++)
         {
-            g2.drawImage(gp.playerEntity.inventory.get(i).down, slotX, slotY, null);
+            g2.drawImage(gp.playerEntity.oldInventory.get(i).down, slotX, slotY, null);
             slotX += slotSize;
             if (i == 4 || i == 9 || i == 14)
             {
@@ -62,9 +63,11 @@ public class InventoryScreen extends Screen implements IKeyHandling {
                 slotY += slotSize;
             }
         }
-        for (int i = 0; i < gp.playerEntity.inventory.size(); i++)
+
+         */
+        for (int i = 0; i < gp.playerEntity.oldInventory.size(); i++)
         {
-            if (gp.playerEntity.inventory.get(i) != null)
+            if (gp.playerEntity.oldInventory.get(i) != null)
             {
                 System.out.println(getItemIndexOnSlot());
             }

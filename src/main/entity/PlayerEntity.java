@@ -1,14 +1,13 @@
 package main.entity;
 
-import main.GameState;
 import main.IKeyHandling;
+import main.Inventory;
 import main.api.EntityCategory;
 import main.api.entity.EntityStats;
 import main.api.entity.Health;
 import main.data.quest.KillingObjective;
 import main.data.quest.Objective;
 import main.data.quest.Quest;
-import main.entity.npcs.NPCEntity;
 import main.GamePanel;
 import main.handlers.KeyHandler;
 import main.init.ModValues;
@@ -30,7 +29,8 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
 
     public final int screenX;
     public final int screenY;
-    public ArrayList<Item> inventory = new ArrayList<>();
+    private Inventory inventory;
+    public ArrayList<Item> oldInventory = new ArrayList<>();
     public final int inventorySize = 20;
     private boolean inInventory = false;
     public int money;
@@ -108,8 +108,8 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
     public void setItems()
     {
 
-        inventory.add(firstHand);
-        inventory.add(secondHand);
+        //oldInventory.add(firstHand);
+        //oldInventory.add(secondHand);
         firstHand.hasEquipped = true;
         secondHand.hasEquipped = true;
     }
@@ -197,10 +197,10 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
 
     public void pickUpItemEntity(int i)
     {
-        if (i != 999 && inventorySize > inventory.size())
+        if (i != 999 && this.inventory.getCapacity() > this.inventory.getItemCount())
         {
             Item pickedItem = gp.itemEntity[i].item;
-            gp.playerEntity.inventory.add(pickedItem);
+            gp.playerEntity.inventory.addItem(pickedItem);
             gp.itemEntity[i] = null;
         }
     }
@@ -485,5 +485,10 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
         right_walking1 = setup("Player_goblin_side_right_walking1", "player");
         right_walking2 = setup("Player_goblin_side_right_walking2", "player");
 
+    }
+
+    public Inventory getInventory()
+    {
+        return this.inventory;
     }
 }
