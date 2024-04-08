@@ -51,7 +51,6 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         g2.setStroke(new BasicStroke(3));
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
-
         // DRAW ITEMS
         for (int i = 0; i < gp.playerEntity.inventory.size(); i++)
         {
@@ -63,7 +62,13 @@ public class InventoryScreen extends Screen implements IKeyHandling {
                 slotY += slotSize;
             }
         }
-
+        for (int i = 0; i < gp.playerEntity.inventory.size(); i++)
+        {
+            if (gp.playerEntity.inventory.get(i) != null)
+            {
+                System.out.println(getItemIndexOnSlot());
+            }
+        }
     }
 
     public int getItemIndexOnSlot()
@@ -74,7 +79,7 @@ public class InventoryScreen extends Screen implements IKeyHandling {
 
     @Override
     public void init(int keyCode) {
-        if (keyCode == KeyEvent.VK_DOWN && !(inventorySlotRow == 3) ) inventorySlotRow++;
+        if (keyCode == KeyEvent.VK_DOWN && !(inventorySlotRow == 3)) inventorySlotRow++;
         if (keyCode == KeyEvent.VK_UP && !(inventorySlotRow == 0)) inventorySlotRow--;
         if (keyCode == KeyEvent.VK_LEFT && !(inventorySlotCol == 0)) inventorySlotCol--;
         if (keyCode == KeyEvent.VK_RIGHT && !(inventorySlotCol == 4)) inventorySlotCol++;
