@@ -29,7 +29,7 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
 
     public final int screenX;
     public final int screenY;
-    private Inventory inventory;
+    private Inventory inventory = new Inventory();
     public ArrayList<Item> oldInventory = new ArrayList<>();
     public final int inventorySize = 20;
     private boolean inInventory = false;

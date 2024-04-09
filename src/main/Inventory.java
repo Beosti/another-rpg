@@ -11,8 +11,8 @@ import java.util.Map;
  */
 public class Inventory {
 
-    private HashMap<Item, Integer> items;
-    private int capacity;
+    private HashMap<Item, Integer> items = new HashMap<>();
+    private int capacity = 20;
 
 
 

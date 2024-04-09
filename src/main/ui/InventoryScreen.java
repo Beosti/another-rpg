@@ -4,9 +4,11 @@ import main.GamePanel;
 import main.IKeyHandling;
 import main.api.screen.ScreenHelper;
 import main.init.ModValues;
+import main.object.item.Item;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 /**
  * Inventory screen that the player opens
@@ -51,7 +53,16 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
         // DRAW ITEMS
-        for ()
+        // Iterate through all items in the inventory
+        if (gp.playerEntity.getInventory().getItems().isEmpty())
+            return;
+        for (Map.Entry<Item, Integer> entry : gp.playerEntity.getInventory().getItems().entrySet()) {
+            Item item = entry.getKey();
+            int index = entry.getValue();
+            //System.out.println(item);
+            // Now you can access both the item and its corresponding index
+        }
+
         /*
         for (int i = 0; i < gp.playerEntity.getInventory().getItemCount(); i++)
         {
@@ -65,13 +76,7 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         }
 
          */
-        for (int i = 0; i < gp.playerEntity.oldInventory.size(); i++)
-        {
-            if (gp.playerEntity.oldInventory.get(i) != null)
-            {
-                System.out.println(getItemIndexOnSlot());
-            }
-        }
+
     }
 
     public int getItemIndexOnSlot()
