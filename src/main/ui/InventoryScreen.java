@@ -59,7 +59,13 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         for (Map.Entry<Item, Integer> entry : gp.playerEntity.getInventory().getItems().entrySet()) {
             Item item = entry.getKey();
             int index = entry.getValue();
-            //System.out.println(item);
+            g2.drawImage(item.down, slotX, slotY, null);
+            slotX += slotSize;
+            if (index == 4 || index == 9 || index == 14)
+            {
+                slotX = slotXstart;
+                slotY += slotSize;
+            }            //System.out.println(item);
             // Now you can access both the item and its corresponding index
         }
 
