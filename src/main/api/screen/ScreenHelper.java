@@ -13,7 +13,7 @@ public class ScreenHelper {
         return x;
     }
 
-    public static void drawSubWindow(Graphics2D g2, int x, int y, int width, int height)
+    public static void drawWindow(Graphics2D g2, int x, int y, int width, int height)
     {
         Color c = new Color(0, 0, 0, 220);
         g2.setColor(c);
@@ -23,5 +23,25 @@ public class ScreenHelper {
         g2.setColor(c);
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+    }
+
+    public static void drawSubWindow(Graphics2D g2, int x, int y, int width, int height)
+    {
+        Color c = new Color(0, 0, 0, 175);
+        g2.setColor(c);
+        g2.fillRoundRect(x , y, width, height, 35, 35);
+
+        c = new Color(255, 255, 255, 220);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+    }
+
+    public static void drawCursor(Graphics2D g2, int x, int y, int width, int height)
+    {
+        Color c = new Color(255, 255, 255, 235);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(x, y, width, height, 10, 10);
     }
 }

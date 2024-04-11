@@ -32,7 +32,7 @@ public class ItemInfoScreen extends InventoryScreen {
 
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(3));
-        ScreenHelper.drawSubWindow(g2, frameX, frameY, frameWidth, frameHeight);
+        ScreenHelper.drawWindow(g2, frameX, frameY, frameWidth, frameHeight);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
 
         if (itemIndex < gp.playerEntity.oldInventory.size()) {
