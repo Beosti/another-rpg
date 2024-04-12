@@ -1,5 +1,6 @@
 package main.object.item;
 
+import main.DamageAmount;
 import main.GamePanel;
 import main.api.DamageCalculation;
 import main.api.UtilityTool;
@@ -12,6 +13,7 @@ import java.io.IOException;
 public class Item {
 
     GamePanel gp;
+    private DamageAmount damageAmount;
     public boolean hasEquipped = false;
 
     public String name = "";
@@ -29,7 +31,11 @@ public class Item {
     }
     public String getDescription()
     {
-        return "[" + name + "]\n" + description;
+        return this.description;
+    }
+    public String getName()
+    {
+        return this.name;
     }
     public BufferedImage setup(String imageName, String packageName)
     {
@@ -46,6 +52,14 @@ public class Item {
             System.out.println(getClass().getResourceAsStream("/items/" + packageName + "/" + imageName + ".png").toString() + " not found");
         }
         return image;
+    }
+
+    public void setDamageAmount(DamageAmount damageAmount) {
+        this.damageAmount = damageAmount;
+    }
+
+    public DamageAmount getDamageAmount() {
+        return damageAmount;
     }
 
 }

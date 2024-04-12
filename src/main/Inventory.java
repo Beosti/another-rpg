@@ -27,6 +27,17 @@ public class Inventory {
         System.out.println("Inventory is full. Cannot add item.");
     }
 
+    public Item getItem(int slot)
+    {
+        for (Map.Entry<Item, Integer> entry : this.getItems().entrySet()) {
+            Item item = entry.getKey();
+            int index = entry.getValue();
+            if (index == slot)
+                return item;
+        }
+        return null;
+    }
+
     // Method to remove an item from the inventory
     public void removeItem(Item item) {
         if (items.containsKey(item)) {

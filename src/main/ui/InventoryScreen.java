@@ -21,6 +21,7 @@ public class InventoryScreen extends Screen implements IKeyHandling {
     private int subInventorySlotRow;
 
     private boolean subWindowOpen = false;
+    private boolean examineWindowOpen = false;
     public InventoryScreen(GamePanel gamePanel)
     {
         this.gp = gamePanel;
@@ -54,11 +55,24 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         {
             if (!gp.playerEntity.getInventory().getItems().containsValue(getItemIndexOnSlot())) // can only open sub window if item is in slot targeted
                 return;
-            if (subWindowOpen) {
+            if (!subWindowOpen)
+            {
+                subWindowOpen = true;
+                subInventorySlotCol = 0;
+                subInventorySlotRow = 0;
+                return;
+            }
+            if (subInventorySlotRow == 1 && subInventorySlotCol == 0)
+            {
+                examineWindowOpen = !examineWindowOpen;
+                return;
+            }
+            if (subInventorySlotRow == 1 && subInventorySlotCol == 1) // EXIT button
+            {
+                examineWindowOpen = false;
                 subWindowOpen = false;
                 return;
             }
-            subWindowOpen = true;
         }
     }
 
@@ -104,20 +118,38 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         int subSlotSize = ModValues.TILE_SIZE + 3;
 
         // SUB CURSOR
-        int subCursorX = subSlotXstart + (subSlotSize * subInventorySlotCol);
+        int subCursorX = (int) (subSlotXstart + (subSlotSize * subInventorySlotCol * 2.5));
         int subCursorY = subSlotYstart + (subSlotSize * subInventorySlotRow);
-        int subCursorWidth = ModValues.TILE_SIZE * 2;
+        int subCursorWidth = (int) (ModValues.TILE_SIZE * 2.5);
         int subCursorHeight = ModValues.TILE_SIZE;
         // DRAW CURSOR
         if (subWindowOpen)
         {
             ScreenHelper.drawCursor(g2, subCursorX, subCursorY, subCursorWidth, subCursorHeight);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-            String text = "Equip";
-            //g2.setColor(Color.BLACK);
-            //g2.drawString(text, subSlotXstart, subSlotYstart);
+            String textEquip = "Equip";
             g2.setColor(Color.WHITE);
-            g2.drawString(text, subSlotXstart, subSlotYstart + ModValues.TILE_SIZE / 2);
+            g2.drawString(textEquip, subSlotXstart + 12, subSlotYstart + 31);
+            String textUse = "Use";
+            g2.drawString(textUse, subSlotXstart + 160, subSlotYstart + 31);
+            //g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+            String textExamine = "Examine";
+            g2.drawString(textExamine, subSlotXstart + 12, subSlotYstart + 84);
+            String textExit = "Exit";
+            //g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+            g2.setColor(Color.WHITE);
+            g2.drawString(textExit, (subSlotXstart + 160), (subSlotYstart + 84));
+        }
+        if (examineWindowOpen)
+        {
+            ScreenHelper.drawSubWindow(g2, subFrameX, subFrameY + 140, subFrameWidth, subFrameHeight);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
+            g2.setColor(Color.WHITE);
+            g2.drawString("Name: " + gp.playerEntity.getInventory().getItem(getItemIndexOnSlot()).getName(), subSlotXstart - 4, subSlotYstart + 148);
+            g2.drawString("Description: ", subSlotXstart - 4, subSlotYstart + 166);
+            g2.drawString(gp.playerEntity.getInventory().getItem(getItemIndexOnSlot()).getDescription(), subSlotXstart - 4, subSlotYstart + 182);
+            g2.drawString("Damage: " + gp.playerEntity.getInventory().getItem(getItemIndexOnSlot()).getDamageAmount().getAmount() + "D" + gp.playerEntity.getInventory().getItem(getItemIndexOnSlot()).getDamageAmount().getDice(), subSlotXstart - 4, subSlotYstart + 200);
+
         }
 
         // DRAW ITEMS

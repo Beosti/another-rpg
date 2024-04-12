@@ -14,11 +14,4 @@ public class WeaponItem extends Item {
         super(gp);
     }
 
-    public void setDamageAmount(DamageAmount damageAmount) {
-        this.damageAmount = damageAmount;
-    }
-
-    public DamageAmount getDamageAmount() {
-        return damageAmount;
-    }
 }

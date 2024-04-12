@@ -10,6 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Base class for all the screens in the mod
+ * A screen is a sort of gui
+ */
 public abstract class Screen {
     public GamePanel gp;
     public Font font;
