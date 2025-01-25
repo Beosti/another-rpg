@@ -22,15 +22,19 @@ public class TitleScreen extends Screen implements IKeyHandling {
 
     @Override
     public void init(int keyCode) {
-        if (keyCode == KeyEvent.VK_S && column != 2)
-            column += 1;
-        if (keyCode == KeyEvent.VK_Z && column != 0)
-            column -= 1;
-        if (keyCode == KeyEvent.VK_ENTER && column == 0) {
-            gamePanel.ui.setScreen(null);
-            gamePanel.gameState = GameState.PLAY_STATE;
-        }
-
+        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN)
+            if (column != 2)
+                column += 1;
+        if (keyCode == KeyEvent.VK_Z ||keyCode == KeyEvent.VK_UP)
+            if (column != 0)
+                column -= 1;
+        if (keyCode == KeyEvent.VK_ENTER)
+            if (column == 0) {
+                gamePanel.ui.setScreen(null);
+                gamePanel.gameState = GameState.PLAY_STATE;
+            }
+            else if (column == 2)
+                System.exit(0);
     }
 
     @Override
