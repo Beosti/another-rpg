@@ -33,8 +33,6 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
     private Inventory inventory = new Inventory();
     public ArrayList<Item> oldInventory = new ArrayList<>();
     public final int inventorySize = 20;
-    private boolean inInventory = false;
-    private boolean characterScreen = false;
     public int money;
     public List<Quest> inProgressQuest = new ArrayList<Quest>();
     public List<Quest> finishedQuest = new ArrayList<Quest>();
@@ -107,16 +105,6 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
             case (KeyEvent.VK_D) -> this.rightPressed = false;
         }
     }
-
-    public void setItems()
-    {
-
-        //oldInventory.add(firstHand);
-        //oldInventory.add(secondHand);
-        firstHand.hasEquipped = true;
-        secondHand.hasEquipped = true;
-    }
-
     //What can the player do at every update of the game
     @Override
     public void update()

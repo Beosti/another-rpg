@@ -21,6 +21,8 @@ public class LivingEntity extends Entity{
     private EntityCategory entityCategory;
     private EntityState entityState;
     private DamageAmount damageAmount;
+    private Item rightHand;
+    private Item leftHand;
     // IMAGES
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     //Every sprite needed for a whole entity image in the game
@@ -106,6 +108,15 @@ public class LivingEntity extends Entity{
                 spriteNumber = 1;
             spriteCounter = 0;
         }
+    }
+
+    public void setItemInHand(Item item)
+    {
+        this.rightHand = item;
+    }
+    public Item getItemInHand()
+    {
+        return this.rightHand;
     }
     public void dyingAnimation(Graphics2D g2)
     {

@@ -3,6 +3,7 @@ package main.ui;
 import main.GamePanel;
 import main.IKeyHandling;
 import main.api.screen.ScreenHelper;
+import main.entity.LivingEntity;
 import main.init.ModValues;
 import main.object.item.Item;
 
@@ -63,7 +64,14 @@ public class InventoryScreen extends Screen implements IKeyHandling {
                 subInventorySlotRow = 0;
                 return;
             }
-            if (subInventorySlotRow == 1 && subInventorySlotCol == 0)
+            if (subInventorySlotCol == 0 && subInventorySlotRow == 0) // EQUIP button
+            {
+                if (gp.playerEntity.getItemInHand() != null)
+                    gp.playerEntity.setItemInHand(null);
+                else
+                    gp.playerEntity.setItemInHand(gp.playerEntity.getInventory().getItem(getItemIndexOnSlot()));
+            }
+            if (subInventorySlotRow == 1 && subInventorySlotCol == 0) // EXAMINE button
             {
                 examineWindowOpen = !examineWindowOpen;
                 return;
@@ -128,7 +136,11 @@ public class InventoryScreen extends Screen implements IKeyHandling {
         {
             ScreenHelper.drawCursor(g2, subCursorX, subCursorY, subCursorWidth, subCursorHeight);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-            String textEquip = "Equip";
+            String textEquip;
+            if (gp.playerEntity.getItemInHand() == null)
+                textEquip = "Equip";
+            else
+                textEquip = "Unequip";
             g2.setColor(Color.WHITE);
             g2.drawString(textEquip, subSlotXstart + 12, subSlotYstart + 31);
             String textUse = "Use";
