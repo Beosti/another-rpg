@@ -82,29 +82,17 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
         }
         if (keyCode == KeyEvent.VK_C)
         {
-            if (this.characterScreen)
-            {
-                this.characterScreen = false;
-                gp.ui.setScreen(null);
-            }
+            if (gp.ui.activeScreen("characterscreen"))
+                gp.ui.removeScreen("characterscreen");
             else
-            {
-                this.characterScreen = true;
-                gp.ui.setScreen(new CharacterScreen(gp));
-            }
+                gp.ui.addScreen(new CharacterScreen(gp));
         }
         if (keyCode == KeyEvent.VK_E)
         {
-            if (this.inInventory)
-            {
-                this.inInventory = false;
-                gp.ui.setScreen(null);
-            }
+            if (gp.ui.activeScreen("inventoryscreen"))
+                gp.ui.removeScreen("inventoryscreen");
             else
-            {
-                this.inInventory = true;
-                gp.ui.setScreen(new InventoryScreen(gp));
-            }
+                gp.ui.addScreen(new InventoryScreen(gp));
         }
 
 

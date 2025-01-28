@@ -28,8 +28,11 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (gp.ui.hasScreen() && gp.ui.getCurrentScreen() instanceof IKeyHandling)
-            ((IKeyHandling) gp.ui.getCurrentScreen()).init(code);
+        for (int i = 0; i < gp.ui.getCurrentScreens().size(); i++)
+        {
+            if (gp.ui.getCurrentScreens().get(i) instanceof IKeyHandling)
+                ((IKeyHandling) gp.ui.getCurrentScreens().get(i)).init(code);
+        }
         if (this.gp.gameState.equals(GameState.PLAY_STATE)) {
             ((IKeyHandling) gp.playerEntity).init(code);
         }

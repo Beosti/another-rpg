@@ -26,6 +26,7 @@ public class Ui {
     BufferedImage heart_full, heart_half, heart_empty;
     ArrayList<String> messageScroll = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
+    ArrayList<Screen> currentScreens = new ArrayList<>();
     public int slotCol = 0;
     public int slotRow = 0;
     public int subSlotCol = 0;
@@ -49,19 +50,29 @@ public class Ui {
         }
     }
 
-    public Screen getCurrentScreen()
+    public ArrayList<Screen> getCurrentScreens()
     {
-        return this.currentScreen;
+        return this.currentScreens;
     }
-    public void closeScreen()
+    public boolean activeScreen(String nameScreen)
     {
-        this.currentScreen = null;
-    }
-    public boolean hasScreen()
-    {
-        if (currentScreen != null)
-            return true;
+        for (Screen screen : this.currentScreens) {
+            if (screen.getName().equals(nameScreen))
+                return true;
+        }
         return false;
+    }
+    public void addScreen(Screen screen)
+    {
+        this.currentScreens.add(screen);
+    }
+    public void removeScreen(String nameScreen)
+    {
+        for (int i = 0; i < this.currentScreens.size(); i++)
+        {
+            if (this.currentScreens.get(i).getName().equals(nameScreen))
+                this.currentScreens.remove(i);
+        }
     }
     public void setScreen(Screen screen)
     {

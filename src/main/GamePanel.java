@@ -67,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
     {
         ArrayList<Screen> overlays = new ArrayList<>();
         overlays.add(new HealthScreen());
-        ui.setScreen(new TitleScreen(this));
+        ui.addScreen(new TitleScreen(this));
         assetSetter.setItem();
         assetSetter.setObject();
         assetSetter.setHostile();
@@ -195,10 +195,9 @@ public class GamePanel extends JPanel implements Runnable{
         for (Screen overlay : this.overlays) {
             overlay.draw(g2);
         }
-        if (ui.hasScreen())
-            ui.getCurrentScreen().draw(g2);
-
-
+        for (int i = 0; i < ui.getCurrentScreens().size(); i++) {
+            ui.getCurrentScreens().get(i).draw(g2);
+        }
 
         g2.dispose();
     }

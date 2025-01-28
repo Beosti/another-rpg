@@ -18,6 +18,7 @@ public class TitleScreen extends Screen implements IKeyHandling {
     public TitleScreen(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
+        this.setName("titlescreen");
     }
 
     @Override
@@ -30,7 +31,7 @@ public class TitleScreen extends Screen implements IKeyHandling {
                 column -= 1;
         if (keyCode == KeyEvent.VK_ENTER)
             if (column == 0) {
-                gamePanel.ui.setScreen(null);
+                gamePanel.ui.removeScreen(this.getName());
                 gamePanel.gameState = GameState.PLAY_STATE;
             }
             else if (column == 2)

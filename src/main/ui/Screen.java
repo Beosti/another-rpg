@@ -17,11 +17,20 @@ import java.util.ArrayList;
 public abstract class Screen {
     public GamePanel gp;
     public Font font;
+    private String name;
 
     boolean screenOpened;
     public Screen()
     {
 
+    }
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    public String getName()
+    {
+        return this.name;
     }
     public abstract void draw(Graphics2D g2);
     public BufferedImage setup(String imageName, String packageName)

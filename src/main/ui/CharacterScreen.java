@@ -11,6 +11,7 @@ public class CharacterScreen extends Screen {
     public CharacterScreen(GamePanel gamePanel)
     {
         this.gp = gamePanel;
+        this.setName("characterscreen");
     }
 
     @Override

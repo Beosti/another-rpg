@@ -25,6 +25,7 @@ public class InventoryScreen extends Screen implements IKeyHandling {
     public InventoryScreen(GamePanel gamePanel)
     {
         this.gp = gamePanel;
+        this.setName("inventoryscreen");
     }
 
     @Override
