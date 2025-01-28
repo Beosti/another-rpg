@@ -13,6 +13,7 @@ import main.handlers.KeyHandler;
 import main.init.ModValues;
 import main.object.item.Item;
 import main.object.item.weapons.WeaponItem;
+import main.ui.CharacterScreen;
 import main.ui.InventoryScreen;
 
 import java.awt.*;
@@ -33,6 +34,7 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
     public ArrayList<Item> oldInventory = new ArrayList<>();
     public final int inventorySize = 20;
     private boolean inInventory = false;
+    private boolean characterScreen = false;
     public int money;
     public List<Quest> inProgressQuest = new ArrayList<Quest>();
     public List<Quest> finishedQuest = new ArrayList<Quest>();
@@ -77,6 +79,19 @@ public class PlayerEntity extends LivingEntity implements IKeyHandling {
             case (KeyEvent.VK_Q) -> this.leftPressed = true;
             case (KeyEvent.VK_D) -> this.rightPressed = true;
 
+        }
+        if (keyCode == KeyEvent.VK_C)
+        {
+            if (this.characterScreen)
+            {
+                this.characterScreen = false;
+                gp.ui.setScreen(null);
+            }
+            else
+            {
+                this.characterScreen = true;
+                gp.ui.setScreen(new CharacterScreen(gp));
+            }
         }
         if (keyCode == KeyEvent.VK_E)
         {
